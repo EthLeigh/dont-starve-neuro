@@ -11,13 +11,16 @@ AddPlayerPostInit(function(inst)
 
     inst:DoPeriodicTask(0, function()
         local x, y, z = inst.Transform:GetWorldPosition()
-        local dest = GLOBAL.Vector3(x + 5, y, z)
+        local dest = GLOBAL.Vector3(x + 15, y, z)
 
         locomotor:GoToPoint(dest, nil, true)
     end)
 end)
 
 AddSimPostInit(function()
-    GLOBAL.TheCamera:SetHeadingTarget(270)
     Camera = GLOBAL.TheCamera
+
+    Camera:SetControllable(false)
+    Camera:SetHeadingTarget(270)
+    Camera:Snap()
 end)
