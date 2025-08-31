@@ -1,11 +1,23 @@
+local Player = nil
+local Camera = nil
+
 AddPlayerPostInit(function(inst)
-    local health = inst.components.health
+    Player = inst
 
-    print("New world started, player entity created:", inst.prefab, inst.xp, inst.prefab.xp)
-    print("Player health:", health.currenthealth)
+    local controller = inst.components.playercontroller
+    local locomotor = inst.components.locomotor
 
-    health:DoDelta(-100)
+    -- controller:Enable(false)
 
-    -- local act = BufferedAction(inst, nil, ACTIONS.WALKTO, nil, inst.pos)
-    -- act:Do()
+    inst:DoPeriodicTask(0, function()
+        local x, y, z = inst.Transform:GetWorldPosition()
+        local dest = GLOBAL.Vector3(x + 5, y, z)
+
+        locomotor:GoToPoint(dest, nil, true)
+    end)
+end)
+
+AddSimPostInit(function()
+    GLOBAL.TheCamera:SetHeadingTarget(270)
+    Camera = GLOBAL.TheCamera
 end)
