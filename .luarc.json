@@ -18,6 +18,6 @@
     "GLOBAL","TheWorld","TheSim","SpawnPrefab","AllPlayers",
     "TUNING","ACTIONS","ActionHandler","AddClassPostConstruct",
     "AddPrefabPostInit","AddPlayerPostInit","AddComponentPostInit",
-    "AddSimPostInit","MakePlayerCharacter"
+    "AddSimPostInit","MakePlayerCharacter","modimport"
   ]
 }
