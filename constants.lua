@@ -1,5 +1,3 @@
-local Constants = {}
+Constants = Constants or {}
 
 Constants.SEARCH_RADIUS = 20
-
-return Constants

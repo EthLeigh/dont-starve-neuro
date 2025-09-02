@@ -1,4 +1,7 @@
-local Utils = modimport("utils.lua")
+Utils = Utils or {}
+
+modimport("utils.lua")
+modimport("constants.lua")
 
 local Player = nil
 local Camera = nil
