@@ -1,14 +1,26 @@
 Utils = Utils or {}
 
 modimport("constants.lua")
+modimport("action_queue.lua")
+
+Utils.GetNearbyHarvestables = function(x, y, z)
+    return GLOBAL.TheSim:FindEntities(
+        x,
+        y,
+        z,
+        Constants.SEARCH_RADIUS,
+        nil,
+        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player"}
+    )
+end
 
 Utils.GetNearbyUniqueHarvestables = function(x, y, z)
-    local nearby_ents = GLOBAL.TheSim:FindEntities(x, y, z, Constants.SEARCH_RADIUS, nil, {"FX", "NOCLICK", "DECOR", "INLIMBO", "player"})
+    local nearby_ents = Utils.GetNearbyHarvestables(x, y, z)
     local nearby_unique_ents = {}
 
     for _, obj in ipairs(nearby_ents) do
         if (nearby_unique_ents[tostring(obj.prefab)] == nil) then
-            nearby_unique_ents[tostring(obj.prefab)] = obj;
+            nearby_unique_ents[tostring(obj.prefab)] = obj
         end
     end
 
@@ -16,29 +28,25 @@ Utils.GetNearbyUniqueHarvestables = function(x, y, z)
 end
 
 Utils.GetActionForEntity = function(ent)
-    if ent == nil or not ent:IsValid() then return nil end
+    if ent == nil then return nil end
 
     if ent.components.pickable and ent.components.pickable:CanBePicked() then
-        return ACTIONS.PICK
+        return GLOBAL.ACTIONS.PICK
     elseif ent.components.harvestable and ent.components.harvestable:CanBeHarvested() then
-        return ACTIONS.HARVEST
+        return GLOBAL.ACTIONS.HARVEST
     elseif ent.components.crop and ent.components.crop:IsReadyForHarvest() then
-        return ACTIONS.HARVEST
+        return GLOBAL.ACTIONS.HARVEST
+    elseif ent.components.inspectable then
+        return GLOBAL.ACTIONS.INSPECT
     end
 
     return nil
 end
 
-Utils.HarvestEntity = function(player, ent)
+Utils.GetBufferedActionForEntity = function(player, ent)
     local action = Utils.GetActionForEntity(ent)
 
-    if action == nil then
-        print("NO ACTION AVAILABLE")
+    if (action == nil) then return nil end
 
-        return
-    end
-
-    local buffer_action = GLOBAL.BufferedAction(player, ent, action)
-
-    player.components.locomotor:PushAction(buffer_action, true)
+    return GLOBAL.BufferedAction(player, ent, action)
 end
