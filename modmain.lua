@@ -1,5 +1,6 @@
 modimport("harvest_helper.lua")
 modimport("movement_helper.lua")
+modimport("inventory_helper.lua")
 modimport("constants.lua")
 
 Player = nil
@@ -31,8 +32,14 @@ AddSimPostInit(function()
         return
     end
 
-    local x, y, z = Player.Transform:GetWorldPosition()
-    local nearby_harvestables = Utils.GetNearbyHarvestables(x, y, z)
+    local items = InventoryHelper.GetHotbarItems(Player)
 
-    HarvestHelper.HarvestEntities(Player, nearby_harvestables)
+    for _, item_name in pairs(items) do
+        print("ITEM:", item_name)
+    end
+
+    -- local x, y, z = Player.Transform:GetWorldPosition()
+    -- local nearby_harvestables = Utils.GetNearbyHarvestables(x, y, z)
+
+    -- HarvestHelper.HarvestEntities(Player, nearby_harvestables)
 end)
