@@ -13,7 +13,7 @@ AddPlayerPostInit(function(inst)
     inst:DoPeriodicTask(0, function()
         local x, y, z = inst.Transform:GetWorldPosition()
 
-        MovementHelper.MoveToPoint(player, x + 15, y, z)
+        MovementHelper.MoveToPoint(Player, x + 15, y, z)
     end)
 end)
 
