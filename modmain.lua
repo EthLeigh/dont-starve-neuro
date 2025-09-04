@@ -7,18 +7,14 @@ Camera = nil
 AddPlayerPostInit(function(inst)
     Player = inst
 
-    local controller = inst.components.playercontroller
-    local locomotor = inst.components.locomotor
-
-    -- controller:Enable(false)
+    -- inst.components.playercontroller:Enable(false)
 
     -- Test pathfinding
-    -- inst:DoPeriodicTask(0, function()
-    --     local x, y, z = inst.Transform:GetWorldPosition()
-    --     local dest = GLOBAL.Vector3(x + 15, y, z)
+    inst:DoPeriodicTask(0, function()
+        local x, y, z = inst.Transform:GetWorldPosition()
 
-    --     locomotor:GoToPoint(dest, nil, true)
-    -- end)
+        MovementHelper.MoveToPoint(player, x + 15, y, z)
+    end)
 end)
 
 AddSimPostInit(function()
