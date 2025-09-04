@@ -1,4 +1,5 @@
 modimport("harvest_helper.lua")
+modimport("movement_helper.lua")
 modimport("constants.lua")
 
 Player = nil
@@ -10,8 +11,8 @@ AddPlayerPostInit(function(inst)
     -- inst.components.playercontroller:Enable(false)
 
     -- Test pathfinding
-    inst:DoPeriodicTask(0, function()
-        local x, y, z = inst.Transform:GetWorldPosition()
+    Player:DoPeriodicTask(0, function()
+        local x, y, z = Player.Transform:GetWorldPosition()
 
         MovementHelper.MoveToPoint(Player, x + 15, y, z)
     end)
