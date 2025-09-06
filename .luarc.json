@@ -2,22 +2,19 @@
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "runtime.version": "Lua 5.1",
   "workspace.library": [
+    "./types.lua",
     "./external/ds"
   ],
   "workspace.checkThirdParty": false,
   "diagnostics.disable": [
-    "duplicate-set-field"           // DST style triggers these a lot
+    "duplicate-set-field",
+    "lowercase-global"
   ],
   "runtime.path": [
     "?.lua",
     "?/init.lua",
-    "?.lua",                // DST requires from MODROOT/scripts
+    "?.lua",
     "?/init.lua"
   ],
-  "diagnostics.globals": [
-    "GLOBAL","TheWorld","TheSim","SpawnPrefab","AllPlayers",
-    "TUNING","ACTIONS","ActionHandler","AddClassPostConstruct",
-    "AddPrefabPostInit","AddPlayerPostInit","AddComponentPostInit",
-    "AddSimPostInit","MakePlayerCharacter","modimport"
-  ]
+  "completion.autoRequire": false
 }

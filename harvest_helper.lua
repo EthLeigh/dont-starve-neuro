@@ -1,8 +1,10 @@
-HarvestHelper = HarvestHelper or {}
+---@class HarvestHelper
+HarvestHelper = {}
 
 modimport("utils.lua")
 
-HarvestHelper.HarvestEntity = function(player, ent)
+---@param ent Entity
+function HarvestHelper.HarvestEntity(ent)
     local action = Utils.GetActionForEntity(ent)
 
     if action == nil then
@@ -11,16 +13,17 @@ HarvestHelper.HarvestEntity = function(player, ent)
         return
     end
 
-    local buffer_action = GLOBAL.BufferedAction(player, ent, action)
+    local buffer_action = GLOBAL.BufferedAction(Player, ent, action)
 
-    player.components.locomotor:PushAction(buffer_action, true)
+    PlayerLocomotor:PushAction(buffer_action, true)
 end
 
-HarvestHelper.HarvestEntities = function(player, ents)
-    local buf_action_queue = BufferedActionQueue(player)
+---@param ents Entity[]
+function HarvestHelper.HarvestEntities(ents)
+    local buf_action_queue = BufferedActionQueue()
 
     for _, ent in pairs(ents) do
-        local buffered_action = Utils.GetBufferedActionForEntity(player, ent)
+        local buffered_action = Utils.GetBufferedActionForEntity(ent)
 
         if (buffered_action ~= nil) then
            buf_action_queue:enqueue(buffered_action)

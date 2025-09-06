@@ -1,1 +1,1 @@
--- Unused for now, but a required file
+-- Required file, not used in the mod

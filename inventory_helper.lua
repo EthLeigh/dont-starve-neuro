@@ -1,8 +1,11 @@
-InventoryHelper = InventoryHelper or {}
+---@class InventoryHelper
+InventoryHelper = {}
 
 modimport("hotbar_item.lua")
 
-InventoryHelper.GetHotbarItems = function(player)
+---@param player Player
+---@return HotbarItem[]
+function InventoryHelper.GetHotbarItems(player)
     local inventory = player.components.inventory
     local hotbar_items = {}
 
@@ -15,7 +18,9 @@ InventoryHelper.GetHotbarItems = function(player)
     return hotbar_items
 end
 
-InventoryHelper.GetHotbarItemNames = function(player)
+---@param player Player
+---@return table<integer, string>
+function InventoryHelper.GetHotbarItemNames(player)
     local hotbar_items = InventoryHelper.GetHotbarItems(player)
     local hotbar_item_names = {}
 

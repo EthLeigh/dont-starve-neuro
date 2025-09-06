@@ -1,9 +1,13 @@
-Utils = Utils or {}
+Utils = {}
 
 modimport("constants.lua")
 modimport("action_queue.lua")
 
-Utils.GetNearbyHarvestables = function(x, y, z)
+---@param x number
+---@param y number
+---@param z number
+---@return Entity[]
+function Utils.GetNearbyHarvestables(x, y, z)
     return GLOBAL.TheSim:FindEntities(
         x,
         y,
@@ -14,19 +18,25 @@ Utils.GetNearbyHarvestables = function(x, y, z)
     )
 end
 
-Utils.GetNearbyUniqueHarvestables = function(x, y, z)
+---@param x number
+---@param y number
+---@param z number
+---@return table<string, Entity>
+function Utils.GetNearbyUniqueHarvestables(x, y, z)
     local nearby_ents = Utils.GetNearbyHarvestables(x, y, z)
     local nearby_unique_ents = {}
 
-    for _, obj in ipairs(nearby_ents) do
-        if (nearby_unique_ents[tostring(obj.prefab)] == nil) then
-            nearby_unique_ents[tostring(obj.prefab)] = obj
+    for _, ent in ipairs(nearby_ents) do
+        if (nearby_unique_ents[ent.prefab] == nil) then
+            nearby_unique_ents[ent.prefab] = ent
         end
     end
 
     return nearby_unique_ents
 end
 
+---@param ent Entity
+---@return table | nil
 Utils.GetActionForEntity = function(ent)
     if ent == nil then return nil end
 
@@ -43,10 +53,11 @@ Utils.GetActionForEntity = function(ent)
     return nil
 end
 
-Utils.GetBufferedActionForEntity = function(player, ent)
+---@param ent Entity
+Utils.GetBufferedActionForEntity = function(ent)
     local action = Utils.GetActionForEntity(ent)
 
-    if (action == nil) then return nil end
+    if action == nil then return end
 
-    return GLOBAL.BufferedAction(player, ent, action)
+    return GLOBAL.BufferedAction(Player, ent, action)
 end

@@ -3,19 +3,29 @@ modimport("movement_helper.lua")
 modimport("inventory_helper.lua")
 modimport("constants.lua")
 
+---@type GLOBAL
+GLOBAL = GLOBAL
+
+---@type Player
 Player = nil
+
+---@type Locomotor
+PlayerLocomotor = nil
+
+---@type Camera
 Camera = nil
 
 AddPlayerPostInit(function(inst)
     Player = inst
+    PlayerLocomotor = Player.components.locomotor
 
-    -- inst.components.playercontroller:Enable(false)
+    -- Player.components.playercontroller:Enable(false)
 
     -- Test pathfinding
     Player:DoPeriodicTask(0, function()
         local x, y, z = Player.Transform:GetWorldPosition()
 
-        MovementHelper.MoveToPoint(Player, x + 15, y, z)
+        MovementHelper.MoveToPoint(x + 15, y, z)
     end)
 end)
 
@@ -32,14 +42,14 @@ AddSimPostInit(function()
         return
     end
 
+    -- Test inventory visibility
     local items = InventoryHelper.GetHotbarItems(Player)
-
     for _, item_name in pairs(items) do
         print("ITEM:", item_name)
     end
 
+    -- Test harvesting
     -- local x, y, z = Player.Transform:GetWorldPosition()
     -- local nearby_harvestables = Utils.GetNearbyHarvestables(x, y, z)
-
-    -- HarvestHelper.HarvestEntities(Player, nearby_harvestables)
+    -- HarvestHelper.HarvestEntities(nearby_harvestables)
 end)

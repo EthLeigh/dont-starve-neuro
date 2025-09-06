@@ -1,17 +1,23 @@
-MovementHelper = MovementHelper or {}
+---@class MovementHelper
+MovementHelper = {}
 
-MovementHelper.MoveToPosition = function(player, pos)
-    player.components.locomotor:GoToPoint(pos, nil, true)
+---@param pos Vector3
+function MovementHelper.MoveToPosition(pos)
+    PlayerLocomotor:GoToPoint(pos, nil, true)
 end
 
-MovementHelper.MoveToPoint = function(player, x, y, z)
+---@param x number
+---@param y number
+---@param z number
+function MovementHelper.MoveToPoint(x, y, z)
     local pos = GLOBAL.Vector3(x, y, z)
 
-    player.components.locomotor:GoToPoint(pos, nil, true)
+    PlayerLocomotor:GoToPoint(pos, nil, true)
 end
 
-MovementHelper.MoveToEntity = function(player, ent)
-    local pos = ent.Transform:GetWorldPosition()
+---@param ent Entity
+function MovementHelper.MoveToEntity(ent)
+    local x, y, z = ent.Transform:GetWorldPosition()
 
-    player.components.locomotor:GoToPoint(pos, nil, true)
+    MovementHelper.MoveToPoint(x, y, z)
 end
