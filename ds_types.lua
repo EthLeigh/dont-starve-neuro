@@ -6,6 +6,7 @@
 ---@field TheCamera Camera
 ---@field ACTIONS table<string, table>
 ---@field TheSim TheSim
+---@field GetAllRecipes fun(): table<string, Recipe>
 
 -- Common Classes
 
@@ -25,6 +26,7 @@
 ---@field Transform Transform
 ---@field components table<string, table>
 ---@field DoPeriodicTask fun(self: Player, duration: number, callback: function)
+---@field DoTaskInTime fun(self: Player, duration: number, callback: function)
 
 ---@class Player: Entity
 ---@field components PlayerComponents
@@ -40,6 +42,7 @@
 ---@class PlayerComponents
 ---@field inventory Inventory
 ---@field locomotor Locomotor
+---@field builder Builder
 
 ---@class Inventory
 ---@field itemslots ItemSlot[]
@@ -47,6 +50,11 @@
 ---@class Locomotor
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)
 ---@field GoToPoint fun(self: Locomotor, position: Vector3, action?: BufferedAction, run?: boolean)
+
+---@class Builder
+---@field CanBuild fun(self: Builder, recipe_name: string): boolean
+---@field DoBuild fun(self: Builder, recipe_name: string, point?: Vector3, rotation?: number): boolean, string
+---@field KnowsRecipe fun(self: Builder, recipe_name: string): boolean
 
 ---@class ItemSlot
 ---@field name string
@@ -63,6 +71,12 @@
 ---@field AddSuccessAction fun(callback: function)
 ---@field AddFailAction fun(callback: function)
 
+---@class Recipe
+---@field name string
+
+---@class Recipes
+---@type Recipe[]
+
 -- Global functions
 
 ---@param callback fun(inst: Player)
@@ -72,6 +86,11 @@ function AddPlayerPostInit(callback) end
 ---@param callback function
 ---@diagnostic disable-next-line: unused-local
 function AddSimPostInit(callback) end
+
+---@param class_name string
+---@param callback function
+---@diagnostic disable-next-line: unused-local
+function AddClassPostConstruct(class_name, callback) end
 
 --- Runs a `.lua` file (used in place of `import`)
 ---@param path string Relative path to the `.lua` file
