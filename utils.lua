@@ -37,7 +37,7 @@ end
 
 ---@param ent Entity
 ---@return table | nil
-Utils.GetActionForEntity = function(ent)
+function Utils.GetActionForEntity(ent)
     if ent == nil then return nil end
 
     if ent.components.pickable and ent.components.pickable:CanBePicked() then
@@ -54,7 +54,7 @@ Utils.GetActionForEntity = function(ent)
 end
 
 ---@param ent Entity
-Utils.GetBufferedActionForEntity = function(ent)
+function Utils.GetBufferedActionForEntity(ent)
     local action = Utils.GetActionForEntity(ent)
 
     if action == nil then return end
