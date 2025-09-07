@@ -8,7 +8,7 @@ function HarvestHelper.HarvestEntity(ent)
     local action = Utils.GetActionForEntity(ent)
 
     if action == nil then
-        print("[DSN] No action enum was found for entity:", ent.prefab)
+        log_info("No action enum was found for entity:", ent.prefab)
 
         return
     end
@@ -28,7 +28,7 @@ function HarvestHelper.HarvestEntities(ents)
         if (buffered_action ~= nil) then
            buf_action_queue:enqueue(buffered_action)
         else
-            print("[DSN] Unable to create a buffered action for entity:", ent.prefab)
+            log_info("Unable to create a buffered action for entity:", ent.prefab)
         end
     end
 

@@ -1,3 +1,4 @@
+modimport("logging.lua")
 modimport("harvest_helper.lua")
 modimport("movement_helper.lua")
 modimport("inventory_helper.lua")
@@ -37,7 +38,7 @@ AddSimPostInit(function()
     Camera:Snap()
 
     if (Player == nil) then
-        error("[DSN] The Player object is nil")
+        log_error("The Player object is nil")
 
         return
     end
@@ -45,7 +46,7 @@ AddSimPostInit(function()
     -- Test inventory visibility
     local items = InventoryHelper.GetHotbarItems(Player)
     for _, item_name in pairs(items) do
-        print("ITEM:", item_name)
+        log_info("ITEM:", item_name)
     end
 
     -- Test harvesting
