@@ -1,9 +1,9 @@
 modimport("logging.lua")
-modimport("crafting_helper.lua")
-modimport("harvest_helper.lua")
-modimport("movement_helper.lua")
-modimport("inventory_helper.lua")
-modimport("entity_helper.lua")
+modimport("helpers/crafting_helper.lua")
+modimport("helpers/harvest_helper.lua")
+modimport("helpers/movement_helper.lua")
+modimport("helpers/inventory_helper.lua")
+modimport("helpers/entity_helper.lua")
 modimport("constants.lua")
 
 ---@type GLOBAL
