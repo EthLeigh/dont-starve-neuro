@@ -18,7 +18,7 @@
 -- Global classes
 
 ---@class TheSim
----@field FindEntities fun(self: TheSim, x: number, y: number, z: number, radius: number, must_have_tags?: string[], can_have_tags?: string[], must_one_of_tags?: string[]): Entity[]
+---@field FindEntities fun(self: TheSim, x: number, y: number, z: number, radius: number, must_have_tags?: string[], cant_have_tags?: string[], must_have_one_of_tags?: string[]): Entity[]
 
 ---@class Entity
 ---@field name string

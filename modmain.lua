@@ -3,6 +3,7 @@ modimport("crafting_helper.lua")
 modimport("harvest_helper.lua")
 modimport("movement_helper.lua")
 modimport("inventory_helper.lua")
+modimport("entity_helper.lua")
 modimport("constants.lua")
 
 ---@type GLOBAL
@@ -55,9 +56,17 @@ AddSimPostInit(function()
     end
 
     -- Test harvesting
-    -- local x, y, z = Player.Transform:GetWorldPosition()
-    -- local nearby_harvestables = Utils.GetNearbyHarvestables(x, y, z)
+    -- local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
     -- HarvestHelper.HarvestEntities(nearby_harvestables)
+
+    -- Test animal detection
+    -- Player:DoPeriodicTask(1, function()
+    --     local nearby_animals = EntityHelper.GetNearbyAnimals()
+
+    --     for _, animal in pairs(nearby_animals) do
+    --         log_info("ANIMAL:", animal.prefab)
+    --     end
+    -- end)
 
     -- Test crafting
     -- Player:DoTaskInTime(0, function()

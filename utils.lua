@@ -3,38 +3,6 @@ Utils = {}
 modimport("constants.lua")
 modimport("action_queue.lua")
 
----@param x number
----@param y number
----@param z number
----@return Entity[]
-function Utils.GetNearbyHarvestables(x, y, z)
-    return GLOBAL.TheSim:FindEntities(
-        x,
-        y,
-        z,
-        Constants.SEARCH_RADIUS,
-        nil,
-        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player"}
-    )
-end
-
----@param x number
----@param y number
----@param z number
----@return table<string, Entity>
-function Utils.GetNearbyUniqueHarvestables(x, y, z)
-    local nearby_ents = Utils.GetNearbyHarvestables(x, y, z)
-    local nearby_unique_ents = {}
-
-    for _, ent in ipairs(nearby_ents) do
-        if (nearby_unique_ents[ent.prefab] == nil) then
-            nearby_unique_ents[ent.prefab] = ent
-        end
-    end
-
-    return nearby_unique_ents
-end
-
 ---@param ent Entity
 ---@return table | nil
 function Utils.GetActionForEntity(ent)
