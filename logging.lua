@@ -1,6 +1,6 @@
 ---@param ... any
 function log_info(...)
-    print("[DSN] " .. ...)
+    print("[DSN]", ...)
 end
 
 ---@param message any
