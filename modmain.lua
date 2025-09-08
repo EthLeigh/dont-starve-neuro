@@ -1,5 +1,6 @@
 modimport("logging.lua")
 modimport("helpers/combat_helper.lua")
+modimport("helpers/dialog_helper.lua")
 modimport("helpers/crafting_helper.lua")
 modimport("helpers/harvest_helper.lua")
 modimport("helpers/movement_helper.lua")
@@ -91,5 +92,10 @@ AddSimPostInit(function()
     --             CraftingHelper.BuildFromRecipeName(buildable.name)
     --         end
     --     end
+    -- end)
+
+    -- Test custom dialog
+    -- Player:DoTaskInTime(5, function()
+    --     DialogHelper.Speak("Oh my god, here we are!")
     -- end)
 end)

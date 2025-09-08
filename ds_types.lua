@@ -16,6 +16,12 @@
 ---@field y number
 ---@field z number
 
+---@class Color
+---@field r number
+---@field g number
+---@field b number
+---@field a number
+
 -- Global classes
 
 ---@class TheSim
@@ -45,6 +51,7 @@
 ---@field locomotor Locomotor
 ---@field builder Builder
 ---@field combat Combat
+---@field talker Talker
 
 ---@class Inventory
 ---@field itemslots ItemSlot[]
@@ -61,6 +68,9 @@
 ---@field CanBuild fun(self: Builder, recipe_name: string): boolean
 ---@field DoBuild fun(self: Builder, recipe_name: string, point?: Vector3, rotation?: number): boolean, string
 ---@field KnowsRecipe fun(self: Builder, recipe_name: string): boolean
+
+---@class Talker
+---@field Say fun(self: Talker, text: string, time: number, noanim: boolean?, force: boolean?, nobroadcast: boolean?, color: Color?)
 
 ---@class ItemSlot
 ---@field name string
