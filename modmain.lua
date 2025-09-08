@@ -1,4 +1,5 @@
 modimport("logging.lua")
+modimport("helpers/combat_helper.lua")
 modimport("helpers/crafting_helper.lua")
 modimport("helpers/harvest_helper.lua")
 modimport("helpers/movement_helper.lua")
@@ -18,6 +19,9 @@ PlayerLocomotor = nil
 ---@type Builder
 PlayerBuilder = nil
 
+---@type Combat
+PlayerCombat = nil
+
 ---@type Camera
 Camera = nil
 
@@ -25,6 +29,7 @@ AddPlayerPostInit(function(inst)
     Player = inst
     PlayerLocomotor = Player.components.locomotor
     PlayerBuilder = Player.components.builder
+    PlayerCombat = Player.components.combat
 
     -- Player.components.playercontroller:Enable(false)
 
@@ -43,10 +48,14 @@ AddSimPostInit(function()
     Camera:SetHeadingTarget(270)
     Camera:Snap()
 
-    if (Player == nil) then
+    GlobalPlayer = GLOBAL.GetPlayer()
+
+    if Player == nil and GlobalPlayer == nil then
         log_error("The Player object is nil")
 
         return
+    elseif GlobalPlayer ~= nil then
+        Player = GlobalPlayer
     end
 
     -- Test inventory visibility
@@ -59,12 +68,15 @@ AddSimPostInit(function()
     -- local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
     -- HarvestHelper.HarvestEntities(nearby_harvestables)
 
-    -- Test animal detection
+    -- Test animal detection and combat
     -- Player:DoPeriodicTask(1, function()
     --     local nearby_animals = EntityHelper.GetNearbyAnimals()
 
     --     for _, animal in pairs(nearby_animals) do
-    --         log_info("ANIMAL:", animal.prefab)
+    --         if CombatHelper.CanAttackEntity(animal) then
+    --             CombatHelper.AttackEntity(animal)
+    --             break;
+    --         end
     --     end
     -- end)
 

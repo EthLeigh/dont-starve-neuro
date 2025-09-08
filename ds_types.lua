@@ -7,6 +7,7 @@
 ---@field ACTIONS table<string, table>
 ---@field TheSim TheSim
 ---@field GetAllRecipes fun(): table<string, Recipe>
+---@field GetPlayer fun(): Player
 
 -- Common Classes
 
@@ -43,6 +44,7 @@
 ---@field inventory Inventory
 ---@field locomotor Locomotor
 ---@field builder Builder
+---@field combat Combat
 
 ---@class Inventory
 ---@field itemslots ItemSlot[]
@@ -50,6 +52,10 @@
 ---@class Locomotor
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)
 ---@field GoToPoint fun(self: Locomotor, position: Vector3, action?: BufferedAction, run?: boolean)
+
+---@class Combat
+---@field SetTarget fun(self: Combat, target: Entity)
+---@field IsValidTarget fun(self: Combat, target: Entity): boolean
 
 ---@class Builder
 ---@field CanBuild fun(self: Builder, recipe_name: string): boolean
