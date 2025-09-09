@@ -47,6 +47,9 @@
 ---@field GetWorldPosition fun(): number, number, number
 
 ---@class PlayerComponents
+---@field health Health
+---@field hunger Hunger
+---@field sanity Sanity
 ---@field inventory Inventory
 ---@field locomotor Locomotor
 ---@field builder Builder
@@ -68,6 +71,19 @@
 ---@field CanBuild fun(self: Builder, recipe_name: string): boolean
 ---@field DoBuild fun(self: Builder, recipe_name: string, point?: Vector3, rotation?: number): boolean, string
 ---@field KnowsRecipe fun(self: Builder, recipe_name: string): boolean
+
+---@class Health
+---@field GetPercent fun(self: Health): number
+---@field IsHurt fun(self: Health): boolean
+
+---@class Hunger
+---@field GetPercent fun(self: Hunger): number
+---@field IsStarving fun(self: Hunger): boolean
+
+---@class Sanity
+---@field GetPercent fun(self: Sanity, use_penalty: boolean?): number
+---@field GetRate fun(self: Sanity): number
+---@field IsSane fun(self: Sanity): boolean
 
 ---@class Talker
 ---@field Say fun(self: Talker, text: string, time: number, noanim: boolean?, force: boolean?, nobroadcast: boolean?, color: Color?)

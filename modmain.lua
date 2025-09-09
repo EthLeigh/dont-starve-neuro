@@ -2,6 +2,7 @@ modimport("logging.lua")
 modimport("helpers/combat_helper.lua")
 modimport("helpers/dialog_helper.lua")
 modimport("helpers/crafting_helper.lua")
+modimport("helpers/player_helper.lua")
 modimport("helpers/harvest_helper.lua")
 modimport("helpers/movement_helper.lua")
 modimport("helpers/inventory_helper.lua")
@@ -13,6 +14,15 @@ GLOBAL = GLOBAL
 
 ---@type Player
 Player = nil
+
+---@type Health
+PlayerHealth = nil
+
+---@type Hunger
+PlayerHunger = nil
+
+---@type Sanity
+PlayerSanity = nil
 
 ---@type Locomotor
 PlayerLocomotor = nil
@@ -28,6 +38,9 @@ Camera = nil
 
 AddPlayerPostInit(function(inst)
     Player = inst
+    PlayerHealth = Player.components.health
+    PlayerHunger = Player.components.hunger
+    PlayerSanity = Player.components.sanity
     PlayerLocomotor = Player.components.locomotor
     PlayerBuilder = Player.components.builder
     PlayerCombat = Player.components.combat
@@ -97,5 +110,23 @@ AddSimPostInit(function()
     -- Test custom dialog
     -- Player:DoTaskInTime(5, function()
     --     DialogHelper.Speak("Oh my god, here we are!")
+    -- end)
+
+    -- Test player helper
+    -- Player:DoPeriodicTask(5, function()
+    --     log_info("--- PLAYER DETAILS ---")
+
+    --     log_info("Health:", PlayerHelper.GetHealth())
+    --     log_info("Hunger:", PlayerHelper.GetHunger())
+    --     log_info("Sanity:", PlayerHelper.GetSanity())
+
+    --     log_info("Hurt:", PlayerHelper.IsHurt())
+    --     log_info("Hungry:", PlayerHelper.IsHungry())
+    --     log_info("Sane:", PlayerHelper.IsSane())
+
+    --     log_info("Hurting from starvation:", PlayerHelper.IsHurtingFromStarvation())
+    --     log_info("Sanity going down:", PlayerHelper.LosingSanity())
+
+    --     log_info("---                ---")
     -- end)
 end)
