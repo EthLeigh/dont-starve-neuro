@@ -6,6 +6,7 @@ modimport("helpers/player_helper.lua")
 modimport("helpers/harvest_helper.lua")
 modimport("helpers/movement_helper.lua")
 modimport("helpers/inventory_helper.lua")
+modimport("helpers/environment_helper.lua")
 modimport("helpers/entity_helper.lua")
 modimport("constants.lua")
 
@@ -73,10 +74,10 @@ AddSimPostInit(function()
     end
 
     -- Test inventory visibility
-    local items = InventoryHelper.GetHotbarItems(Player)
-    for _, item_name in pairs(items) do
-        log_info("ITEM:", item_name)
-    end
+    -- local items = InventoryHelper.GetHotbarItems(Player)
+    -- for _, item_name in pairs(items) do
+    --     log_info("ITEM:", item_name)
+    -- end
 
     -- Test harvesting
     -- local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
@@ -129,4 +130,11 @@ AddSimPostInit(function()
 
     --     log_info("---                ---")
     -- end)
+
+    -- Testing environment helper
+    -- log_info(EnvironmentHelper.GetGroundName())
+    -- log_info(EnvironmentHelper.GetSeason())
+    -- log_info(EnvironmentHelper.GetPrecipType())
+    -- log_info(EnvironmentHelper.GetTemperature())
+    -- log_info(EnvironmentHelper.IsFreezing())
 end)

@@ -5,9 +5,12 @@
 ---@field Vector3 fun(x: number, y: number, z: number): Vector3
 ---@field TheCamera Camera
 ---@field ACTIONS table<string, table>
+---@field GROUND table<string, table>
 ---@field TheSim TheSim
 ---@field GetAllRecipes fun(): table<string, Recipe>
 ---@field GetPlayer fun(): Player
+---@field GetMap fun(): Map
+---@field GetWorld fun(): World
 
 -- Common Classes
 
@@ -27,6 +30,10 @@
 ---@class TheSim
 ---@field FindEntities fun(self: TheSim, x: number, y: number, z: number, radius: number, must_have_tags?: string[], cant_have_tags?: string[], must_have_one_of_tags?: string[]): Entity[]
 
+---@class World
+---@field components WorldComponents
+---@field ListenForEvent fun(self: World, event_name: string, callback: function)
+
 ---@class Entity
 ---@field name string
 ---@field prefab string
@@ -43,8 +50,18 @@
 ---@field SetHeadingTarget fun(self: Camera, angle: number)
 ---@field Snap function
 
+---@class Map
+---@field GetTileAtPoint fun(self: Map, x: number, y: number, z: number): string
+
 ---@class Transform
 ---@field GetWorldPosition fun(): number, number, number
+
+---@class WorldComponents
+---@field seasonmanager SeasonManager
+
+---@class SeasonManager
+---@field GetSeasonString fun(self: SeasonManager): string
+---@field preciptype string
 
 ---@class PlayerComponents
 ---@field health Health
@@ -55,6 +72,7 @@
 ---@field builder Builder
 ---@field combat Combat
 ---@field talker Talker
+---@field temperature Temperature
 
 ---@class Inventory
 ---@field itemslots ItemSlot[]
@@ -87,6 +105,10 @@
 
 ---@class Talker
 ---@field Say fun(self: Talker, text: string, time: number, noanim: boolean?, force: boolean?, nobroadcast: boolean?, color: Color?)
+
+---@class Temperature
+---@field GetCurrent fun(self: Temperature): number
+---@field IsFreezing fun(self: Temperature): boolean
 
 ---@class ItemSlot
 ---@field name string
