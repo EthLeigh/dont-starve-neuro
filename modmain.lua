@@ -8,6 +8,7 @@ modimport("helpers/movement_helper.lua")
 modimport("helpers/inventory_helper.lua")
 modimport("helpers/environment_helper.lua")
 modimport("helpers/entity_helper.lua")
+modimport("helpers/marker_helper.lua")
 modimport("constants.lua")
 
 ---@type GLOBAL
@@ -137,4 +138,14 @@ AddSimPostInit(function()
     -- log_info(EnvironmentHelper.GetPrecipType())
     -- log_info(EnvironmentHelper.GetTemperature())
     -- log_info(EnvironmentHelper.IsFreezing())
+
+    -- Test marker helper
+    -- local x, _, z = Player.Transform:GetWorldPosition()
+    -- MarkerHelper.SetMarker("home", x, z)
+
+    -- Player:DoTaskInTime(1, function()
+    --     MarkerHelper.GetMarker("home", function (markerX, markerZ)
+    --         log_info("MY HOME POSITION:", markerX, markerZ)
+    --     end)
+    -- end)
 end)

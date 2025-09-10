@@ -11,6 +11,7 @@
 ---@field GetPlayer fun(): Player
 ---@field GetMap fun(): Map
 ---@field GetWorld fun(): World
+---@field tonumber fun(value: any): number?
 
 -- Common Classes
 
@@ -29,6 +30,8 @@
 
 ---@class TheSim
 ---@field FindEntities fun(self: TheSim, x: number, y: number, z: number, radius: number, must_have_tags?: string[], cant_have_tags?: string[], must_have_one_of_tags?: string[]): Entity[]
+---@field SetPersistentString fun(self: TheSim, name: string, data: any, encode: boolean?, on_save: function?)
+---@field GetPersistentString fun(self: TheSim, name: string, on_load: fun(success: boolean, data: string)?)
 
 ---@class World
 ---@field components WorldComponents
