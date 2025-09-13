@@ -27,6 +27,18 @@ function EntityHelper.GetNearbyMonsters()
 end
 
 ---@return Entity[]
+function EntityHelper.GetNearbyHostileEntities()
+    local x, y, z = Player.Transform:GetWorldPosition()
+
+    return GLOBAL.TheSim:FindEntities(
+        x, y, z,
+        Constants.SEARCH_RADIUS,
+        {"HASCOMBATCOMPONENT"},
+        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player", "structure"}
+    )
+end
+
+---@return Entity[]
 function EntityHelper.GetNearbyHarvestables()
     local x, y, z = Player.Transform:GetWorldPosition()
 
