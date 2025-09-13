@@ -3,10 +3,9 @@ InventoryHelper = {}
 
 modimport("hotbar_item.lua")
 
----@param player Player
 ---@return HotbarItem[]
-function InventoryHelper.GetHotbarItems(player)
-    local inventory = player.components.inventory
+function InventoryHelper.GetHotbarItems()
+    local inventory = Player.components.inventory
     local hotbar_items = {}
 
     for _, hotbar_item in pairs(inventory.itemslots) do
@@ -18,10 +17,9 @@ function InventoryHelper.GetHotbarItems(player)
     return hotbar_items
 end
 
----@param player Player
 ---@return table<integer, string>
-function InventoryHelper.GetHotbarItemNames(player)
-    local hotbar_items = InventoryHelper.GetHotbarItems(player)
+function InventoryHelper.GetHotbarItemNames()
+    local hotbar_items = InventoryHelper.GetHotbarItems()
     local hotbar_item_names = {}
 
     for _, hotbar_item in pairs(hotbar_items) do
@@ -29,4 +27,24 @@ function InventoryHelper.GetHotbarItemNames(player)
     end
 
     return hotbar_item_names
+end
+
+---@return HotbarItem[]
+function InventoryHelper.GetFoodItems()
+    local hotbar_items = InventoryHelper.GetHotbarItems()
+    local food_items = {}
+
+    for _, hotbar_item in pairs(hotbar_items) do
+        log_info("ITEM:", hotbar_item.name)
+
+        table.insert(food_items, hotbar_item)
+
+        if hotbar_item.item.components.edible ~= nil then
+            for name, value in pairs(hotbar_item.item.components.edible) do
+                log_info(name, value)
+            end
+        end
+    end
+
+    return food_items
 end

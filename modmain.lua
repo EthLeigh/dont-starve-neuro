@@ -9,6 +9,7 @@ modimport("helpers/inventory_helper.lua")
 modimport("helpers/environment_helper.lua")
 modimport("helpers/entity_helper.lua")
 modimport("helpers/marker_helper.lua")
+modimport("helpers/eater_helper.lua")
 modimport("constants.lua")
 
 ---@type GLOBAL
@@ -35,6 +36,9 @@ PlayerBuilder = nil
 ---@type Combat
 PlayerCombat = nil
 
+---@type Eater
+PlayerEater = nil
+
 ---@type Camera
 Camera = nil
 
@@ -46,6 +50,7 @@ AddPlayerPostInit(function(inst)
     PlayerLocomotor = Player.components.locomotor
     PlayerBuilder = Player.components.builder
     PlayerCombat = Player.components.combat
+    PlayerEater = Player.components.eater
 
     -- Player.components.playercontroller:Enable(false)
 

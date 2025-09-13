@@ -62,7 +62,7 @@
 ---@class WorldComponents
 ---@field seasonmanager SeasonManager
 
----@class SeasonManager
+---@class SeasonManager: Component
 ---@field GetSeasonString fun(self: SeasonManager): string
 ---@field preciptype string
 
@@ -74,42 +74,46 @@
 ---@field locomotor Locomotor
 ---@field builder Builder
 ---@field combat Combat
+---@field eater Eater
 ---@field talker Talker
 ---@field temperature Temperature
 
----@class Inventory
+---@class Inventory: Component
 ---@field itemslots ItemSlot[]
 
----@class Locomotor
+---@class Locomotor: Component
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)
 ---@field GoToPoint fun(self: Locomotor, position: Vector3, action?: BufferedAction, run?: boolean)
 
----@class Combat
+---@class Combat: Component
 ---@field SetTarget fun(self: Combat, target: Entity)
 ---@field IsValidTarget fun(self: Combat, target: Entity): boolean
 
----@class Builder
+---@class Builder: Component
 ---@field CanBuild fun(self: Builder, recipe_name: string): boolean
 ---@field DoBuild fun(self: Builder, recipe_name: string, point?: Vector3, rotation?: number): boolean, string
 ---@field KnowsRecipe fun(self: Builder, recipe_name: string): boolean
 
----@class Health
+---@class Health: Component
 ---@field GetPercent fun(self: Health): number
 ---@field IsHurt fun(self: Health): boolean
 
----@class Hunger
+---@class Hunger: Component
 ---@field GetPercent fun(self: Hunger): number
 ---@field IsStarving fun(self: Hunger): boolean
 
----@class Sanity
+---@class Eater: Component
+---@field Eat fun(self: Eater, food: ItemSlot)
+
+---@class Sanity: Component
 ---@field GetPercent fun(self: Sanity, use_penalty: boolean?): number
 ---@field GetRate fun(self: Sanity): number
 ---@field IsSane fun(self: Sanity): boolean
 
----@class Talker
+---@class Talker: Component
 ---@field Say fun(self: Talker, text: string, time: number, noanim: boolean?, force: boolean?, nobroadcast: boolean?, color: Color?)
 
----@class Temperature
+---@class Temperature: Component
 ---@field GetCurrent fun(self: Temperature): number
 ---@field IsFreezing fun(self: Temperature): boolean
 
@@ -120,9 +124,15 @@
 
 ---@class ItemSlotComponents
 ---@field stackable ItemStackableComponent
+---@field edible ItemEdibleComponent
 
 ---@class ItemStackableComponent
 ---@field StackSize fun(): integer
+
+---@class ItemEdibleComponent
+---@field GetHunger fun(self: ItemEdibleComponent): integer
+---@field GetSanity fun(self: ItemEdibleComponent): integer
+---@field GetHealth fun(self: ItemEdibleComponent): integer
 
 ---@class BufferedAction
 ---@field AddSuccessAction fun(callback: function)
