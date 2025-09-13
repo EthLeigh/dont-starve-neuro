@@ -35,14 +35,8 @@ function InventoryHelper.GetFoodItems()
     local food_items = {}
 
     for _, hotbar_item in pairs(hotbar_items) do
-        log_info("ITEM:", hotbar_item.name)
-
-        table.insert(food_items, hotbar_item)
-
         if hotbar_item.item.components.edible ~= nil then
-            for name, value in pairs(hotbar_item.item.components.edible) do
-                log_info(name, value)
-            end
+            table.insert(food_items, hotbar_item)
         end
     end
 
