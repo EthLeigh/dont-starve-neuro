@@ -12,6 +12,7 @@
 ---@field GetMap fun(): Map
 ---@field GetWorld fun(): World
 ---@field tonumber fun(value: any): number?
+---@field math mathlib
 
 -- Common Classes
 
@@ -35,7 +36,7 @@
 
 ---@class World
 ---@field components WorldComponents
----@field ListenForEvent fun(self: World, event_name: string, callback: function)
+---@field ListenForEvent fun(self: World, event_name: string, callback: fun(...: any))
 
 ---@class Entity
 ---@field name string
@@ -44,6 +45,12 @@
 ---@field components table<string, table>
 ---@field DoPeriodicTask fun(self: Player, duration: number, callback: function)
 ---@field DoTaskInTime fun(self: Player, duration: number, callback: function)
+
+---@class Instance
+---@field ListenForEvent fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>))
+
+---@class Component
+---@field inst Instance
 
 ---@class Player: Entity
 ---@field components PlayerComponents

@@ -1,4 +1,5 @@
 modimport("logging.lua")
+modimport("managers/trigger_manager.lua")
 modimport("helpers/combat_helper.lua")
 modimport("helpers/dialog_helper.lua")
 modimport("helpers/crafting_helper.lua")
@@ -14,6 +15,9 @@ modimport("constants.lua")
 
 ---@type GLOBAL
 GLOBAL = GLOBAL
+
+---@type World
+World = nil
 
 ---@type Player
 Player = nil
@@ -64,6 +68,7 @@ end)
 
 AddSimPostInit(function()
     Camera = GLOBAL.TheCamera
+    World = GLOBAL:GetWorld()
 
     Camera:SetControllable(false)
     Camera:SetHeadingTarget(270)
@@ -153,4 +158,6 @@ AddSimPostInit(function()
     --         log_info("MY HOME POSITION:", markerX, markerZ)
     --     end)
     -- end)
+
+    SetupTriggerEvents()
 end)
