@@ -1,7 +1,7 @@
 ---@class InventoryHelper
 InventoryHelper = {}
 
-modimport("hotbar_item.lua")
+modimport("classes/hotbar_item.lua")
 
 ---@return HotbarItem[]
 function InventoryHelper.GetHotbarItems()

@@ -1,3 +1,5 @@
+-- TODO: Match other standards (like :new and subclassing Queue)
+
 ---@class BufferedActionQueue
 ---@field player Player
 ---@field queue table<integer, BufferedAction>

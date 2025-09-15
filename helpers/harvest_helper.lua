@@ -28,7 +28,7 @@ function HarvestHelper.HarvestEntities(ents)
         if (buffered_action ~= nil) then
            buf_action_queue:enqueue(buffered_action)
         else
-            log_info("Unable to create a buffered action for entity:", ent.prefab)
+            -- log_info("Unable to create a buffered action for entity:", ent.prefab)
         end
     end
 

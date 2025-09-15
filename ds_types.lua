@@ -12,7 +12,9 @@
 ---@field GetMap fun(): Map
 ---@field GetWorld fun(): World
 ---@field tonumber fun(value: any): number?
+---@field unpack function Type left anonymous to avoid complexity
 ---@field math mathlib
+---@field setmetatable fun(table: table, metatable: table)
 
 -- Common Classes
 
@@ -26,6 +28,9 @@
 ---@field g number
 ---@field b number
 ---@field a number
+
+---@class PeriodicTask
+---@field Cancel fun(self: PeriodicTask)
 
 -- Global classes
 
@@ -43,7 +48,7 @@
 ---@field prefab string
 ---@field Transform Transform
 ---@field components table<string, table>
----@field DoPeriodicTask fun(self: Player, duration: number, callback: function)
+---@field DoPeriodicTask fun(self: Player, duration: number, callback: function): PeriodicTask
 ---@field DoTaskInTime fun(self: Player, duration: number, callback: function)
 
 ---@class Instance

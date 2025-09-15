@@ -1,5 +1,7 @@
 modimport("logging.lua")
+modimport("classes/task.lua")
 modimport("managers/trigger_manager.lua")
+modimport("managers/task_manager.lua")
 modimport("helpers/combat_helper.lua")
 modimport("helpers/dialog_helper.lua")
 modimport("helpers/crafting_helper.lua")
@@ -158,6 +160,25 @@ AddSimPostInit(function()
     --         log_info("MY HOME POSITION:", markerX, markerZ)
     --     end)
     -- end)
+
+    -- Test TaskManager
+    -- TaskManager.StartTasks({
+    --     Task:new(TaskManager.TASK_TYPES.HARVEST, function(current_iteration, args)
+    --         log_info("DOING FIRST LOOP")
+    --         if current_iteration > 5 then
+    --             log_info("FINISHED FIRST TASK, MOVING TO THE NEXT")
+
+    --             return true
+    --         end
+
+    --         return false
+    --     end),
+    --     Task:new(TaskManager.TASK_TYPES.HARVEST, function()
+    --         log_info("HOLY SHIT DOING THE SECOND ONE")
+
+    --         return true
+    --     end),
+    -- })
 
     SetupTriggerEvents()
 end)

@@ -1,7 +1,7 @@
 Utils = {}
 
 modimport("constants.lua")
-modimport("action_queue.lua")
+modimport("classes/action_queue.lua")
 
 ---@param ent Entity
 ---@return table | nil

@@ -1,6 +1,8 @@
 ---@class EntityHelper
 EntityHelper = {}
 
+EntityHelper.GENERIC_AVOID_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO"}
+
 ---@return Entity[]
 function EntityHelper.GetNearbyAnimals()
     local x, y, z = Player.Transform:GetWorldPosition()
@@ -9,7 +11,7 @@ function EntityHelper.GetNearbyAnimals()
         x, y, z,
         Constants.SEARCH_RADIUS,
         nil,
-        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player", "structure", "monster"},
+        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster"},
         {"animal", "prey"}
     )
 end
@@ -22,7 +24,7 @@ function EntityHelper.GetNearbyMonsters()
         x, y, z,
         Constants.SEARCH_RADIUS,
         {"monster"},
-        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player", "structure"}
+        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure"}
     )
 end
 
@@ -34,10 +36,11 @@ function EntityHelper.GetNearbyHostileEntities()
         x, y, z,
         Constants.SEARCH_RADIUS,
         {"HASCOMBATCOMPONENT"},
-        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player", "structure"}
+        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure"}
     )
 end
 
+-- TODO: Currently includes non-harvestable entities like trees, etc.
 ---@return Entity[]
 function EntityHelper.GetNearbyHarvestables()
     local x, y, z = Player.Transform:GetWorldPosition()
@@ -46,7 +49,7 @@ function EntityHelper.GetNearbyHarvestables()
         x, y, z,
         Constants.SEARCH_RADIUS,
         nil,
-        {"FX", "NOCLICK", "DECOR", "INLIMBO", "player", "structure", "monster", "prey", "animal"}
+        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE"}
     )
 end
 
