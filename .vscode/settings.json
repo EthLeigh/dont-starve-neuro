@@ -1,0 +1,10 @@
+{
+  "eslint.useFlatConfig": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.workingDirectories": [
+    { "directory": "bridge", "changeProcessCWD": true }
+  ],
+  "typescript.tsdk": "bridge/node_modules/typescript/lib",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}
