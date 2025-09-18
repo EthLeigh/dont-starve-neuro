@@ -1,5 +1,11 @@
+import type { JSONSchema } from 'zod/v4/core';
 import type { GAME_NAME } from '../utils/constants.js';
-import type { Action } from './actions.js';
+
+export type OutgoingAction = {
+  name: string;
+  description: string;
+  schema: JSONSchema.JSONSchema | undefined;
+};
 
 export type StartupMessage = {
   command: 'startup';
@@ -19,7 +25,7 @@ export type RegisterActionMessage = {
   command: 'actions/register';
   game: typeof GAME_NAME;
   data: {
-    actions: Action[];
+    actions: OutgoingAction[];
   };
 };
 

@@ -1,13 +1,24 @@
+import type { JSONSchema } from 'zod/v4/core';
 import type {
   ActionResultMessage,
   ContextMessage,
   ForceActionMessage,
+  OutgoingAction,
   RegisterActionMessage,
   StartupMessage,
   UnregisterActionMessage,
 } from '../types/outgoingMessages.js';
 import { GAME_NAME } from '../utils/constants.js';
-import type { Action } from '../types/actions.js';
+
+export const createOutgoingAction = (
+  name: string,
+  description: string,
+  schema: JSONSchema.JSONSchema | undefined = undefined,
+): OutgoingAction => ({
+  name,
+  description,
+  schema,
+});
 
 export const createStartupMessage = (): StartupMessage => ({
   command: 'startup',
@@ -23,7 +34,7 @@ export const createContextMessage = (message: string, silent: boolean): ContextM
   },
 });
 
-export const createRegisterActionMessage = (actions: Action[]): RegisterActionMessage => ({
+export const createRegisterActionMessage = (actions: OutgoingAction[]): RegisterActionMessage => ({
   command: 'actions/register',
   game: GAME_NAME,
   data: {
