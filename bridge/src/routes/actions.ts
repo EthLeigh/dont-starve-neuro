@@ -32,6 +32,8 @@ const ResultRequestSchema = z.object({
 type ResultRequest = z.infer<typeof ResultRequestSchema>;
 
 const actions: FastifyPluginAsync = async (app) => {
+  // TODO: Create an endpoint to fetch all queued IncomingActions
+
   app.get('/register-all', async () => {
     const contextMessage = createRegisterActionMessage(allActions);
 

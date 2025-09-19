@@ -14,6 +14,7 @@ modimport("helpers/entity_helper.lua")
 modimport("helpers/marker_helper.lua")
 modimport("helpers/eater_helper.lua")
 modimport("constants.lua")
+modimport("bridge.lua")
 
 ---@type GLOBAL
 GLOBAL = GLOBAL
@@ -181,4 +182,8 @@ AddSimPostInit(function()
     -- })
 
     SetupTriggerEvents()
+
+    Player:DoPeriodicTask(1, function()
+        ApiBridge.GetIncomingActions()
+    end)
 end)
