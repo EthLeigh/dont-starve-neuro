@@ -17,8 +17,6 @@ export const initWs = async (): Promise<void> => {
     });
 
     ws.on('message', (data) => {
-      logger.info(`Received data from Websocket: ${data.toString()}`);
-
       if (!Buffer.isBuffer(data)) {
         throw new Error('Received an action as something other than a buffer');
       }
@@ -37,6 +35,8 @@ export const initWs = async (): Promise<void> => {
       if (!parsedData.success) {
         throw new Error('Failed to parse incoming action object', { cause: parsedData.error });
       }
+
+      logger.debug(`Received data from Websocket: ${parsedData}`);
 
       handleNewIncomingAction(parsedData.data);
     });
