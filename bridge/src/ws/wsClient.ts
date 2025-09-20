@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 import { env } from '../env.js';
 import { IncomingActionSchema } from '../types/incomingMessageTypes.js';
 import { handleNewIncomingAction } from '../state/pendingIncomingAction.js';
+import { logger } from '../server.js';
 
 let ws: WebSocket;
 
@@ -10,14 +11,16 @@ export const initWs = async (): Promise<void> => {
 
   return new Promise<void>((resolve, reject) => {
     ws.on('open', () => {
-      console.info('Connected to Neuro API WebSocket');
+      logger.info('Connected to Neuro API WebSocket');
 
       resolve();
     });
 
     ws.on('message', (data) => {
+      logger.info(`Received data from Websocket: ${data.toString()}`);
+
       if (!Buffer.isBuffer(data)) {
-        return console.error('Received an action as something other than a buffer');
+        throw new Error('Received an action as something other than a buffer');
       }
 
       const dataString = data.toString('utf8');
@@ -26,13 +29,13 @@ export const initWs = async (): Promise<void> => {
       try {
         dataObject = JSON.parse(dataString);
       } catch (e) {
-        return console.error('Failed to parse incoming action string', e);
+        throw new Error('Failed to parse incoming action string', { cause: e });
       }
 
       const parsedData = IncomingActionSchema.safeParse(dataObject);
 
       if (!parsedData.success) {
-        return console.error('Failed to parse incoming action object', parsedData.error);
+        throw new Error('Failed to parse incoming action object', { cause: parsedData.error });
       }
 
       handleNewIncomingAction(parsedData.data);
@@ -45,7 +48,7 @@ export const initWs = async (): Promise<void> => {
 export const sendMessage = async (payload: unknown): Promise<void> => {
   if (ws) {
     if (ws.readyState === WebSocket.CLOSED) {
-      console.error('WebSocket connection has been closed, attempting to reconnect...');
+      logger.error('WebSocket connection has been closed, attempting to reconnect...');
 
       try {
         await initWs();

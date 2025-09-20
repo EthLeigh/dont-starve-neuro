@@ -10,9 +10,12 @@ import z from 'zod';
 import { schemaToJsonSchema } from '../utils/zodUtil.js';
 import allActions from '../constants/actionConstants.js';
 import {
+  clearPendingIncomingAction,
   consumePendingIncomingAction,
+  getPendingIncomingAction,
   hasSentPendingIncomingAction,
 } from '../state/pendingIncomingAction.js';
+import { logger } from '../server.js';
 
 const SendContextRequestSchema = z.object({
   message: z.string(),
@@ -29,7 +32,6 @@ const ForceRequestSchema = z.object({
 type ForceRequest = z.infer<typeof ForceRequestSchema>;
 
 const ResultRequestSchema = z.object({
-  id: z.string(),
   success: z.boolean(),
   message: z.string().optional(),
 });
@@ -49,7 +51,7 @@ const actions: FastifyPluginAsync = async (app) => {
   });
 
   app.post(
-    '/send-context',
+    '/context',
     {
       schema: {
         body: schemaToJsonSchema(SendContextRequestSchema),
@@ -96,12 +98,21 @@ const actions: FastifyPluginAsync = async (app) => {
       },
     },
     async (req) => {
-      const requestForceAction = req.body as ResultRequest;
+      const actionResult = req.body as ResultRequest;
+      const pendingIncomingAction = getPendingIncomingAction();
+
+      if (!pendingIncomingAction) {
+        logger.error('Failed to send action result as there is no pending action');
+
+        return;
+      }
+
+      clearPendingIncomingAction();
 
       const contextMessage = createActionResultMessage(
-        requestForceAction.id,
-        requestForceAction.success,
-        requestForceAction.message,
+        pendingIncomingAction.data.id,
+        actionResult.success,
+        actionResult.message,
       );
 
       await sendMessage(contextMessage);
