@@ -14,6 +14,7 @@ export default tseslint.config(
       },
     },
     extends: [js.configs.recommended, ...tseslint.configs.recommended, prettier],
+    // TODO: Make these rules not so strict and let TypeScript infer what it can
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: false }],

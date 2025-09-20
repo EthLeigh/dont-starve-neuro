@@ -25,12 +25,15 @@ export const createStartupMessage = (): StartupMessage => ({
   game: GAME_NAME,
 });
 
-export const createContextMessage = (message: string, silent: boolean): ContextMessage => ({
+export const createContextMessage = (
+  message: string,
+  silent: boolean | undefined,
+): ContextMessage => ({
   command: 'context',
   game: GAME_NAME,
   data: {
     message,
-    silent,
+    silent: silent || false,
   },
 });
 

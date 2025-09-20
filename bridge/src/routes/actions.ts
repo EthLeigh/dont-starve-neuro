@@ -9,10 +9,11 @@ import {
 import z from 'zod';
 import { schemaToJsonSchema } from '../utils/zod.js';
 import allActions from '../constants/actions.js';
+import { consumePendingIncomingAction } from '../state/pendingIncomingAction.js';
 
 const SendContextRequestSchema = z.object({
   message: z.string(),
-  silent: z.boolean().default(false),
+  silent: z.boolean().optional(),
 });
 type SendContextRequest = z.infer<typeof SendContextRequestSchema>;
 
@@ -32,7 +33,7 @@ const ResultRequestSchema = z.object({
 type ResultRequest = z.infer<typeof ResultRequestSchema>;
 
 const actions: FastifyPluginAsync = async (app) => {
-  // TODO: Create an endpoint to fetch all queued IncomingActions
+  app.get('/retrieve-incoming', async () => consumePendingIncomingAction());
 
   app.get('/register-all', async () => {
     const contextMessage = createRegisterActionMessage(allActions);

@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import { env } from '../env.js';
-import { requestActionQueue } from '../server.js';
 import { IncomingActionSchema } from '../types/incomingMessages.js';
+import { handleNewIncomingAction } from '../state/pendingIncomingAction.js';
 
 let ws: WebSocket;
 
@@ -35,7 +35,7 @@ export const initWs = async (): Promise<void> => {
         return console.error('Failed to parse incoming action object', parsedData.error);
       }
 
-      requestActionQueue.enqueue(parsedData.data);
+      handleNewIncomingAction(parsedData.data);
     });
 
     ws.on('error', reject);
