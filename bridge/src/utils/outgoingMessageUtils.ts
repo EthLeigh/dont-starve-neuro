@@ -7,8 +7,8 @@ import type {
   RegisterActionMessage,
   StartupMessage,
   UnregisterActionMessage,
-} from '../types/outgoingMessages.js';
-import { GAME_NAME } from '../utils/constants.js';
+} from '../types/outgoingMessageTypes.js';
+import { GAME_NAME } from '../constants/constants.js';
 
 export const createOutgoingAction = (
   name: string,

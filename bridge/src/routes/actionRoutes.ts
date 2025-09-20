@@ -5,11 +5,14 @@ import {
   createContextMessage,
   createForceActionMessage,
   createRegisterActionMessage,
-} from '../utils/outgoingMessages.js';
+} from '../utils/outgoingMessageUtils.js';
 import z from 'zod';
-import { schemaToJsonSchema } from '../utils/zod.js';
-import allActions from '../constants/actions.js';
-import { consumePendingIncomingAction } from '../state/pendingIncomingAction.js';
+import { schemaToJsonSchema } from '../utils/zodUtil.js';
+import allActions from '../constants/actionConstants.js';
+import {
+  consumePendingIncomingAction,
+  hasSentPendingIncomingAction,
+} from '../state/pendingIncomingAction.js';
 
 const SendContextRequestSchema = z.object({
   message: z.string(),
@@ -33,7 +36,11 @@ const ResultRequestSchema = z.object({
 type ResultRequest = z.infer<typeof ResultRequestSchema>;
 
 const actions: FastifyPluginAsync = async (app) => {
-  app.get('/retrieve-incoming', async () => consumePendingIncomingAction());
+  app.get('/retrieve-incoming', async () => {
+    if (hasSentPendingIncomingAction()) return;
+
+    consumePendingIncomingAction();
+  });
 
   app.get('/register-all', async () => {
     const contextMessage = createRegisterActionMessage(allActions);

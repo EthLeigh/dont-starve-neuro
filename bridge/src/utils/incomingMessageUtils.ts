@@ -1,4 +1,4 @@
-import type { IncomingAction, IncomingActionData } from '../types/incomingMessages.js';
+import type { IncomingAction, IncomingActionData } from '../types/incomingMessageTypes.js';
 
 export const createIncomingAction = (
   command: string,

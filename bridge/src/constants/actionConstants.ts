@@ -1,8 +1,8 @@
 import z from 'zod';
-import { createOutgoingAction } from '../utils/outgoingMessages.js';
-import type { OutgoingAction } from '../types/outgoingMessages.js';
+import { createOutgoingAction } from '../utils/outgoingMessageUtils.js';
+import type { OutgoingAction } from '../types/outgoingMessageTypes.js';
 import type { JSONSchema } from 'zod/v4/core';
-import { schemaToJsonSchema } from '../utils/zod.js';
+import { schemaToJsonSchema } from '../utils/zodUtil.js';
 
 const toJSONSchema = (schema: z.ZodObject): JSONSchema.JSONSchema => {
   const jsonSchema = schemaToJsonSchema(schema);

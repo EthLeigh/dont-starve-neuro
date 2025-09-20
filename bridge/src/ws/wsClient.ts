@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { env } from '../env.js';
-import { IncomingActionSchema } from '../types/incomingMessages.js';
+import { IncomingActionSchema } from '../types/incomingMessageTypes.js';
 import { handleNewIncomingAction } from '../state/pendingIncomingAction.js';
 
 let ws: WebSocket;

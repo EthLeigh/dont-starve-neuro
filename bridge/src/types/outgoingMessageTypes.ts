@@ -1,5 +1,5 @@
 import type { JSONSchema } from 'zod/v4/core';
-import type { GAME_NAME } from '../utils/constants.js';
+import type { GAME_NAME } from '../constants/constants.js';
 
 export type OutgoingAction = {
   name: string;
