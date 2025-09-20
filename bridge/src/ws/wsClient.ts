@@ -43,14 +43,26 @@ export const initWs = async (): Promise<void> => {
 };
 
 export const sendMessage = async (payload: unknown): Promise<void> => {
-  if (!ws || ws.readyState !== WebSocket.OPEN) {
-    throw new Error('Neuro API WebSocket not ready');
+  if (ws) {
+    if (ws.readyState === WebSocket.CLOSED) {
+      console.error('WebSocket connection has been closed, attempting to reconnect...');
+
+      try {
+        await initWs();
+      } catch (e) {
+        throw new Error('Failed to initialize WebSocket connection', { cause: e });
+      }
+    } else if (ws.readyState !== WebSocket.OPEN) {
+      throw new Error('WebSocket connection is not ready');
+    }
+  } else {
+    throw new Error('WebSocket connection has not been initialized');
   }
 
   return new Promise<void>((resolve, reject) => {
     ws.send(JSON.stringify(payload), (err) => {
       if (err) {
-        reject(new Error('An error occurred with the Neuro API WebSocket', { cause: err }));
+        reject(new Error('An error occurred with the WebSocket', { cause: err }));
       } else {
         resolve();
       }
