@@ -56,16 +56,16 @@ export const createUnregisterActionMessage = (actionNames: string[]): Unregister
 export const createForceActionMessage = (
   query: string,
   actionNames: string[],
-  ephemeralContext: boolean,
+  ephemeralContext: boolean | undefined,
   state: string | undefined,
 ): ForceActionMessage => ({
   command: 'actions/force',
   game: GAME_NAME,
   data: {
-    state,
     query,
-    ephemeral_context: ephemeralContext,
     action_names: actionNames,
+    ephemeral_context: ephemeralContext,
+    state,
   },
 });
 

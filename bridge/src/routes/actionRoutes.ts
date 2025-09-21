@@ -17,6 +17,11 @@ import {
 } from '../state/pendingIncomingAction.js';
 import { logger } from '../server.js';
 
+const SendRegisterRequestSchema = z.object({
+  actionNames: z.array(z.string()),
+});
+type SendRegisterRequest = z.infer<typeof SendRegisterRequestSchema>;
+
 const SendContextRequestSchema = z.object({
   message: z.string(),
   silent: z.boolean().optional(),
@@ -26,7 +31,7 @@ type SendContextRequest = z.infer<typeof SendContextRequestSchema>;
 const ForceRequestSchema = z.object({
   query: z.string(),
   actionNames: z.array(z.string()),
-  ephemeralContext: z.boolean().default(true),
+  ephemeralContext: z.boolean().optional(),
   state: z.string().optional(),
 });
 type ForceRequest = z.infer<typeof ForceRequestSchema>;
@@ -49,6 +54,25 @@ const actions: FastifyPluginAsync = async (app) => {
 
     await sendMessage(contextMessage);
   });
+
+  app.post(
+    '/register',
+    {
+      schema: {
+        body: schemaToJsonSchema(SendContextRequestSchema),
+      },
+    },
+    async (req) => {
+      const { actionNames: actionNamesToRegister } = req.body as SendRegisterRequest;
+      const actionsToRegister = allActions.filter((action) =>
+        actionNamesToRegister.includes(action.name),
+      );
+
+      const contextMessage = createRegisterActionMessage(actionsToRegister);
+
+      await sendMessage(contextMessage);
+    },
+  );
 
   app.post(
     '/context',
