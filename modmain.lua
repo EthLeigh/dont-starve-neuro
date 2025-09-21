@@ -13,8 +13,11 @@ modimport("helpers/environment_helper.lua")
 modimport("helpers/entity_helper.lua")
 modimport("helpers/marker_helper.lua")
 modimport("helpers/eater_helper.lua")
-modimport("constants.lua")
-modimport("bridge.lua")
+modimport("helpers/api_bridge_helper.lua")
+modimport("constants/game.lua")
+modimport("constants/api_bridge.lua")
+modimport("constants/api_actions.lua")
+modimport("api_bridge.lua")
 
 ---@type GLOBAL
 GLOBAL = GLOBAL
@@ -48,6 +51,10 @@ PlayerEater = nil
 
 ---@type Camera
 Camera = nil
+
+AddClassPostConstruct("screens/mainscreen", function()
+    ApiBridge.HandleSendStartup()
+end)
 
 AddPlayerPostInit(function(inst)
     Player = inst
@@ -184,6 +191,9 @@ AddSimPostInit(function()
     SetupTriggerEvents()
 
     Player:DoPeriodicTask(1, function()
-        ApiBridge.GetIncomingActions()
+        ApiBridge.GetPendingActions()
     end)
+
+    -- Testing only (need to send valid actions only not all)
+    ApiBridge.HandleSendRegisterAll()
 end)

@@ -1,6 +1,5 @@
 Utils = {}
 
-modimport("constants.lua")
 modimport("classes/action_queue.lua")
 
 ---@param ent Entity

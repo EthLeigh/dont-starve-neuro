@@ -9,7 +9,7 @@ function EntityHelper.GetNearbyAnimals()
 
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
-        Constants.SEARCH_RADIUS,
+        GameConstants.SEARCH_RADIUS,
         nil,
         {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster"},
         {"animal", "prey"}
@@ -22,7 +22,7 @@ function EntityHelper.GetNearbyMonsters()
 
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
-        Constants.SEARCH_RADIUS,
+        GameConstants.SEARCH_RADIUS,
         {"monster"},
         {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure"}
     )
@@ -34,7 +34,7 @@ function EntityHelper.GetNearbyHostileEntities()
 
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
-        Constants.SEARCH_RADIUS,
+        GameConstants.SEARCH_RADIUS,
         {"HASCOMBATCOMPONENT"},
         {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure"}
     )
@@ -47,7 +47,7 @@ function EntityHelper.GetNearbyHarvestables()
 
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
-        Constants.SEARCH_RADIUS,
+        GameConstants.SEARCH_RADIUS,
         nil,
         {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE"}
     )
