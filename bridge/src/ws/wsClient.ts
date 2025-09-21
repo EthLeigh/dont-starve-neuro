@@ -36,7 +36,7 @@ export const initWs = async (): Promise<void> => {
         throw new Error('Failed to parse incoming action object', { cause: parsedData.error });
       }
 
-      logger.debug(`Received data from Websocket: ${parsedData}`);
+      logger.debug({ data: parsedData.data }, 'Received data from Websocket');
 
       handleNewIncomingAction(parsedData.data);
     });
