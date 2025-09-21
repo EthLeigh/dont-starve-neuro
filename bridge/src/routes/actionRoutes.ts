@@ -38,10 +38,10 @@ const ResultRequestSchema = z.object({
 type ResultRequest = z.infer<typeof ResultRequestSchema>;
 
 const actions: FastifyPluginAsync = async (app) => {
-  app.get('/retrieve-incoming', async () => {
+  app.get('/retrieve-pending', async () => {
     if (hasSentPendingIncomingAction()) return;
 
-    consumePendingIncomingAction();
+    return consumePendingIncomingAction();
   });
 
   app.get('/register-all', async () => {
