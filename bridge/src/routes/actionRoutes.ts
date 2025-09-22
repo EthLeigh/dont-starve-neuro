@@ -59,7 +59,7 @@ const actions: FastifyPluginAsync = async (app) => {
     '/register',
     {
       schema: {
-        body: schemaToJsonSchema(SendContextRequestSchema),
+        body: schemaToJsonSchema(SendRegisterRequestSchema),
       },
     },
     async (req) => {
