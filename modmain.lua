@@ -191,7 +191,7 @@ AddSimPostInit(function()
     SetupTriggerEvents()
 
     Player:DoPeriodicTask(1, function()
-        ApiBridge.GetPendingActions()
+        ApiBridge.GetPending()
     end)
 
     -- Testing only (need to send valid actions only not all)

@@ -5,6 +5,7 @@ import {
   createContextMessage,
   createForceActionMessage,
   createRegisterActionMessage,
+  createUnregisterActionMessage,
 } from '../utils/outgoingMessageUtils.js';
 import z from 'zod';
 import { schemaToJsonSchema } from '../utils/zodUtil.js';
@@ -21,6 +22,11 @@ const SendRegisterRequestSchema = z.object({
   actionNames: z.array(z.string()),
 });
 type SendRegisterRequest = z.infer<typeof SendRegisterRequestSchema>;
+
+const SendUnregisterRequestSchema = z.object({
+  actionNames: z.array(z.string()),
+});
+type SendUnregisterRequest = z.infer<typeof SendUnregisterRequestSchema>;
 
 const SendContextRequestSchema = z.object({
   message: z.string(),
@@ -50,9 +56,9 @@ const actions: FastifyPluginAsync = async (app) => {
   });
 
   app.get('/register-all', async () => {
-    const contextMessage = createRegisterActionMessage(allActions);
+    const registerAllMessage = createRegisterActionMessage(allActions);
 
-    await sendMessage(contextMessage);
+    await sendMessage(registerAllMessage);
   });
 
   app.post(
@@ -68,9 +74,25 @@ const actions: FastifyPluginAsync = async (app) => {
         actionNamesToRegister.includes(action.name),
       );
 
-      const contextMessage = createRegisterActionMessage(actionsToRegister);
+      const registerMessage = createRegisterActionMessage(actionsToRegister);
 
-      await sendMessage(contextMessage);
+      await sendMessage(registerMessage);
+    },
+  );
+
+  app.post(
+    '/unregister',
+    {
+      schema: {
+        body: schemaToJsonSchema(SendUnregisterRequestSchema),
+      },
+    },
+    async (req) => {
+      const { actionNames: actionNamesToUnregister } = req.body as SendUnregisterRequest;
+
+      const unregisterMessage = createUnregisterActionMessage(actionNamesToUnregister);
+
+      await sendMessage(unregisterMessage);
     },
   );
 
@@ -103,14 +125,14 @@ const actions: FastifyPluginAsync = async (app) => {
     async (req) => {
       const requestForceAction = req.body as ForceRequest;
 
-      const contextMessage = createForceActionMessage(
+      const forceMessage = createForceActionMessage(
         requestForceAction.query,
         requestForceAction.actionNames,
         requestForceAction.ephemeralContext,
         requestForceAction.state,
       );
 
-      await sendMessage(contextMessage);
+      await sendMessage(forceMessage);
     },
   );
 
@@ -133,13 +155,13 @@ const actions: FastifyPluginAsync = async (app) => {
 
       clearPendingIncomingAction();
 
-      const contextMessage = createActionResultMessage(
+      const resultMessage = createActionResultMessage(
         pendingIncomingAction.data.id,
         actionResult.success,
         actionResult.message,
       );
 
-      await sendMessage(contextMessage);
+      await sendMessage(resultMessage);
     },
   );
 };
