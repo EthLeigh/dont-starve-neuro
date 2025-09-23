@@ -19,12 +19,12 @@ function EnvironmentHelper.GetSeason()
     return seasonManager:GetSeasonString()
 end
 
----@return string
-function EnvironmentHelper.GetPrecipType()
+---@return boolean
+function EnvironmentHelper.IsRaining()
     local world = GLOBAL.GetWorld()
     local seasonManager = world.components.seasonmanager
 
-    return seasonManager.preciptype
+    return seasonManager.precip or false
 end
 
 ---@return number

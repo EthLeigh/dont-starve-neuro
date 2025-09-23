@@ -13,20 +13,22 @@ function EaterHelper.GetBestFoodInInventory()
     ---@type HotbarItem[]
     local safe_food_items = {}
 
-    for _, food_item in pairs(food_items) do
+    for _, food_item in ipairs(food_items) do
         local food_edible = food_item.edible
 
-        if food_edible and food_edible:GetHealth() >= 0 and food_edible:GetHunger() > 0 and food_edible:GetSanity() >= 0 then
+        if food_edible and food_item.is_perishable and food_edible:GetHealth() >= 0 and food_edible:GetHunger() > 0 and food_edible:GetSanity() >= 0 then
             table.insert(safe_food_items, food_item)
         end
     end
 
+    ---@type HotbarItem | nil
     local good_food_item = nil
 
-    for _, food_item in pairs(safe_food_items) do
+    for _, food_item in ipairs(safe_food_items) do
         local food_edible = food_item.edible
+        local good_food_edible = good_food_item ~= nil and good_food_item.edible or nil
 
-        if not good_food_item or (food_edible and good_food_item:GetHunger() < food_edible:GetHunger()) then
+        if not good_food_item or (good_food_edible and food_edible and good_food_edible:GetHunger() < food_edible:GetHunger()) then
             good_food_item = food_item
         end
     end
@@ -34,17 +36,17 @@ function EaterHelper.GetBestFoodInInventory()
     return good_food_item
 end
 
----@return boolean "Successfully ate the most optimal food in the inventory"
+---@return string | nil "The name of the food that was eaten or nil if none was found"
 function EaterHelper.EatBestFoodInInventory()
     local best_food_item = EaterHelper.GetBestFoodInInventory()
 
     if not best_food_item then
         log_info("No food items found in the hotbar to eat")
 
-        return false
+        return nil
     end
 
     EaterHelper.EatFood(best_food_item.item)
 
-    return true
+    return best_food_item.item.name
 end

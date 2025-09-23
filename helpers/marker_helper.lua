@@ -18,14 +18,15 @@ end
 --- Loads a saved position as a persistent string by it's name
 ---@param name string
 ---@param on_done fun(x: number, z: number)
-function MarkerHelper.GetMarker(name, on_done)
+---@param on_error function
+function MarkerHelper.GetMarker(name, on_done, on_error)
     local waypoint_name = name .. SAVE_NAME_SUFFIX
 
     GLOBAL.TheSim:GetPersistentString(waypoint_name, function(success, data)
         if not success then
             log_error("Failed to retrieve marker (" .. waypoint_name .. ") from persistent string")
 
-            return
+            return on_error()
         end
 
         local raw_position = {}

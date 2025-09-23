@@ -68,12 +68,17 @@ local function StartTask(task)
     end)
 end
 
---- This will clear the previous list of tasks
----@param tasks Task[]
-function TaskManager.StartTasks(tasks)
+-- TODO: Doesn't seem to immediately cancel the active task
+local function StopTasks()
     if TaskManager._task_loop then
         ClearTasks()
     end
+end
+
+--- This will clear the previous list of tasks
+---@param tasks Task[]
+function TaskManager.StartTasks(tasks)
+    StopTasks()
 
     for _, task in pairs(tasks) do
         TaskManager._task_queue:Push(task)
@@ -88,4 +93,8 @@ function TaskManager.StartTasks(tasks)
     end
 
     StartTask(first_task)
+end
+
+function TaskManager.StopTasks()
+    StopTasks()
 end

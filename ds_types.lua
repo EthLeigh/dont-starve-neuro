@@ -94,6 +94,7 @@
 ---@class SeasonManager: Component
 ---@field GetSeasonString fun(self: SeasonManager): string
 ---@field preciptype string
+---@field precip boolean | nil
 
 ---@class PlayerComponents
 ---@field health Health
@@ -154,6 +155,7 @@
 ---@class ItemSlotComponents
 ---@field stackable ItemStackableComponent
 ---@field edible ItemEdibleComponent
+---@field perishable ItemPerishableComponent
 
 ---@class ItemStackableComponent
 ---@field StackSize fun(): integer
@@ -162,6 +164,11 @@
 ---@field GetHunger fun(self: ItemEdibleComponent): integer
 ---@field GetSanity fun(self: ItemEdibleComponent): integer
 ---@field GetHealth fun(self: ItemEdibleComponent): integer
+
+---@class ItemPerishableComponent
+---@field IsFresh fun(self: ItemPerishableComponent): boolean
+---@field IsStale fun(self: ItemPerishableComponent): boolean
+---@field IsSpoiled fun(self: ItemPerishableComponent): boolean
 
 ---@class BufferedAction
 ---@field AddSuccessAction fun(callback: function)

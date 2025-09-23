@@ -28,6 +28,33 @@ export const eatFood = createOutgoingAction(
   'Eats the best food available in the inventory.',
 );
 
-const allActions: OutgoingAction[] = [moveToMarker, eatFood];
+export const harvestNearby = createOutgoingAction(
+  'harvest_nearby',
+  'Harvests nearby collectables until another action is called.',
+);
+
+export const getEnvironmentInfo = createOutgoingAction(
+  'get_environment_info',
+  "Retrieves information about the current floor type, season, precipitation, and if it's freezing.",
+);
+
+export const getInventory = createOutgoingAction(
+  'get_inventory',
+  'Retrieves all the items in the inventory and returns their names.',
+);
+
+export const getAvailableCrafts = createOutgoingAction(
+  'get_available_crafts',
+  'Retrieves all the available and valid crafting recipes that can be crafted.',
+);
+
+const allActions: OutgoingAction[] = [
+  moveToMarker,
+  eatFood,
+  harvestNearby,
+  getEnvironmentInfo,
+  getInventory,
+  getAvailableCrafts,
+];
 
 export default allActions;

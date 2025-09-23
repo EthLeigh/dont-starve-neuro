@@ -30,9 +30,10 @@ function Utils.GetBufferedActionForEntity(ent)
 end
 
 function Utils.GetEnumKey(enum, value)
-  for k, v in pairs(enum) do
-    if v == value then
-      return k
+    for k, v in pairs(enum) do
+        if v == value then
+            return k
+        end
     end
   end
 end
