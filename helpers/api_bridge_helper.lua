@@ -44,14 +44,10 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = message .. ", it is " .. (EnvironmentHelper.IsRaining() and "raining" or "not raining")
         message = message .. ", the season is " .. EnvironmentHelper.GetSeason()
         message = message .. " and it is " .. (EnvironmentHelper.IsFreezing() and "freezing." or "not freezing.")
-
-        ApiBridge.HandleSendResult(success, message)
     elseif name == ApiActions.GET_INVENTORY then
         local inventory_item_names = InventoryHelper.GetHotbarItemNames()
 
         message = "Your inventory items are: " .. table.concat(inventory_item_names, ", ") .. "."
-
-        ApiBridge.HandleSendResult(success, message)
     elseif name == ApiActions.GET_AVAILABLE_CRAFTS then
         local available_craftables = CraftingHelper.GetAvailableBuildables()
         local available_craftable_names = {}
@@ -62,8 +58,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
         message = "Your available craftable items/buildings are: " ..
             table.concat(available_craftable_names, ", ") .. "."
-
-        ApiBridge.HandleSendResult(success, message)
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"
