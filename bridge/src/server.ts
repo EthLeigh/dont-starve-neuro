@@ -25,11 +25,14 @@ app.addHook('preValidation', (req, _, done) => {
     return;
   }
 
+  // Breaks if a single quotation is included when parsing
+  const cleanedKey = key.replace("'", '');
+
   try {
-    const parsed = JSON.parse(key);
+    const parsed = JSON.parse(cleanedKey);
     req.body = parsed;
   } catch {
-    app.log.warn('Failed to parse a stringified request body');
+    app.log.warn({ body: req.body }, 'Failed to parse a stringified request body');
   }
 
   done();
