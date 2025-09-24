@@ -35,5 +35,4 @@ function Utils.GetEnumKey(enum, value)
             return k
         end
     end
-  end
 end
