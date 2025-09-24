@@ -58,6 +58,13 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
         message = "Your available craftable items/buildings are: " ..
             table.concat(available_craftable_names, ", ") .. "."
+    elseif name == ApiActions.GET_PLAYER_INFO then
+        message = "The current character is " .. PlayerHelper.GetName()
+        message = message .. ", health is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetHealth() * 100)) .. "%"
+        message = message .. ", hunger is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetHunger() * 100)) .. "%"
+        message = message .. ", sanity is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetSanity() * 100)) .. "%"
+        message = message .. ", they are " .. (PlayerHelper.IsHungry() and "hungry" or "not hungry")
+        message = message .. ", and are " .. (PlayerHelper.IsSane() and "sane." or "insane.")
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"

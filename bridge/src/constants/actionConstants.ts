@@ -38,6 +38,11 @@ export const getEnvironmentInfo = createOutgoingAction(
   "Retrieves information about the current floor type, season, precipitation, and if it's freezing.",
 );
 
+export const getPlayerInfo = createOutgoingAction(
+  'get_player_info',
+  "Retrieves information about the current character's name, health, hunger, sanity, if they're starving and if the character is sane.",
+);
+
 export const getInventory = createOutgoingAction(
   'get_inventory',
   'Retrieves all the items in the inventory and returns their names.',
@@ -53,6 +58,7 @@ const allActions: OutgoingAction[] = [
   eatFood,
   harvestNearby,
   getEnvironmentInfo,
+  getPlayerInfo,
   getInventory,
   getAvailableCrafts,
 ];

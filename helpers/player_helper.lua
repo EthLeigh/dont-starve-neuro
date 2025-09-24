@@ -1,6 +1,11 @@
 ---@class PlayerHelper
 PlayerHelper = {}
 
+---@return string
+function PlayerHelper.GetName()
+    return Player.name
+end
+
 --- Returns in percentage
 ---@return number
 function PlayerHelper.GetHealth()
