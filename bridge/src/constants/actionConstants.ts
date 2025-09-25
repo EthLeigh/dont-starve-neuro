@@ -15,7 +15,17 @@ const toJSONSchema = (schema: z.ZodObject): JSONSchema.JSONSchema => {
 
 export const moveToMarker = createOutgoingAction(
   'move_to_marker',
-  'Moves the player to a saved location.',
+  "Moves the player to a saved marker location by it's name.",
+  toJSONSchema(
+    z.strictObject({
+      marker_name: z.string(),
+    }),
+  ),
+);
+
+export const saveMarker = createOutgoingAction(
+  'save_marker',
+  'Saves the current location by name as a marker to come back to later.',
   toJSONSchema(
     z.strictObject({
       marker_name: z.string(),
@@ -65,6 +75,7 @@ export const characterSay = createOutgoingAction(
 
 const allActions: OutgoingAction[] = [
   moveToMarker,
+  saveMarker,
   eatFood,
   harvestNearby,
   getEnvironmentInfo,

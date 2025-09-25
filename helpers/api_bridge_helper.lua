@@ -22,15 +22,19 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         MarkerHelper.GetMarker(
             data["marker_name"],
             function(x, z)
-                message = "Found the marker and your character is now heading towards it"
+                message = "Loaded the marker's location and started heading towards it."
 
                 MovementHelper.MoveToPoint(x, z)
             end,
             function()
                 success = false
-                message = "Failed to find the specified marker"
+                message = "Failed to find the specified marker."
             end
         )
+    elseif name == ApiActions.SAVE_MARKER then
+        MarkerHelper.SetMarker(data["marker_name"])
+
+        message = "Successfully saved current location as '" .. data["marker_name"] .. "'."
     elseif name == ApiActions.HARVEST_NEARBY then
         local harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function()
             return true

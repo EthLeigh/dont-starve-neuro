@@ -4,11 +4,10 @@ MarkerHelper = {}
 
 local SAVE_NAME_SUFFIX = "_marker"
 
---- Saves a position as a persistent string for later use 
+--- Saves a position as a persistent string for later use
 ---@param name string
----@param x number
----@param z number
-function MarkerHelper.SetMarker(name, x, z)
+function MarkerHelper.SetMarker(name)
+    local x, _, z = Player.Transform:GetWorldPosition()
     local waypoint_name = name .. SAVE_NAME_SUFFIX
     local formatted_position = x .. ";" .. z
 

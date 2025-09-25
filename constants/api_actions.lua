@@ -3,6 +3,7 @@ ApiActions = {}
 ApiActions.EAT_FOOD = "eat_food"
 ApiActions.HARVEST_NEARBY = "harvest_nearby"
 ApiActions.MOVE_TO_MARKER = "move_to_marker"
+ApiActions.SAVE_MARKER = "save_marker"
 ApiActions.GET_ENVIRONMENT_INFO = "get_environment_info"
 ApiActions.GET_PLAYER_INFO = "get_player_info"
 ApiActions.GET_INVENTORY = "get_inventory"
