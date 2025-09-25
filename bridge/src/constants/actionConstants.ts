@@ -18,7 +18,7 @@ export const moveToMarker = createOutgoingAction(
   'Moves the player to a saved location.',
   toJSONSchema(
     z.strictObject({
-      markerName: z.string(),
+      marker_name: z.string(),
     }),
   ),
 );
