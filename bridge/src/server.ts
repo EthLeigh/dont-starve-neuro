@@ -26,7 +26,7 @@ app.addHook('preValidation', (req, _, done) => {
   }
 
   // Breaks if a single quotation is included when parsing
-  const cleanedKey = key.replace("'", '');
+  const cleanedKey = key.replace(/\\'/g, "'");
 
   try {
     const parsed = JSON.parse(cleanedKey);
@@ -42,7 +42,7 @@ app.register(formbody);
 app.register(api, { prefix: '/api' });
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).catch((e) => {
-  app.log.error('An error ocurred with Fastify', e);
+  app.log.error('An error occurred with Fastify', e);
   process.exit(1);
 });
 
