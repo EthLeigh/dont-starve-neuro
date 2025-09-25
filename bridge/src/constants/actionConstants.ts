@@ -53,6 +53,16 @@ export const getAvailableCrafts = createOutgoingAction(
   'Retrieves all the available and valid crafting recipes that can be crafted.',
 );
 
+export const characterSay = createOutgoingAction(
+  'character_say',
+  'Makes your character say something.',
+  toJSONSchema(
+    z.strictObject({
+      dialog: z.string(),
+    }),
+  ),
+);
+
 const allActions: OutgoingAction[] = [
   moveToMarker,
   eatFood,
@@ -61,6 +71,7 @@ const allActions: OutgoingAction[] = [
   getPlayerInfo,
   getInventory,
   getAvailableCrafts,
+  characterSay,
 ];
 
 export default allActions;

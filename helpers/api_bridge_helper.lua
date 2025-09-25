@@ -65,6 +65,8 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = message .. ", sanity is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetSanity() * 100)) .. "%"
         message = message .. ", they are " .. (PlayerHelper.IsHungry() and "hungry" or "not hungry")
         message = message .. ", and are " .. (PlayerHelper.IsSane() and "sane." or "insane.")
+    elseif name == ApiActions.CHARACTER_SAY then
+        DialogHelper.Speak(data["dialog"])
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"
