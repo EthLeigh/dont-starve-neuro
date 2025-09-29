@@ -63,6 +63,16 @@ export const getAvailableCrafts = createOutgoingAction(
   'Retrieves all the available and valid crafting recipes that can be crafted.',
 );
 
+export const craft = createOutgoingAction(
+  'craft',
+  'Crafts an item based on a recipe name (recipes can be retrieved through the get_available_crafts action).',
+  toJSONSchema(
+    z.strictObject({
+      recipe_name: z.string(),
+    }),
+  ),
+);
+
 export const characterSay = createOutgoingAction(
   'character_say',
   'Makes your character say something.',
@@ -82,6 +92,7 @@ const allActions: OutgoingAction[] = [
   getPlayerInfo,
   getInventory,
   getAvailableCrafts,
+  craft,
   characterSay,
 ];
 

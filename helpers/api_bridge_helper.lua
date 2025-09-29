@@ -60,8 +60,12 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             table.insert(available_craftable_names, craftable_name)
         end
 
-        message = "Your available craftable items/buildings are: " ..
-            table.concat(available_craftable_names, ", ") .. "."
+        if #available_craftable_names == 0 then
+            message = "There are no available craftables."
+        else
+            message = "Your available craftable items/buildings are: " ..
+                table.concat(available_craftable_names, ", ") .. "."
+        end
     elseif name == ApiActions.GET_PLAYER_INFO then
         message = "The current character is " .. PlayerHelper.GetName()
         message = message .. ", health is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetHealth() * 100)) .. "%"
@@ -69,6 +73,31 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = message .. ", sanity is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetSanity() * 100)) .. "%"
         message = message .. ", they are " .. (PlayerHelper.IsHungry() and "hungry" or "not hungry")
         message = message .. ", and are " .. (PlayerHelper.IsSane() and "sane." or "insane.")
+    elseif name == ApiActions.CRAFT then
+        local recipe_name = data["recipe_name"]
+        local available_craftables = CraftingHelper.GetAvailableBuildables()
+        local recipe_exists = false
+
+        for craftable_name, _ in pairs(available_craftables) do
+            if craftable_name == recipe_name then
+                recipe_exists = true
+
+                break
+            end
+        end
+
+        if recipe_exists then
+            success = CraftingHelper.BuildFromRecipeName(recipe_name)
+
+            if not success then
+                message = "Failed to craft." -- Just in case
+            else
+                message = "Successfully crafted the " .. recipe_name .. "."
+            end
+        else
+            success = false
+            message = "That is not a valid craft recipe"
+        end
     elseif name == ApiActions.CHARACTER_SAY then
         DialogHelper.Speak(data["dialog"])
     else

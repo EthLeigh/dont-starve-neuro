@@ -17,6 +17,7 @@ end
 
 --- Can only be run in a `Player:DoTaskInTime` in `AddSimPostInit`
 ---@param recipe_name string
+---@return boolean "If the craft was successful or not"
 function CraftingHelper.BuildFromRecipeName(recipe_name)
-    PlayerBuilder:DoBuild(recipe_name)
+    return PlayerBuilder:DoBuild(recipe_name)[0]
 end
