@@ -1,6 +1,7 @@
 These are some high level overviews on how the API Bridge works.
 
-> [!IMPORTANT] The reason the API Bridge exists is that Don't Starve doesn't natively support WebSocket connections, only HTTP requests and only for POST and GET.
+> [!IMPORTANT]
+> The reason the API Bridge exists is that Don't Starve doesn't natively support WebSocket connections, only HTTP requests and only for POST and GET.
 
 ## Sending Context
 
