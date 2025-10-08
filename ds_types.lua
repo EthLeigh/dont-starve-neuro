@@ -75,6 +75,7 @@
 ---@field inst Instance
 
 ---@class Player: Entity
+---@field LightWatcher LightWatcher
 ---@field components PlayerComponents
 
 ---@class Camera
@@ -87,6 +88,10 @@
 
 ---@class Transform
 ---@field GetWorldPosition fun(): number, number, number
+
+---@class LightWatcher
+---@field GetLightValue fun(self: LightWatcher): number
+---@field IsInLight fun(self: LightWatcher): boolean
 
 ---@class WorldComponents
 ---@field seasonmanager SeasonManager

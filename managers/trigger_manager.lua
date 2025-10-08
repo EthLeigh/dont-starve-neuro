@@ -21,15 +21,19 @@ local function HandlePlayerHurt(health_change_cause)
     end
 
     MovementHelper.FleeFromEntity(current_threat)
+
+    -- TODO: Add context message for getting attacked
 end
 
 --- Handles the event for when the player starts starving
 local function HandlePlayerStarve()
-    EaterHelper.EatBestFoodInInventory()
+    local food_eaten = EaterHelper.EatBestFoodInInventory()
+
+    ContextManager.HandlePlayerStarve(food_eaten)
 end
 
 --- Setup listeners for necessary events
-function SetupTriggerEvents()
+function TriggerManager.SetupTriggerEvents()
     PlayerHealth.inst:ListenForEvent("healthdelta", function(_, data)
         if data.oldpercent < data.newpercent then
             return

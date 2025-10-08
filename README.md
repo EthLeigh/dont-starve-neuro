@@ -35,15 +35,18 @@ this is for some more context over game functions/classes/enums/etc.
 
 # Context Messages
 
-None implemented currently.
+- Enter Darkness: "Your character is in the dark, run to the nearest light source or make one. Your character will lose sanity and get attacked by shadow monsters."
+- Exit Darkness/Enter Light: "Your character is no longer in the dark."
+- Starving (automatically eat available food): "Your character started starving but ate food to stay fed."
+- Starving (no food available): "Your character is starving and will take damage until you eat but there is no food in your character's inventory."
+- Stopped Starving: "Your character is no longer starving."
+- Going insane: "Your character is going insane from sanity loss."
+- Becoming sane: "Your character is no longer insane."
 
 ## Planned Context Messages
 
 - Enemy attacking: "You are being attacked by an `ENEMY_NAME`."
 - Nearby hostile/strong enemy: "There is a dangerous/hostile `ENEMY_NAME` close to you."
-- Starving: "You are starving."
-- Insanity: "Your character is going insane from sanity loss."
-- Darkness: "You are in the dark, run to the nearest light source or make one."
 - Season change: "It is now `SEASON_NAME`."
 - Rain change: "It is now **raining/not raining**."
 - Freezing change: "It is now **freezing/not freezing**."

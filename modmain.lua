@@ -1,5 +1,6 @@
 modimport("logging.lua")
 modimport("classes/task.lua")
+modimport("managers/context_manager.lua")
 modimport("managers/trigger_manager.lua")
 modimport("managers/task_manager.lua")
 modimport("helpers/combat_helper.lua")
@@ -49,6 +50,9 @@ PlayerCombat = nil
 ---@type Eater
 PlayerEater = nil
 
+---@type LightWatcher
+PlayerLightWatcher = nil
+
 ---@type Camera
 Camera = nil
 
@@ -65,6 +69,7 @@ AddPlayerPostInit(function(inst)
     PlayerBuilder = Player.components.builder
     PlayerCombat = Player.components.combat
     PlayerEater = Player.components.eater
+    PlayerLightWatcher = Player.LightWatcher
 
     -- Player.components.playercontroller:Enable(false)
 
@@ -188,7 +193,8 @@ AddSimPostInit(function()
     --     end),
     -- })
 
-    SetupTriggerEvents()
+    TriggerManager.SetupTriggerEvents()
+    ContextManager.SetupContextEvents()
 
     Player:DoPeriodicTask(1, function()
         ApiBridge.GetPending()
