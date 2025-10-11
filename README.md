@@ -42,11 +42,13 @@ this is for some more context over game functions/classes/enums/etc.
 - Stopped Starving: "Your character is no longer starving."
 - Going insane: "Your character is going insane from sanity loss."
 - Becoming sane: "Your character is no longer insane."
+- Season change: "The season is now `SEASON_NAME`."
+- Rain start: "It has started to rain."
+- Rain stop: "It stopped raining."
+- Freezing start: "Your character is freezing."
+- Freezing stop: "Your character has stopped freezing."
 
 ## Planned Context Messages
 
 - Enemy attacking: "You are being attacked by an `ENEMY_NAME`."
-- Nearby hostile/strong enemy: "There is a dangerous/hostile `ENEMY_NAME` close to you."
-- Season change: "It is now `SEASON_NAME`."
-- Rain change: "It is now **raining/not raining**."
-- Freezing change: "It is now **freezing/not freezing**."
+- Nearby hostile/strong enemy (reconsider?): "There is a dangerous/hostile `ENEMY_NAME` close to you."

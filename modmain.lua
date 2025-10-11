@@ -26,6 +26,9 @@ GLOBAL = GLOBAL
 ---@type World
 World = nil
 
+---@type SeasonManager
+SeasonManager = nil
+
 ---@type Player
 Player = nil
 
@@ -53,6 +56,9 @@ PlayerEater = nil
 ---@type LightWatcher
 PlayerLightWatcher = nil
 
+---@type Temperature
+PlayerTemperature = nil
+
 ---@type Camera
 Camera = nil
 
@@ -70,6 +76,7 @@ AddPlayerPostInit(function(inst)
     PlayerCombat = Player.components.combat
     PlayerEater = Player.components.eater
     PlayerLightWatcher = Player.LightWatcher
+    PlayerTemperature = Player.components.temperature
 
     -- Player.components.playercontroller:Enable(false)
 
@@ -84,6 +91,7 @@ end)
 AddSimPostInit(function()
     Camera = GLOBAL.TheCamera
     World = GLOBAL:GetWorld()
+    SeasonManager = World.components.seasonmanager
 
     Camera:SetControllable(false)
     Camera:SetHeadingTarget(270)

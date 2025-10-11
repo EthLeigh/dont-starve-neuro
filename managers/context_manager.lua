@@ -2,6 +2,8 @@ ContextManager = {}
 
 ContextManager._sentForDarkness = false
 
+local sentSeasonUpdate = false
+
 --- Checks if the player is in/leaving darkness and sends context
 local function HandleCheckPlayerEnterDarkness()
     if PlayerLightWatcher:IsInLight() and ContextManager._sentForDarkness then
@@ -41,6 +43,38 @@ local function HandlePlayerGoSane()
     ApiBridge.HandleSendContext("Your character is no longer insane.", true)
 end
 
+--- Handles the event for when the season changes (to winter/summer)
+local function HandleSeasonChange()
+    -- Since event is triggered automatically when entering a world, we ignore the first event
+    if not sentSeasonUpdate then
+        sentSeasonUpdate = true
+
+        return
+    end
+
+    ApiBridge.HandleSendContext("The season is now " .. SeasonManager:GetSeasonString() .. ".")
+end
+
+--- Handles the event for when the rain starts
+local function HandleRainStart()
+    ApiBridge.HandleSendContext("It has started to rain.", true)
+end
+
+--- Handles the event for when the rain stops
+local function HandleRainStop()
+    ApiBridge.HandleSendContext("It has stopped raining.", true)
+end
+
+--- Handles the event for when the rain starts
+local function HandleFreezingStart()
+    ApiBridge.HandleSendContext("Your character is freezing.")
+end
+
+--- Handles the event for when the rain stops
+local function HandleFreezingStop()
+    ApiBridge.HandleSendContext("Your character has stopped freezing.", true)
+end
+
 --- Setup listeners for necessary events
 function ContextManager.SetupContextEvents()
     Player:DoPeriodicTask(3, HandleCheckPlayerEnterDarkness)
@@ -49,4 +83,11 @@ function ContextManager.SetupContextEvents()
 
     PlayerSanity.inst:ListenForEvent("goinsane", HandlePlayerGoInsane)
     PlayerSanity.inst:ListenForEvent("gosane", HandlePlayerGoSane)
+
+    SeasonManager.inst:ListenForEvent("seasonChange", HandleSeasonChange)
+    SeasonManager.inst:ListenForEvent("rainstart", HandleRainStart)
+    SeasonManager.inst:ListenForEvent("rainstop", HandleRainStop)
+
+    PlayerTemperature.inst:ListenForEvent("startfreezing", HandleFreezingStart)
+    PlayerTemperature.inst:ListenForEvent("stopfreezing", HandleFreezingStop)
 end
