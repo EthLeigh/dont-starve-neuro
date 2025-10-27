@@ -18,7 +18,7 @@ export const initWs = async (): Promise<void> => {
 
     ws.on('message', (data) => {
       if (!Buffer.isBuffer(data)) {
-        throw new Error('Received an action as something other than a buffer');
+        throw new TypeError('Received an action as something other than a buffer');
       }
 
       const dataString = data.toString('utf8');
@@ -36,7 +36,7 @@ export const initWs = async (): Promise<void> => {
         throw new Error('Failed to parse incoming action object', { cause: parsedData.error });
       }
 
-      logger.debug({ data: parsedData.data }, 'Received data from Websocket');
+      logger.info({ data: parsedData.data }, 'Received data from Websocket');
 
       handleNewIncomingAction(parsedData.data);
     });
