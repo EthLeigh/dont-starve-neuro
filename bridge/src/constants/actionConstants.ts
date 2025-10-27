@@ -88,6 +88,11 @@ export const getPerksAndQuirks = createOutgoingAction(
   "Returns the current character's perks and quirks.",
 );
 
+export const goToLightSource = createOutgoingAction(
+  'go_to_light_source',
+  'Runs to the nearest light source.',
+);
+
 const allActions: OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -100,6 +105,7 @@ const allActions: OutgoingAction[] = [
   craft,
   characterSay,
   getPerksAndQuirks,
+  goToLightSource,
 ];
 
 export default allActions;

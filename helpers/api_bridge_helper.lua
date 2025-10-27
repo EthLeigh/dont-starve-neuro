@@ -109,6 +109,23 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = "You are playing as " ..
             GLOBAL.STRINGS.CHARACTER_NAMES[PlayerName] .. ". Their traits are: " .. character_desc
         success = true
+    elseif name == ApiActions.GO_TO_LIGHT_SOURCE then
+        local light_sources = EntityHelper.GetNearbyLightSources()
+
+        if #light_sources == 0 then
+            success = false
+            message = "Failed to find a nearby light source"
+        else
+            local light_source = light_sources[1]
+            local x, _, z = light_source.Transform:GetWorldPosition()
+            local light_radius = light_source.components.firefx.current_radius
+
+            -- Offset to avoid collision and endless running
+            MovementHelper.MoveToPoint(x, z + (light_radius / 2))
+
+            success = true
+            message = "Successfully moved toward nearest light source"
+        end
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"

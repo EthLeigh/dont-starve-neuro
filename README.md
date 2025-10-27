@@ -24,10 +24,10 @@ this is for some more context over game functions/classes/enums/etc.
 - Craft - `craft`: Attempts to craft a recipe by name. Recipe names can be fetched with `get_available_crafts`.
 - Character say - `character_say`: Makes the character say custom dialog.
 - Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs).
+- Go to light source - `go_to_light_source`: Runs to the nearest light source.
 
 ## Planned Actions
 
-- Go to light source - `go_to_light_source`: Runs to the nearest light source or crafts one (maybe not craft).
 - Get all markers - `get_all_markers`: Returns all saved markers.
 - Attack nearby - `attack_nearby`: Attacks the nearest entity, but prioritizes enemies.
 - Get goal - `get_goal`: Returns a general goal for Neuro to follow and will internally keep track of her progress. The goals will increment in (hardcoded) steps. For example: "Make a campfire" -> "Collect farmable food" -> etc.

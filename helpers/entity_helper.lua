@@ -1,7 +1,7 @@
 ---@class EntityHelper
 EntityHelper = {}
 
-EntityHelper.GENERIC_AVOID_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO"}
+EntityHelper.GENERIC_AVOID_TAGS = { "FX", "NOCLICK", "DECOR", "INLIMBO" }
 
 ---@return Entity[]
 function EntityHelper.GetNearbyAnimals()
@@ -11,8 +11,8 @@ function EntityHelper.GetNearbyAnimals()
         x, y, z,
         GameConstants.SEARCH_RADIUS,
         nil,
-        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster"},
-        {"animal", "prey"}
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster" },
+        { "animal", "prey" }
     )
 end
 
@@ -23,8 +23,8 @@ function EntityHelper.GetNearbyMonsters()
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
-        {"monster"},
-        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure"}
+        { "monster" },
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure" }
     )
 end
 
@@ -35,8 +35,8 @@ function EntityHelper.GetNearbyHostileEntities()
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
-        {"HASCOMBATCOMPONENT"},
-        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure"}
+        { "HASCOMBATCOMPONENT" },
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure" }
     )
 end
 
@@ -49,11 +49,11 @@ function EntityHelper.GetNearbyHarvestables()
         x, y, z,
         GameConstants.SEARCH_RADIUS,
         nil,
-        {GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE"}
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
     )
 end
 
----@return table<string, Entity>
+---@return table<string, Entity[]>
 function EntityHelper.GetNearbyUniqueHarvestables()
     local nearby_ents = EntityHelper.GetNearbyHarvestables()
     local nearby_unique_ents = {}
@@ -65,4 +65,15 @@ function EntityHelper.GetNearbyUniqueHarvestables()
     end
 
     return nearby_unique_ents
+end
+
+---@return table<string, Entity[]>
+function EntityHelper.GetNearbyLightSources()
+    local x, y, z = Player.Transform:GetWorldPosition()
+
+    return GLOBAL.TheSim:FindEntities(
+        x, y, z,
+        GameConstants.SEARCH_RADIUS,
+        { "lightsource" }
+    )
 end
