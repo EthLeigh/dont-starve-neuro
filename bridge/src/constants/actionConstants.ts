@@ -83,6 +83,11 @@ export const characterSay = createOutgoingAction(
   ),
 );
 
+export const getPerksAndQuirks = createOutgoingAction(
+  'get_perks_and_quirks',
+  "Returns the current character's perks and quirks.",
+);
+
 const allActions: OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -94,6 +99,7 @@ const allActions: OutgoingAction[] = [
   getAvailableCrafts,
   craft,
   characterSay,
+  getPerksAndQuirks,
 ];
 
 export default allActions;

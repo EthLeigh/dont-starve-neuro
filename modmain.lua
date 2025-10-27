@@ -32,6 +32,9 @@ SeasonManager = nil
 ---@type Player
 Player = nil
 
+---@type string
+PlayerName = nil
+
 ---@type Health
 PlayerHealth = nil
 
@@ -92,6 +95,8 @@ AddSimPostInit(function()
     Camera = GLOBAL.TheCamera
     World = GLOBAL:GetWorld()
     SeasonManager = World.components.seasonmanager
+
+    PlayerName = Player.profile:GetValue("characterinthrone")
 
     Camera:SetControllable(false)
     Camera:SetHeadingTarget(270)

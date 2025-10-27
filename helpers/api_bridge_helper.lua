@@ -100,6 +100,15 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         end
     elseif name == ApiActions.CHARACTER_SAY then
         DialogHelper.Speak(data["dialog"])
+    elseif name == ApiActions.GET_PERKS_AND_QUIRKS then
+        local character_desc = GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS[PlayerName]
+        character_desc = character_desc:gsub("*", ""):gsub("%s*\n%s*(%a)", function(c)
+            return ", " .. c:gsub(" ", ""):lower()
+        end) .. "."
+
+        message = "You are playing as " ..
+            GLOBAL.STRINGS.CHARACTER_NAMES[PlayerName] .. ". Their traits are: " .. character_desc
+        success = true
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"

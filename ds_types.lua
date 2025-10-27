@@ -16,6 +16,7 @@
 ---@field math mathlib
 ---@field setmetatable fun(table: table, metatable: table)
 ---@field json json
+---@field STRINGS STRINGS
 
 -- Neuro API Classes
 
@@ -43,6 +44,12 @@
 
 ---@class PeriodicTask
 ---@field Cancel fun(self: PeriodicTask)
+
+-- Global enums/constants
+
+---@class STRINGS
+---@field CHARACTER_NAMES table<string, string>
+---@field CHARACTER_DESCRIPTIONS table<string, string>
 
 -- Global classes
 
@@ -76,7 +83,11 @@
 
 ---@class Player: Entity
 ---@field LightWatcher LightWatcher
+---@field profile Profile
 ---@field components PlayerComponents
+
+---@class Profile
+---@field GetValue fun(self: Profile, field: string): string
 
 ---@class Camera
 ---@field SetControllable fun(self: Camera, state: boolean)

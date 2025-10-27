@@ -23,13 +23,13 @@ this is for some more context over game functions/classes/enums/etc.
 - Get available crafts - `get_available_crafts`: Returns all available and valid crafting recipes by name, this does not include items required for that recipe, or if the resulting craft is a building or item.
 - Craft - `craft`: Attempts to craft a recipe by name. Recipe names can be fetched with `get_available_crafts`.
 - Character say - `character_say`: Makes the character say custom dialog.
+- Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs).
 
 ## Planned Actions
 
 - Go to light source - `go_to_light_source`: Runs to the nearest light source or crafts one (maybe not craft).
 - Get all markers - `get_all_markers`: Returns all saved markers.
 - Attack nearby - `attack_nearby`: Attacks the nearest entity, but prioritizes enemies.
-- Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks. For example: You are playing as Willow. She has an infinite lighter, is immune to fire damage, but lights fires when low on sanity.
 - Get goal - `get_goal`: Returns a general goal for Neuro to follow and will internally keep track of her progress. The goals will increment in (hardcoded) steps. For example: "Make a campfire" -> "Collect farmable food" -> etc.
   _This will hopefully alleviate Neuro not knowing how to play, or getting lost/not playing._
 
