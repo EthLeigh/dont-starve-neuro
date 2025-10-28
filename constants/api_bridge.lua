@@ -4,6 +4,7 @@ BridgeConstants = {}
 BridgeConstants.BRIDGE_BASE_URL = "http://localhost:9003/api"
 BridgeConstants.STARTUP_URL = BridgeConstants.BRIDGE_BASE_URL .. "/send-startup"
 BridgeConstants.REGISTER_ALL_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/register-all"
+BridgeConstants.UNREGISTER_ALL_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/unregister-all"
 BridgeConstants.REGISTER_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/register"
 BridgeConstants.UNREGISTER_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/unregister"
 BridgeConstants.RETRIEVE_PENDING_ACTIONS_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/retrieve-pending"

@@ -61,6 +61,14 @@ const actions: FastifyPluginAsync = async (app) => {
     await sendMessage(registerAllMessage);
   });
 
+  app.get('/unregister-all', async () => {
+    const unregisterAllMessage = createUnregisterActionMessage(
+      allActions.map((action) => action.name),
+    );
+
+    await sendMessage(unregisterAllMessage);
+  });
+
   app.post(
     '/register',
     {

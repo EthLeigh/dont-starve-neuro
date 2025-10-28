@@ -81,6 +81,14 @@ function ApiBridge.HandleSendRegisterAll()
     )
 end
 
+function ApiBridge.HandleSendUnregisterAll()
+    GLOBAL.TheSim:QueryServer(
+        BridgeConstants.UNREGISTER_ALL_URL,
+        function() end,
+        "GET"
+    )
+end
+
 ---@param action_names string[]
 function ApiBridge.HandleSendRegister(action_names)
     GLOBAL.TheSim:QueryServer(
