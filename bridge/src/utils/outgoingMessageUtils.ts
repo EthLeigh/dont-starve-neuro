@@ -37,7 +37,9 @@ export const createContextMessage = (
   },
 });
 
-export const createRegisterActionMessage = (actions: OutgoingAction[]): RegisterActionMessage => ({
+export const createRegisterActionMessage = (
+  actions: readonly OutgoingAction[],
+): RegisterActionMessage => ({
   command: 'actions/register',
   game: GAME_NAME,
   data: {

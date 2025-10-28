@@ -93,7 +93,7 @@ export const goToLightSource = createOutgoingAction(
   'Runs to the nearest light source.',
 );
 
-const allActions: OutgoingAction[] = [
+const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
   eatFood,

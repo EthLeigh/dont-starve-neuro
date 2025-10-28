@@ -26,7 +26,7 @@ app.addHook('preValidation', (req, _, done) => {
   }
 
   // Breaks if a single quotation is included when parsing
-  const cleanedKey = key.replace(/\\'/g, "'");
+  const cleanedKey = key.replaceAll(String.raw`\'`, "'");
 
   try {
     const parsed = JSON.parse(cleanedKey);
