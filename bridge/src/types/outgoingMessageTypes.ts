@@ -25,7 +25,7 @@ export type RegisterActionMessage = {
   command: 'actions/register';
   game: typeof GAME_NAME;
   data: {
-    actions: OutgoingAction[];
+    actions: readonly OutgoingAction[];
   };
 };
 
