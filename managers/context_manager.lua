@@ -2,7 +2,7 @@ ContextManager = {}
 
 ContextManager._sentForDarkness = false
 
-local sentSeasonUpdate = false
+local sent_season_update = false
 
 --- Checks if the player is in/leaving darkness and sends context
 local function HandleCheckPlayerEnterDarkness()
@@ -46,8 +46,8 @@ end
 --- Handles the event for when the season changes (to winter/summer)
 local function HandleSeasonChange()
     -- Since event is triggered automatically when entering a world, we ignore the first event
-    if not sentSeasonUpdate then
-        sentSeasonUpdate = true
+    if not sent_season_update then
+        sent_season_update = true
 
         return
     end

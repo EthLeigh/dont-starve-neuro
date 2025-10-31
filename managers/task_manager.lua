@@ -33,6 +33,7 @@ local function GetTaskTypeFunction(type)
             -- TODO: Add filtering for specific harvestables
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
+            -- TODO: Clear the action buffer when the task is cancelled
             HarvestHelper.HarvestEntities(nearby_harvestables)
         end
     else

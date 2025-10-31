@@ -29,6 +29,10 @@
 ---@field name string
 ---@field data string? JSON as a string
 
+---@class Goal
+---@field name string
+---@field completion_check function
+
 -- Common Classes
 
 ---@class Vector3

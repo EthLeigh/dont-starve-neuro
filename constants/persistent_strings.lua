@@ -1,0 +1,1 @@
+GoalStringKey = "nds_goal"
