@@ -15,6 +15,7 @@
 ---@field unpack function Type left anonymous to avoid complexity
 ---@field math mathlib
 ---@field setmetatable fun(table: table, metatable: table)
+---@field next fun(table: table, index: any): any
 ---@field json json
 ---@field STRINGS STRINGS
 
@@ -71,7 +72,7 @@
 ---@field components WorldComponents
 ---@field ListenForEvent fun(self: World, event_name: string, callback: fun(...: any))
 
----@class Entity
+---@class Entity: Instance
 ---@field name string
 ---@field prefab string
 ---@field Transform Transform
@@ -80,7 +81,9 @@
 ---@field DoTaskInTime fun(self: Player, duration: number, callback: function)
 
 ---@class Instance
----@field ListenForEvent fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>))
+---@field ListenForEvent fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>), source: Instance?)
+---@field RemoveEventCallback fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>), source: Instance?)
+---@field OnSave fun(inst: Instance, data: table<any, any>)
 
 ---@class Component
 ---@field inst Instance

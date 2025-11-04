@@ -3,6 +3,7 @@ modimport("constants/game.lua")
 modimport("constants/api_bridge.lua")
 modimport("constants/api_actions.lua")
 modimport("constants/persistent_strings.lua")
+modimport("constants/goals.lua")
 modimport("classes/task.lua")
 modimport("managers/context_manager.lua")
 modimport("managers/trigger_manager.lua")
@@ -92,6 +93,16 @@ AddPlayerPostInit(function(inst)
 
     --     MovementHelper.MoveToPoint(x + 15, y, z)
     -- end)
+
+    player_original_on_save = Player.OnSave
+
+    -- Handle stuff when player gets saved
+    Player.OnSave = function(_, data)
+        -- Commented out for testing/dev
+        -- GoalManager.SaveCurrentGoalCheck()
+
+        player_original_on_save(inst, data)
+    end
 end)
 
 AddSimPostInit(function()
