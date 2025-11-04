@@ -43,5 +43,6 @@ function CreateListenerOnEntityForEvent(goal_check_name, component, event_name, 
         GoalManager.StartGoalCheck(next_goal)
     end
 
+    -- TODO: Remove the old goal listeners
     Player:ListenForEvent(event_name, CompletionListener, component.inst)
 end
