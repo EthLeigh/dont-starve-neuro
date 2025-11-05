@@ -24,6 +24,8 @@ function GoalManager.LoadAndStart()
         end
 
         GoalManager.CurrentGoalCheck()
+
+        ApiBridge.HandleSendContext(GoalManager.GetAsMessage())
     end)
 end
 
@@ -33,8 +35,16 @@ function GoalManager.StartGoalCheck(goal_check_name)
     GoalManager.CurrentGoalCheck = GoalChecks[goal_check_name]
 
     GoalManager.CurrentGoalCheck()
+
+    ApiBridge.HandleSendContext(GoalManager.GetAsMessage())
 end
 
 function GoalManager.SaveCurrentGoalCheck()
     GLOBAL.TheSim:SetPersistentString(GoalStringKey, GoalManager.CurrentGoalCheckName)
+end
+
+function GoalManager.GetAsMessage()
+    return "Your current goal is '" .. (GoalManager.CurrentGoalCheckName or "None") ..
+        "', and the completion description is: " ..
+        (GoalCompletionDescriptions[GoalManager.CurrentGoalCheckName] or "Unavailable.")
 end

@@ -27,6 +27,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Character say - `character_say`: Makes the character say custom dialog.
 - Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs).
 - Go to light source - `go_to_light_source`: Runs to the nearest light source.
+- Retrieve current goal - `retrieve_current_goal`: Sends the current goal and it's completion description.
 
 ## Context Messages
 

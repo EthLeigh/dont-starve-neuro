@@ -126,6 +126,9 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             success = true
             message = "Successfully moved toward nearest light source"
         end
+    elseif ApiActions.RETRIEVE_CURRENT_GOAL then
+        success = true
+        message = GoalManager.GetAsMessage()
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"

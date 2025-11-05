@@ -93,6 +93,11 @@ export const goToLightSource = createOutgoingAction(
   'Runs to the nearest light source.',
 );
 
+export const retrieveCurrentGoal = createOutgoingAction(
+  'retrieve_current_goal',
+  "Sends the current goal and it's completion description.",
+);
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -106,6 +111,7 @@ const allActions: readonly OutgoingAction[] = [
   characterSay,
   getPerksAndQuirks,
   goToLightSource,
+  retrieveCurrentGoal,
 ];
 
 export default allActions;
