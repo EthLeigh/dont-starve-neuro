@@ -35,7 +35,7 @@ function EntityHelper.GetNearbyHostileEntities()
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
-        { "HASCOMBATCOMPONENT" },
+        { "HASCOMBATCOMPONENT", "hostile" },
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure" }
     )
 end

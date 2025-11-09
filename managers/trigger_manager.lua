@@ -1,10 +1,14 @@
 ---@class TriggerManager
 TriggerManager = {}
 
---- Handles the event for when the player's health changes
+TriggerManager.CurrentAttacker = nil
+
+--- Handles the event for when the player's health changes. Will send a context message about the current enemy attacking.
 ---@param health_change_cause string
 local function HandlePlayerHurt(health_change_cause)
     local threats = EntityHelper.GetNearbyHostileEntities()
+
+    ---@type Entity|nil
     local current_threat = nil
 
     for _, threat in pairs(threats) do
@@ -15,14 +19,19 @@ local function HandlePlayerHurt(health_change_cause)
     end
 
     if current_threat == nil then
-        log_warning("Unable to find the entity damaging the player!")
-
         return
     end
 
     MovementHelper.FleeFromEntity(current_threat)
 
-    -- TODO: Add context message for getting attacked
+    if (current_threat == TriggerManager.CurrentAttacker) then
+        return
+    end
+
+    TriggerManager.CurrentAttacker = current_threat
+
+    ApiBridge.HandleSendContext("You are being attacked by a " ..
+        current_threat.prefab .. ". There are " .. #EntityHelper.GetNearbyMonsters() .. " monsters around you.")
 end
 
 --- Handles the event for when the player starts starving

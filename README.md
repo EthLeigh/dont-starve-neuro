@@ -43,6 +43,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Rain stop: "It stopped raining."
 - Freezing start: "Your character is freezing."
 - Freezing stop: "Your character has stopped freezing."
+- Monster attack: "You are being attacked by a `ENTITY_NAME`. There are `TOTAL_MONSTER_COUNT` monsters around you."
 
 ## Automatic Actions
 
