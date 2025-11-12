@@ -44,6 +44,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Freezing start: "Your character is freezing."
 - Freezing stop: "Your character has stopped freezing."
 - Monster attack: "You are being attacked by a `ENTITY_NAME`. There are `TOTAL_MONSTER_COUNT` monsters around you."
+- Entity slain: "You have slain a `ENTITY_NAME`."
 
 ## Automatic Actions
 

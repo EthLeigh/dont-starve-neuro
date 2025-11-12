@@ -230,4 +230,6 @@ AddSimPostInit(function()
 
     -- Testing only (need to send valid actions only not all)
     ApiBridge.HandleSendRegisterAll()
+
+    Player:ListenForEvent("killed", ContextManager.OnEntityKilled)
 end)

@@ -75,6 +75,17 @@ local function HandleFreezingStop()
     ApiBridge.HandleSendContext("Your character has stopped freezing.", true)
 end
 
+---@param data table<string, any>
+function ContextManager.OnEntityKilled(_, data)
+    local victim = data.victim
+
+    if not victim then
+        return
+    end
+
+    ApiBridge.HandleSendContext("You have slain a " .. victim.prefab .. ".", true)
+end
+
 --- Setup listeners for necessary events
 function ContextManager.SetupContextEvents()
     Player:DoPeriodicTask(3, HandleCheckPlayerEnterDarkness)

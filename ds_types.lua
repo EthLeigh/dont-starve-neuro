@@ -55,6 +55,7 @@
 ---@class STRINGS
 ---@field CHARACTER_NAMES table<string, string>
 ---@field CHARACTER_DESCRIPTIONS table<string, string>
+---@field NAMES table<string, string>
 
 -- Global classes
 
@@ -200,9 +201,6 @@
 ---@class Recipe
 ---@field name string
 
----@class Recipes
----@type Recipe[]
-
 -- Global functions
 
 ---@param callback fun(inst: Player)
@@ -217,6 +215,11 @@ function AddSimPostInit(callback) end
 ---@param callback function
 ---@diagnostic disable-next-line: unused-local
 function AddClassPostConstruct(class_name, callback) end
+
+--- Creates a handler that runs when any Entity is created
+---@param handler fun(inst: Entity)
+---@diagnostic disable-next-line: unused-local
+function AddPrefabPostInitAny(handler) end
 
 --- Runs a `.lua` file (used in place of `import`)
 ---@param path string Relative path to the `.lua` file
