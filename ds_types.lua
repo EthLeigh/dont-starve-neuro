@@ -1,7 +1,7 @@
 -- This is not a comprehensive list of the real fields/params, just the ones used in the mod
 
 ---@class GLOBAL
----@field BufferedAction fun(player: Player, ent: Entity, action: table): BufferedAction
+---@field BufferedAction fun(player: Player, ent: Entity, action: table, invobject: ItemSlot?): BufferedAction
 ---@field Vector3 fun(x: number, y: number, z: number): Vector3
 ---@field TheCamera Camera
 ---@field ACTIONS table<string, table>
@@ -180,6 +180,7 @@
 ---@field stackable ItemStackableComponent
 ---@field edible ItemEdibleComponent
 ---@field perishable ItemPerishableComponent
+---@field cookable ItemCookableComponent?
 
 ---@class ItemStackableComponent
 ---@field StackSize fun(): integer
@@ -193,6 +194,10 @@
 ---@field IsFresh fun(self: ItemPerishableComponent): boolean
 ---@field IsStale fun(self: ItemPerishableComponent): boolean
 ---@field IsSpoiled fun(self: ItemPerishableComponent): boolean
+
+---@class ItemCookableComponent
+---@field product string
+---@field Cook function
 
 ---@class BufferedAction
 ---@field AddSuccessAction fun(callback: function)

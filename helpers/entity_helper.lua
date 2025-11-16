@@ -77,3 +77,17 @@ function EntityHelper.GetNearbyLightSources()
         { "lightsource" }
     )
 end
+
+---@param tags string[]
+---@return table<string, Entity[]>
+function EntityHelper.GetNearbyEntities(tags)
+    local x, y, z = Player.Transform:GetWorldPosition()
+
+    return GLOBAL.TheSim:FindEntities(
+        x, y, z,
+        GameConstants.SEARCH_RADIUS,
+        {},
+        {},
+        tags
+    )
+end

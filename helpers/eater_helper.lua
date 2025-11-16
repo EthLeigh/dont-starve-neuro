@@ -6,8 +6,8 @@ function EaterHelper.EatFood(food)
     PlayerEater:Eat(food)
 end
 
----@return HotbarItem | nil
-function EaterHelper.GetBestFoodInInventory()
+---@return HotbarItem[]
+local function GetFoodItemsInInventory()
     local food_items = InventoryHelper.GetFoodItems()
 
     ---@type HotbarItem[]
@@ -21,6 +21,13 @@ function EaterHelper.GetBestFoodInInventory()
         end
     end
 
+    return safe_food_items
+end
+
+---@return HotbarItem | nil
+function EaterHelper.GetBestFoodInInventory()
+    local safe_food_items = GetFoodItemsInInventory()
+
     ---@type HotbarItem | nil
     local good_food_item = nil
 
@@ -29,6 +36,26 @@ function EaterHelper.GetBestFoodInInventory()
         local good_food_edible = good_food_item ~= nil and good_food_item.edible or nil
 
         if not good_food_item or (good_food_edible and food_edible and good_food_edible:GetHunger() < food_edible:GetHunger()) then
+            good_food_item = food_item
+        end
+    end
+
+    return good_food_item
+end
+
+---@return HotbarItem | nil
+function EaterHelper.GetBestNonCookedFoodInInventory()
+    local safe_food_items = GetFoodItemsInInventory()
+
+    ---@type HotbarItem | nil
+    local good_food_item = nil
+
+    for _, food_item in ipairs(safe_food_items) do
+        local food_edible = food_item.edible
+        local food_cookable = food_item.cookable
+        local good_food_edible = good_food_item ~= nil and good_food_item.edible or nil
+
+        if not good_food_item or (good_food_edible and food_edible and food_cookable ~= nil and good_food_edible:GetHunger() < food_edible:GetHunger()) then
             good_food_item = food_item
         end
     end

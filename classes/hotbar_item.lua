@@ -3,6 +3,7 @@
 ---@class HotbarItem
 ---@field item ItemSlot
 ---@field edible ItemEdibleComponent
+---@field cookable ItemCookableComponent?
 ---@field is_perishable boolean
 ---@field count integer
 ---@field name string
@@ -15,6 +16,7 @@ HotbarItem = Class(function(self, item)
     local stack_comp = item.components.stackable
 
     self.edible = item.components.edible
+    self.cookable = item.components.cookable
     self.is_perishable = item.components.perishable ~= nil
     self.count = stack_comp and stack_comp:StackSize() or 1
     self.name = item.name

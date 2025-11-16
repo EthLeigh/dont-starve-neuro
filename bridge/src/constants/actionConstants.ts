@@ -103,6 +103,11 @@ export const attackNearby = createOutgoingAction(
   'Attacks all nearby entites continuously until another action is called.',
 );
 
+export const cookFood = createOutgoingAction(
+  'cook_food',
+  'Cooks the best available food in the inventory at a nearby campfire.',
+);
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -118,6 +123,7 @@ const allActions: readonly OutgoingAction[] = [
   goToLightSource,
   retrieveCurrentGoal,
   attackNearby,
+  cookFood,
 ];
 
 export default allActions;
