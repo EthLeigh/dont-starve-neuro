@@ -126,8 +126,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             success = true
             message = "Successfully moved toward nearest light source"
         end
-    elseif ApiActions.RETRIEVE_CURRENT_GOAL then
-        success = true
+    elseif name == ApiActions.RETRIEVE_CURRENT_GOAL then
         message = GoalManager.GetAsMessage()
     elseif name == ApiActions.ATTACK_NEARBY then
         local attack_nearby_task = Task:new(TaskManager.TASK_TYPES.ATTACK_NEARBY, function()
