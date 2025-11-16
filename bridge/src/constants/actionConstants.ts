@@ -98,6 +98,11 @@ export const retrieveCurrentGoal = createOutgoingAction(
   "Sends the current goal and it's completion description.",
 );
 
+export const attackNearby = createOutgoingAction(
+  'attack_nearby',
+  'Attacks all nearby entites continuously until another action is called.',
+);
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -112,6 +117,7 @@ const allActions: readonly OutgoingAction[] = [
   getPerksAndQuirks,
   goToLightSource,
   retrieveCurrentGoal,
+  attackNearby,
 ];
 
 export default allActions;

@@ -129,6 +129,14 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
     elseif ApiActions.RETRIEVE_CURRENT_GOAL then
         success = true
         message = GoalManager.GetAsMessage()
+    elseif name == ApiActions.ATTACK_NEARBY then
+        local attack_nearby_task = Task:new(TaskManager.TASK_TYPES.ATTACK_NEARBY, function()
+            return false
+        end)
+
+        message = "Started attacking nearby entities until another action is called."
+
+        TaskManager.StartTasks({ attack_nearby_task })
     else
         success = false
         message = "An unexpected error has occurred as that action was not found"

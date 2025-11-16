@@ -28,6 +28,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs).
 - Go to light source - `go_to_light_source`: Runs to the nearest light source.
 - Retrieve current goal - `retrieve_current_goal`: Sends the current goal and it's completion description.
+- Attack nearby - `attack_nearby`: Attacks all nearby entities until another action is called.
 
 ## Context Messages
 

@@ -15,7 +15,7 @@
 ---@field unpack function Type left anonymous to avoid complexity
 ---@field math mathlib
 ---@field setmetatable fun(table: table, metatable: table)
----@field next fun(table: table, index: any): any
+---@field next fun(table: table, index: any): any, any
 ---@field json json
 ---@field STRINGS STRINGS
 

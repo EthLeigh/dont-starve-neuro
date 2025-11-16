@@ -5,6 +5,7 @@ TaskManager = {}
 
 TaskManager.TASK_TYPES = {
     HARVEST = 1,
+    ATTACK_NEARBY = 2,
 }
 
 ---@type Queue<Task>
@@ -28,13 +29,31 @@ end
 ---@param type integer
 ---@return function | nil
 local function GetTaskTypeFunction(type)
+    -- TODO: Clear the action buffer when the task is cancelled
+
     if type == TaskManager.TASK_TYPES.HARVEST then
         return function()
             -- TODO: Add filtering for specific harvestables
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
-            -- TODO: Clear the action buffer when the task is cancelled
             HarvestHelper.HarvestEntities(nearby_harvestables)
+        end
+    elseif type == TaskManager.TASK_TYPES.ATTACK_NEARBY then
+        return function()
+            local nearby_hostiles = EntityHelper.GetNearbyHostileEntities()
+            local nearby_animals = EntityHelper.GetNearbyAnimals()
+
+            local ent_to_attack = nil
+
+            if #nearby_hostiles > 0 then
+                _, ent_to_attack = GLOBAL.next(nearby_hostiles, nil)
+            elseif #nearby_animals > 0 then
+                _, ent_to_attack = GLOBAL.next(nearby_animals, nil)
+            else
+                return
+            end
+
+            CombatHelper.AttackEntity(ent_to_attack)
         end
     else
         return nil
