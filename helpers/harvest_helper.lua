@@ -20,17 +20,17 @@ end
 
 ---@param ents Entity[]
 function HarvestHelper.HarvestEntities(ents)
-    local buf_action_queue = BufferedActionQueue()
+    local buf_action_queue = BufferedActionQueue:New()
 
     for _, ent in pairs(ents) do
         local buffered_action = Utils.GetBufferedActionForEntity(ent)
 
         if (buffered_action ~= nil) then
-            buf_action_queue:enqueue(buffered_action)
+            buf_action_queue:Push(buffered_action)
         else
-            -- log_info("Unable to create a buffered action for entity:", ent.prefab)
+            log_error("Unable to create a buffered action for entity", ent.prefab)
         end
     end
 
-    buf_action_queue:run_next()
+    buf_action_queue:RunNext()
 end

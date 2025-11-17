@@ -1,35 +1,37 @@
--- TODO: Match other standards (like :new and subclassing Queue)
-
----@class BufferedActionQueue
+---@class Queue<BufferedAction>
 ---@field player Player
 ---@field queue table<integer, BufferedAction>
 ---@field running boolean
-BufferedActionQueue = Class(function(self)
-    self.queue = {}
-    self.running = false
-end)
+BufferedActionQueue = {}
+BufferedActionQueue.__index = BufferedActionQueue
 
----@param buff_act BufferedAction
-function BufferedActionQueue:enqueue(buff_act)
-    table.insert(self.queue, buff_act)
+---@return Queue<BufferedAction>
+function BufferedActionQueue:New()
+    local act_queue = {
+        running = false
+    }
+
+    GLOBAL.setmetatable(act_queue, self)
+
+    return act_queue
 end
 
----@type function
-function BufferedActionQueue:run_next()
-    if self.running or #self.queue == 0 then return end
+function BufferedActionQueue:RunNext()
+    if self.running or #self.queue == 0 then
+        return
+    end
+
     self.running = true
 
-    local buff_act = table.remove(self.queue, 1)
+    local buffered_action = table.remove(self.queue, 1)
 
-    buff_act:AddSuccessAction(function()
+    local function FinishAction()
         self.running = false
-        self:run_next()
-    end)
+        self:RunNext()
+    end
 
-    buff_act:AddFailAction(function()
-        self.running = false
-        self:run_next()
-    end)
+    buffered_action:AddSuccessAction(FinishAction)
+    buffered_action:AddFailAction(FinishAction)
 
-    Player.components.locomotor:PushAction(buff_act, true)
+    Player.components.locomotor:PushAction(buffered_action, true)
 end

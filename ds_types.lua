@@ -200,8 +200,8 @@
 ---@field Cook function
 
 ---@class BufferedAction
----@field AddSuccessAction fun(callback: function)
----@field AddFailAction fun(callback: function)
+---@field AddSuccessAction fun(self: BufferedAction, callback: function)
+---@field AddFailAction fun(self: BufferedAction, callback: function)
 
 ---@class Recipe
 ---@field name string
