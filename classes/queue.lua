@@ -9,8 +9,6 @@ Queue.__index = Queue
 ---@return Queue<T>
 function Queue:New()
     local queue = {
-        first = 0,
-        last = -1,
         _data = {},
     }
 
@@ -22,28 +20,19 @@ end
 ---@generic T
 ---@param value T
 function Queue:Push(value)
-    local last = self.last + 1
-
-    self.last = last
-    self._data[self.last] = value
+    table.insert(self._data, value)
 end
 
 ---@generic T
 ---@return T|nil
 function Queue:Pop()
     if self:GetSize() == 0 then
+        log_warning("No elements left in queue")
+
         return nil
     end
 
-    local first = self.first
-    ---@generic T
-    ---@type T
-    local value = self._data[first]
-
-    self._data[first] = nil
-    self.first = first + 1
-
-    return value
+    return table.remove(self._data, 1)
 end
 
 ---@return integer
@@ -52,7 +41,5 @@ function Queue:GetSize()
 end
 
 function Queue:Clear()
-    self.first = 0
-    self.last = -1
     self._data = {}
 end

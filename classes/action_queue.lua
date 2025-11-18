@@ -11,7 +11,7 @@ function BufferedActionQueue:New()
         running = false
     }
 
-    GLOBAL.setmetatable(act_queue, self)
+    GLOBAL.setmetatable(act_queue, Queue)
 
     return act_queue
 end

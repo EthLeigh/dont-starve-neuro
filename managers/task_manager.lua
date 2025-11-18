@@ -35,8 +35,14 @@ local function GetTaskTypeFunction(type)
         return function()
             -- TODO: Add filtering for specific harvestables
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
+            local nearby_harvestable = GLOBAL.next(nearby_harvestables, nil)
 
-            HarvestHelper.HarvestEntities(nearby_harvestables)
+
+            if not nearby_harvestable then
+                return
+            end
+
+            HarvestHelper.HarvestEntity(nearby_harvestable)
         end
     elseif type == TaskManager.TASK_TYPES.ATTACK_NEARBY then
         return function()
