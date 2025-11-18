@@ -142,7 +142,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         if #nearby_cookers == 0 then
             success = false
             message = "No cookable entities were found nearby (Campfires, or Fire Pits)."
-            log_error("No cookable entities were found nearby (Campfires, or Fire Pits).")
         else
             local _, nearby_cooker = GLOBAL.next(nearby_cookers, nil)
             local hotbar_item_to_cook = EaterHelper.GetBestFoodInInventory()
@@ -150,17 +149,11 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             if hotbar_item_to_cook == nil then
                 success = false
                 message = "No food was found in your character's inventory."
-                log_error("No food was found in your character's inventory.")
             else
-                log_entries(hotbar_item_to_cook.item.components)
-
                 local food_to_cook = hotbar_item_to_cook.item
-
-                log_error("BEFORE")
                 local act = GLOBAL.BufferedAction(Player, nearby_cooker, GLOBAL.ACTIONS.COOK, food_to_cook)
-                log_error("AFTER")
+
                 Player.components.locomotor:PushAction(act, true)
-                log_error("AFTER AFTER")
 
                 message = "Cooked the " .. food_to_cook.name .. "."
             end
