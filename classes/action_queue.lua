@@ -23,7 +23,11 @@ function BufferedActionQueue:RunNext()
 
     self.running = true
 
-    local buffered_action = table.remove(self.queue, 1)
+    local buffered_action = self:Pop()
+
+    if not buffered_action then
+        return
+    end
 
     local function FinishAction()
         self.running = false
