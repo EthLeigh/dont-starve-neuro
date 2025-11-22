@@ -41,16 +41,25 @@ function EntityHelper.GetNearbyHostileEntities()
 end
 
 -- TODO: Currently includes non-harvestable entities like trees, etc.
----@return Entity[]
+---@return table<integer, Entity>
 function EntityHelper.GetNearbyHarvestables()
     local x, y, z = Player.Transform:GetWorldPosition()
-
-    return GLOBAL.TheSim:FindEntities(
+    local nearby_harvestables = GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
         nil,
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE",
+            "item", "isinventoryitem" }
     )
+
+    local filtered_harvestables = {}
+    for _, harvestable in pairs(nearby_harvestables) do
+        if Utils.GetActionForEntity(harvestable) ~= nil then
+            table.insert(filtered_harvestables, harvestable)
+        end
+    end
+
+    return filtered_harvestables
 end
 
 ---@return table<string, Entity[]>

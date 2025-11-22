@@ -36,13 +36,11 @@ local function GetTaskTypeFunction(type)
             -- TODO: Add filtering for specific harvestables
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
-            table.sort(nearby_harvestables, function(a, b)
-                return a.prefab < b.prefab
-            end)
-
-            local nearby_harvestable = GLOBAL.next(nearby_harvestables, nil)
+            local _, nearby_harvestable = GLOBAL.next(nearby_harvestables, nil)
 
             if not nearby_harvestable then
+                log_warning("No harvestables found nearby.")
+
                 return
             end
 
