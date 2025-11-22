@@ -15,9 +15,12 @@
 ---@field unpack function Type left anonymous to avoid complexity
 ---@field math mathlib
 ---@field setmetatable fun(table: table, metatable: table)
----@field next fun(table: table, index: any): any, any
+---@field next next
 ---@field json json
 ---@field STRINGS STRINGS
+
+---@generic K, V
+---@alias next fun(table: table<K, V>, index: K|nil): K, V
 
 -- Neuro API Classes
 

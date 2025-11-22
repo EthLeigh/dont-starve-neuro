@@ -32,7 +32,9 @@ function Queue:Pop()
         return nil
     end
 
-    return table.remove(self._data, 1)
+    local _, next_val = GLOBAL.next(self._data, nil)
+
+    return next_val
 end
 
 ---@return integer

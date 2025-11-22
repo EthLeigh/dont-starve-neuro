@@ -13,7 +13,7 @@ function log_error(...)
     print("[DSN] [ERROR]", ...)
 end
 
----@param table table<string, any>
+---@param table table<any, any>
 function log_entries(table)
     log_info("Started logging entries for: ", table)
 
