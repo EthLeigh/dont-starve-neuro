@@ -24,10 +24,11 @@ end
 local function ClearTasks()
     ClearLoop()
     TaskManager._task_queue:Clear()
+    TaskManager._task_loop:Cancel()
 end
 
 ---@param type integer
----@return function | nil
+---@return fun(): boolean
 local function GetTaskTypeFunction(type)
     -- TODO: Clear the action buffer when the task is cancelled
 
@@ -41,10 +42,12 @@ local function GetTaskTypeFunction(type)
             if not nearby_harvestable then
                 log_warning("No harvestables found nearby.")
 
-                return
+                return false
             end
 
             HarvestHelper.HarvestEntity(nearby_harvestable)
+
+            return true
         end
     elseif type == TaskManager.TASK_TYPES.ATTACK_NEARBY then
         return function()
@@ -52,19 +55,20 @@ local function GetTaskTypeFunction(type)
             local nearby_animals = EntityHelper.GetNearbyAnimals()
 
             local ent_to_attack = nil
-
             if #nearby_hostiles > 0 then
                 _, ent_to_attack = GLOBAL.next(nearby_hostiles, nil)
             elseif #nearby_animals > 0 then
                 _, ent_to_attack = GLOBAL.next(nearby_animals, nil)
             else
-                return
+                return false
             end
 
             CombatHelper.AttackEntity(ent_to_attack)
+
+            return true
         end
     else
-        return nil
+        return function() return false end
     end
 end
 
@@ -81,7 +85,13 @@ local function StartTask(task)
     TaskManager._task_loop = Player:DoPeriodicTask(1, function()
         TaskManager._task_loop_iteration = TaskManager._task_loop_iteration + 1
 
-        task_function()
+        local task_execution_success = task_function()
+
+        if not task_execution_success then
+            TaskManager._task_loop:Cancel()
+
+            return
+        end
 
         if task.success_check_fn(TaskManager._task_loop_iteration) then
             ClearLoop()
