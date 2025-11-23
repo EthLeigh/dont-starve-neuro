@@ -30,8 +30,6 @@ end
 ---@param type integer
 ---@return fun(): boolean
 local function GetTaskTypeFunction(type)
-    -- TODO: Clear the action buffer when the task is cancelled
-
     if type == TaskManager.TASK_TYPES.HARVEST then
         return function()
             -- TODO: Add filtering for specific harvestables
@@ -106,7 +104,6 @@ local function StartTask(task)
     end)
 end
 
--- TODO: Doesn't seem to immediately cancel the active task
 local function StopTasks()
     if TaskManager._task_loop then
         ClearTasks()

@@ -1,5 +1,3 @@
--- TODO: Match other standards (like :new)
-
 ---@class HotbarItem
 ---@field item ItemSlot
 ---@field edible ItemEdibleComponent
