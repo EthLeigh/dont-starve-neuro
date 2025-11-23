@@ -24,7 +24,6 @@ end
 local function ClearTasks()
     ClearLoop()
     TaskManager._task_queue:Clear()
-    TaskManager._task_loop:Cancel()
 end
 
 ---@param type integer
