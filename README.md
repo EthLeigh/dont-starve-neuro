@@ -29,7 +29,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Go to light source - `go_to_light_source`: Runs to the nearest light source.
 - Retrieve current goal - `retrieve_current_goal`: Sends the current goal and it's completion description.
 - Attack nearby - `attack_nearby`: Attacks all nearby entities until another action is called.
-- Cook food - `cook_food`: Cooks the best available food in the inventory using a Campfire of Fire Pit.
+- Cook food - `cook_food`: Cooks the best available food in the inventory using a Campfire or Fire Pit.
 
 ## Context Messages
 
