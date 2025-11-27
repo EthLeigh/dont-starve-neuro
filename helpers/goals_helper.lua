@@ -20,29 +20,31 @@ GoalChecks = {
 ---@param component Component
 ---@param event_name string
 ---@param completion_check fun(...): boolean
-function CreateListenerOnEntityForEvent(goal_check_name, component, event_name, completion_check)
-    local function CompletionListener(_, data)
-        if GoalManager.CurrentGoalCheckName ~= goal_check_name then return end
+function CreateListenerOnEntityForEvent(goal_name, component, event_name, completion_check)
+    component.GoalCompletionListener = function(_, data)
+        if GoalManager.CurrentGoal.Name ~= goal_name then return end
 
         complete = completion_check(data)
 
         if not complete then return end
 
-        log_info("Completed goal:", goal_check_name)
-        next_goal = GLOBAL.next(GoalChecks, goal_check_name)
+        log_info("Completed goal:", goal_name)
+        next_goal = GLOBAL.next(GoalChecks, goal_name)
 
         if not next_goal then
             log_warning("No more goals left!")
 
-            GoalManager.CurrentGoalCheck = nil
-            GoalManager.CurrentGoalCheckName = nil
+            GoalManager.CurrentGoal.CurrentGoalCheck = nil
+            GoalManager.CurrentGoal.Name = nil
 
             return
         end
 
-        GoalManager.StartGoalCheck(next_goal)
+        GoalManager.StartGoal(next_goal, component, event_name)
     end
 
-    -- TODO: Remove the old goal listeners
-    Player:ListenForEvent(event_name, CompletionListener, component.inst)
+    GoalManager.CurrentGoal.Component = component
+    GoalManager.CurrentGoal.EventName = event_name
+
+    Player:ListenForEvent(event_name, component.GoalCompletionListener, component.inst)
 end

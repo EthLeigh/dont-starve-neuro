@@ -99,7 +99,7 @@ AddPlayerPostInit(function(inst)
     -- Handle stuff when player gets saved
     Player.OnSave = function(_, data)
         -- Commented out for testing/dev
-        -- GoalManager.SaveCurrentGoalCheck()
+        -- GoalManager.SaveCurrentGoal()
 
         player_original_on_save(inst, data)
     end

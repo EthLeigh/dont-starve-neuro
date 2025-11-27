@@ -19,9 +19,6 @@
 ---@field json json
 ---@field STRINGS STRINGS
 
----@generic K, V
----@alias next fun(table: table<K, V>, index: K|nil): K, V
-
 -- Neuro API Classes
 
 ---@class IncomingAction
@@ -53,6 +50,13 @@
 ---@class PeriodicTask
 ---@field Cancel fun(self: PeriodicTask)
 
+-- Aliases
+
+---@alias EventCallback fun(...: any)
+
+---@generic K, V
+---@alias next fun(table: table<K, V>, index: K|nil): K, V
+
 -- Global enums/constants
 
 ---@class STRINGS
@@ -74,7 +78,7 @@
 
 ---@class World
 ---@field components WorldComponents
----@field ListenForEvent fun(self: World, event_name: string, callback: fun(...: any))
+---@field ListenForEvent fun(self: World, event_name: string, callback: EventCallback)
 
 ---@class Entity: Instance
 ---@field name string
@@ -91,6 +95,7 @@
 
 ---@class Component
 ---@field inst Instance
+---@field GoalCompletionListener EventCallback?
 
 ---@class Player: Entity
 ---@field LightWatcher LightWatcher
