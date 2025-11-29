@@ -27,7 +27,7 @@ local function ClearTasks()
 end
 
 ---@param type integer
----@return fun(): boolean
+---@return fun(): boolean "Returns whether the task was successful or not"
 local function GetTaskTypeFunction(type)
     if type == TaskManager.TASK_TYPES.HARVEST then
         return function()
@@ -70,7 +70,8 @@ local function GetTaskTypeFunction(type)
 end
 
 ---@param task Task
-local function StartTask(task)
+---@param task_cooldown integer?
+local function StartTask(task, task_cooldown)
     local task_function = GetTaskTypeFunction(task.type)
 
     if not task_function then
@@ -79,7 +80,7 @@ local function StartTask(task)
         return
     end
 
-    TaskManager._task_loop = Player:DoPeriodicTask(1, function()
+    TaskManager._task_loop = Player:DoPeriodicTask(task_cooldown or 1, function()
         TaskManager._task_loop_iteration = TaskManager._task_loop_iteration + 1
 
         local task_execution_success = task_function()
@@ -98,7 +99,7 @@ local function StartTask(task)
                 return
             end
 
-            StartTask(next_task)
+            StartTask(next_task, task_cooldown)
         end
     end)
 end
@@ -111,7 +112,8 @@ end
 
 --- This will clear the previous list of tasks
 ---@param tasks Task[]
-function TaskManager.StartTasks(tasks)
+---@param task_cooldown integer?
+function TaskManager.StartTasks(tasks, task_cooldown)
     StopTasks()
 
     for _, task in pairs(tasks) do
@@ -126,7 +128,7 @@ function TaskManager.StartTasks(tasks)
         return
     end
 
-    StartTask(first_task)
+    StartTask(first_task, task_cooldown)
 end
 
 function TaskManager.StopTasks()
