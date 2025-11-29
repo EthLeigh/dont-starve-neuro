@@ -11,7 +11,7 @@ end
 function MovementHelper.MoveToPoint(x, z)
     local pos = GLOBAL.Vector3(x, 0, z)
 
-    PlayerLocomotor:GoToPoint(pos, nil, true)
+    MovementHelper.MoveToPosition(pos)
 end
 
 ---@param ent Entity

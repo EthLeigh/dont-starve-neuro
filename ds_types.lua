@@ -146,6 +146,7 @@
 ---@class Locomotor: Component
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)
 ---@field GoToPoint fun(self: Locomotor, position: Vector3, action?: BufferedAction, run?: boolean)
+---@field RunInDirection fun(self: Locomotor, direction: Vector3, throttle: number?)
 
 ---@class Combat: Component
 ---@field SetTarget fun(self: Combat, target: Entity)

@@ -89,9 +89,9 @@ AddPlayerPostInit(function(inst)
 
     -- Test pathfinding
     -- Player:DoPeriodicTask(0, function()
-    --     local x, y, z = Player.Transform:GetWorldPosition()
+    --     local x, _, z = Player.Transform:GetWorldPosition()
 
-    --     MovementHelper.MoveToPoint(x + 15, y, z)
+    --     MovementHelper.MoveToPoint(x + 15, z)
     -- end)
 
     player_original_on_save = Player.OnSave
