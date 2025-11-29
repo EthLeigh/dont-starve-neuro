@@ -17,7 +17,7 @@ HotbarItem = Class(function(self, item)
     self.cookable = item.components.cookable
     self.is_perishable = item.components.perishable ~= nil
     self.count = stack_comp and stack_comp:StackSize() or 1
-    self.name = item.name
+    self.name = StringHelper.GetPrettyName(item.prefab)
     self.id = tostring(item.prefab)
 
     return self

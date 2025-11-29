@@ -68,12 +68,12 @@ function EaterHelper.EatBestFoodInInventory()
     local best_food_item = EaterHelper.GetBestFoodInInventory()
 
     if not best_food_item then
-        log_info("No food items found in the hotbar to eat")
+        log_info("No food items found in the hotbar to eat.")
 
         return nil
     end
 
     EaterHelper.EatFood(best_food_item.item)
 
-    return best_food_item.item.name
+    return best_food_item.name
 end

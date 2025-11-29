@@ -31,7 +31,8 @@ local function HandlePlayerHurt(health_change_cause)
     TriggerManager.CurrentAttacker = current_threat
 
     ApiBridge.HandleSendContext("You are being attacked by a " ..
-        current_threat.prefab .. ". There are " .. #EntityHelper.GetNearbyMonsters() .. " monsters around you.")
+        StringHelper.GetPrettyName(current_threat.prefab) ..
+        ". There are " .. #EntityHelper.GetNearbyMonsters() .. " monsters around you.")
 end
 
 --- Handles the event for when the player starts starving

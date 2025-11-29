@@ -96,18 +96,18 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             end
         else
             success = false
-            message = "That is not a valid craft recipe"
+            message = "That is not a valid craft recipe."
         end
     elseif name == ApiActions.CHARACTER_SAY then
         DialogHelper.Speak(data["dialog"])
     elseif name == ApiActions.GET_PERKS_AND_QUIRKS then
-        local character_desc = GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS[PlayerName]
+        local character_desc = StringHelper.GetCharacterDescription(PlayerName)
         character_desc = character_desc:gsub("*", ""):gsub("%s*\n%s*(%a)", function(c)
             return ", " .. c:gsub(" ", ""):lower()
         end) .. "."
 
         message = "You are playing as " ..
-            GLOBAL.STRINGS.CHARACTER_NAMES[PlayerName] .. ". Their traits are: " .. character_desc
+            StringHelper.GetPrettyCharacterName(PlayerName) .. ". Their traits are: " .. character_desc
         success = true
     elseif name == ApiActions.GO_TO_LIGHT_SOURCE then
         local light_sources = EntityHelper.GetNearbyLightSources()
@@ -155,7 +155,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
                 Player.components.locomotor:PushAction(act, true)
 
-                message = "Cooked the " .. food_to_cook.name .. "."
+                message = "Cooked the " .. StringHelper.GetPrettyName(food_to_cook.prefab) .. "."
             end
         end
     elseif name == ApiActions.EXPLORE then

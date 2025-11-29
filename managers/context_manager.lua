@@ -94,7 +94,7 @@ function ContextManager.OnEntityKilled(_, data)
         return
     end
 
-    ApiBridge.HandleSendContext("You have slain a " .. victim.prefab .. ".", true)
+    ApiBridge.HandleSendContext("You have slain a " .. StringHelper.GetPrettyName(victim.prefab) .. ".", true)
 end
 
 --- Setup listeners for necessary events

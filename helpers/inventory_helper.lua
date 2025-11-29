@@ -23,7 +23,7 @@ function InventoryHelper.GetHotbarItemNames()
     local hotbar_item_names = {}
 
     for _, hotbar_item in pairs(hotbar_items) do
-        table.insert(hotbar_item_names, hotbar_item.item.prefab)
+        table.insert(hotbar_item_names, StringHelper.GetPrettyName(hotbar_item.item.prefab))
     end
 
     return hotbar_item_names
