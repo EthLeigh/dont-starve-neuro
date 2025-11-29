@@ -158,9 +158,17 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
                 message = "Cooked the " .. food_to_cook.name .. "."
             end
         end
+    elseif name == ApiActions.EXPLORE then
+        local explore_task = Task:new(TaskManager.TASK_TYPES.EXPLORE, function()
+            return false
+        end)
+
+        message = "Exploring until another action is called."
+
+        TaskManager.StartTasks({ explore_task }, 5)
     else
         success = false
-        message = "An unexpected error has occurred as that action was not found"
+        message = "An unexpected error has occurred as that action was not found."
     end
 
     ApiBridge.HandleSendResult(success, message)

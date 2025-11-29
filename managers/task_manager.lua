@@ -6,6 +6,7 @@ TaskManager = {}
 TaskManager.TASK_TYPES = {
     HARVEST = 1,
     ATTACK_NEARBY = 2,
+    EXPLORE = 3,
 }
 
 ---@type Queue<Task>
@@ -47,6 +48,19 @@ local function GetTaskTypeFunction(type)
             return true
         end
     elseif type == TaskManager.TASK_TYPES.ATTACK_NEARBY then
+        return function()
+            local direction = GLOBAL.math.random(-4, 4) * 0.25
+            local angle = direction * GLOBAL.math.pi
+
+            local p_x, _, p_z = Player.Transform:GetWorldPosition()
+            local x_dir, z_dir = GLOBAL.math.cos(angle), GLOBAL.math.sin(angle)
+
+            MovementHelper.MoveToPoint(p_x * x_dir * GameConstants.EXPLORE_DISTANCE,
+                p_z * z_dir * GameConstants.EXPLORE_DISTANCE)
+
+            return true
+        end
+    elseif type == TaskManager.TASK_TYPES.EXPLORE then
         return function()
             local nearby_hostiles = EntityHelper.GetNearbyHostileEntities()
             local nearby_animals = EntityHelper.GetNearbyAnimals()

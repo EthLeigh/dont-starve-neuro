@@ -108,6 +108,11 @@ export const cookFood = createOutgoingAction(
   'Cooks the best available food in the inventory at a nearby campfire.',
 );
 
+export const explore = createOutgoingAction(
+  'explore',
+  'Explores in a random directoin until another action is called.',
+);
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -124,6 +129,7 @@ const allActions: readonly OutgoingAction[] = [
   retrieveCurrentGoal,
   attackNearby,
   cookFood,
+  explore,
 ];
 
 export default allActions;
