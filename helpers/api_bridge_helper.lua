@@ -166,6 +166,24 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = "Exploring until another action is called."
 
         TaskManager.StartTasks({ explore_task }, 5)
+    elseif name == ApiActions.RETRIEVE_NEARBY then
+        local entity_counts = EntityHelper.GetAllNearbyEntityCounts()
+
+        local message_parts = {}
+        for entity_name, entity_count in pairs(entity_counts) do
+            entity_name = StringHelper.GetPrettyName(entity_name)
+
+            if entity_count ~= 1 and not string.starts(string.reverse(entity_name), 's') then
+                entity_name = entity_name .. "s" -- dumb pluralization
+            elseif string.starts(string.reverse(entity_name), 's') then
+
+            end
+
+            message_parts[#message_parts + 1] = string.format("%d %s", entity_count, entity_name)
+        end
+
+        table.sort(message_parts)
+        message = table.concat(message_parts, ", ")
     else
         success = false
         message = "An unexpected error has occurred as that action was not found."

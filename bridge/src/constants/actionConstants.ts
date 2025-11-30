@@ -113,6 +113,11 @@ export const explore = createOutgoingAction(
   'Explores in a random directoin until another action is called.',
 );
 
+export const retrieveNearby = createOutgoingAction(
+  'retrieve_nearby',
+  'Retrieves all the nearby objects/entities/enemies and how many there are.',
+);
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -130,6 +135,7 @@ const allActions: readonly OutgoingAction[] = [
   attackNearby,
   cookFood,
   explore,
+  retrieveNearby,
 ];
 
 export default allActions;

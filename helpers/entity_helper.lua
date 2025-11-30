@@ -100,3 +100,27 @@ function EntityHelper.GetNearbyEntities(tags)
         tags
     )
 end
+
+---@return table<string, integer>
+function EntityHelper.GetAllNearbyEntityCounts()
+    local x, y, z = Player.Transform:GetWorldPosition()
+
+    local entities = GLOBAL.TheSim:FindEntities(
+        x, y, z,
+        GameConstants.SEARCH_RADIUS,
+        {},
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player" },
+        {}
+    )
+    local entity_counts = {}
+
+    for _, entity in pairs(entities) do
+        local prefab = entity.prefab
+
+        if prefab ~= nil then
+            entity_counts[prefab] = (entity_counts[prefab] or 0) + 1
+        end
+    end
+
+    return entity_counts
+end
