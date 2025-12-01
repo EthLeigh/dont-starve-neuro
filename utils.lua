@@ -2,7 +2,7 @@ Utils = {}
 
 modimport("classes/action_queue.lua")
 
----@param ent Entity
+---@param ent Entity | nil
 ---@return table | nil
 function Utils.GetActionForEntity(ent)
     if ent == nil then return nil end
@@ -20,7 +20,7 @@ function Utils.GetActionForEntity(ent)
     return nil
 end
 
----@param ent Entity
+---@param ent Entity | nil
 function Utils.GetBufferedActionForEntity(ent)
     local action = Utils.GetActionForEntity(ent)
 

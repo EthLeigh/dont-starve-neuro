@@ -62,7 +62,7 @@ function EntityHelper.GetNearbyHarvestables()
     return filtered_harvestables
 end
 
----@return table<string, Entity[]>
+---@return table<string, Entity>
 function EntityHelper.GetNearbyUniqueHarvestables()
     local nearby_ents = EntityHelper.GetNearbyHarvestables()
     local nearby_unique_ents = {}
@@ -76,7 +76,7 @@ function EntityHelper.GetNearbyUniqueHarvestables()
     return nearby_unique_ents
 end
 
----@return table<string, Entity[]>
+---@return table<string, Entity>
 function EntityHelper.GetNearbyLightSources()
     local x, y, z = Player.Transform:GetWorldPosition()
 
@@ -87,16 +87,16 @@ function EntityHelper.GetNearbyLightSources()
     )
 end
 
----@param tags string[]
----@return table<string, Entity[]>
+---@param tags string[]?
+---@return table<string, Entity>
 function EntityHelper.GetNearbyEntities(tags)
     local x, y, z = Player.Transform:GetWorldPosition()
 
     return GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
-        {},
-        {},
+        nil,
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" },
         tags
     )
 end
@@ -105,12 +105,7 @@ end
 function EntityHelper.GetAllNearbyEntityCounts()
     local x, y, z = Player.Transform:GetWorldPosition()
 
-    local entities = GLOBAL.TheSim:FindEntities(
-        x, y, z,
-        GameConstants.SEARCH_RADIUS,
-        nil,
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" }
-    )
+    local entities = EntityHelper.GetNearbyEntities()
     local inventory_items = InventoryHelper.GetHotbarItems()
     local entity_counts = {}
 

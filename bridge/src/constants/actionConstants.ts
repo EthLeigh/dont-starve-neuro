@@ -118,6 +118,16 @@ export const retrieveNearby = createOutgoingAction(
   'Retrieves all the nearby objects/entities/enemies and how many there are.',
 );
 
+export const interact = createOutgoingAction(
+  'interact',
+  'Interacts with a nearby entity/interacbile.',
+  toJSONSchema(
+    z.strictObject({
+      name: z.string().lowercase().min(3),
+    }),
+  ),
+);
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -136,6 +146,7 @@ const allActions: readonly OutgoingAction[] = [
   cookFood,
   explore,
   retrieveNearby,
+  interact,
 ];
 
 export default allActions;

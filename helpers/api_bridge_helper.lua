@@ -184,6 +184,35 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         else
             message = "There are no interactibles nearby."
         end
+    elseif name == ApiActions.INTERACT then
+        ---@type string
+        local entity_name_to_interact = data.name
+        local nearby_entities = EntityHelper.GetNearbyEntities()
+
+        local entity_to_interact = nil
+        for entity_name, entity in pairs(nearby_entities) do
+            if entity_name == entity_name_to_interact then
+                entity_to_interact = entity
+
+                break
+            end
+        end
+
+        -- Will return nil if the ent is nil
+        local buffered_action = Utils.GetBufferedActionForEntity(entity_to_interact)
+
+        if entity_to_interact and buffered_action then
+            PlayerLocomotor:PushAction(buffered_action, true)
+        elseif not buffered_action then
+            success = false
+            message = "That entity/interactible is not supported and cannot be interacted with."
+        elseif not entity_to_interact then
+            success = false
+            message = "That entity/interactible was not found."
+        else
+            success = false
+            message = "An unexpected error occurred."
+        end
     else
         success = false
         message = "An unexpected error has occurred as that action was not found."
