@@ -108,16 +108,23 @@ function EntityHelper.GetAllNearbyEntityCounts()
     local entities = GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
-        {},
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player" },
-        {}
+        nil,
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" }
     )
+    local inventory_items = InventoryHelper.GetHotbarItems()
     local entity_counts = {}
+
+    local inventory_item_names = {}
+    for _, inventory_item in pairs(inventory_items) do
+        table.insert(inventory_item_names, inventory_item.item.prefab)
+    end
 
     for _, entity in pairs(entities) do
         local prefab = entity.prefab
 
-        if prefab ~= nil then
+        if table.contains(inventory_item_names, prefab) then
+            Utils.RemoveElementByValue(inventory_item_names, prefab)
+        elseif prefab ~= nil and not table.contains(GLOBAL.IGNORE_PREFABS, string.upper(prefab)) then
             entity_counts[prefab] = (entity_counts[prefab] or 0) + 1
         end
     end

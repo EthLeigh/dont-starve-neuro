@@ -1,5 +1,6 @@
 modimport("logging.lua")
 modimport("constants/game.lua")
+modimport("constants/ignored_prefabs.lua")
 modimport("constants/api_bridge.lua")
 modimport("constants/api_actions.lua")
 modimport("constants/persistent_strings.lua")

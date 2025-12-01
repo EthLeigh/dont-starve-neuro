@@ -18,6 +18,7 @@
 ---@field next next
 ---@field json json
 ---@field STRINGS STRINGS
+---@field IGNORE_PREFABS string[]
 
 -- Neuro API Classes
 

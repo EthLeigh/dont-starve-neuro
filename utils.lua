@@ -36,3 +36,18 @@ function Utils.GetEnumKey(enum, value)
         end
     end
 end
+
+---@generic K
+---@param list table<any, K>
+---@param value K
+function Utils.RemoveElementByValue(list, value)
+    for list_index, list_value in ipairs(list) do
+        if list_value == value then
+            table.remove(list, list_index)
+
+            return true
+        end
+    end
+
+    return false
+end
