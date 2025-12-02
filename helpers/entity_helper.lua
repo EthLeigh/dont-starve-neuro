@@ -40,7 +40,6 @@ function EntityHelper.GetNearbyHostileEntities()
     )
 end
 
--- TODO: Currently includes non-harvestable entities like trees, etc.
 ---@return table<integer, Entity>
 function EntityHelper.GetNearbyHarvestables()
     local x, y, z = Player.Transform:GetWorldPosition()
@@ -103,8 +102,6 @@ end
 
 ---@return table<string, integer>
 function EntityHelper.GetAllNearbyEntityCounts()
-    local x, y, z = Player.Transform:GetWorldPosition()
-
     local entities = EntityHelper.GetNearbyEntities()
     local inventory_items = InventoryHelper.GetHotbarItems()
     local entity_counts = {}

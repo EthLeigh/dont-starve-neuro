@@ -3,30 +3,34 @@ Utils = {}
 modimport("classes/action_queue.lua")
 
 ---@param ent Entity | nil
----@return table | nil
+---@return string | nil, table | nil
 function Utils.GetActionForEntity(ent)
-    if ent == nil then return nil end
+    if ent == nil then return end
 
     if ent.components.pickable and ent.components.pickable:CanBePicked() then
-        return GLOBAL.ACTIONS.PICK
+        return "pick", GLOBAL.ACTIONS.PICK
     elseif ent.components.harvestable and ent.components.harvestable:CanBeHarvested() then
-        return GLOBAL.ACTIONS.HARVEST
+        return "harvest", GLOBAL.ACTIONS.HARVEST
     elseif ent.components.crop and ent.components.crop:IsReadyForHarvest() then
-        return GLOBAL.ACTIONS.HARVEST
+        return "harvest", GLOBAL.ACTIONS.HARVEST
+    elseif ent.components.inventoryitem and ent.components.inventoryitem.canbepickedup then
+        return "pickup", GLOBAL.ACTIONS.PICKUP
     elseif ent.components.inspectable then
-        return GLOBAL.ACTIONS.INSPECT
+        -- TODO: Add a context message for the character response
+        return "examine", GLOBAL.ACTIONS.LOOKAT
     end
-
-    return nil
 end
 
 ---@param ent Entity | nil
+---@return string | nil, BufferedAction | nil
 function Utils.GetBufferedActionForEntity(ent)
-    local action = Utils.GetActionForEntity(ent)
+    if ent == nil then return end
+
+    local action_name, action = Utils.GetActionForEntity(ent)
 
     if action == nil then return end
 
-    return GLOBAL.BufferedAction(Player, ent, action)
+    return action_name, GLOBAL.BufferedAction(Player, ent, action)
 end
 
 function Utils.GetEnumKey(enum, value)

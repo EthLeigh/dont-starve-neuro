@@ -190,8 +190,8 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         local nearby_entities = EntityHelper.GetNearbyEntities()
 
         local entity_to_interact = nil
-        for entity_name, entity in pairs(nearby_entities) do
-            if entity_name == entity_name_to_interact then
+        for _, entity in pairs(nearby_entities) do
+            if entity.prefab == entity_name_to_interact then
                 entity_to_interact = entity
 
                 break
@@ -199,16 +199,18 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         end
 
         -- Will return nil if the ent is nil
-        local buffered_action = Utils.GetBufferedActionForEntity(entity_to_interact)
+        local action_name, buffered_action = Utils.GetBufferedActionForEntity(entity_to_interact)
 
         if entity_to_interact and buffered_action then
             PlayerLocomotor:PushAction(buffered_action, true)
-        elseif not buffered_action then
-            success = false
-            message = "That entity/interactible is not supported and cannot be interacted with."
+
+            message = "Performing the " .. action_name .. " action on the " .. entity_name_to_interact .. "."
         elseif not entity_to_interact then
             success = false
             message = "That entity/interactible was not found."
+        elseif not buffered_action then
+            success = false
+            message = "That entity/interactible is not supported and cannot be interacted with."
         else
             success = false
             message = "An unexpected error occurred."

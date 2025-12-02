@@ -23,7 +23,7 @@ function HarvestHelper.HarvestEntities(ents)
     local buf_action_queue = BufferedActionQueue:New()
 
     for _, ent in pairs(ents) do
-        local buffered_action = Utils.GetBufferedActionForEntity(ent)
+        local _, buffered_action = Utils.GetBufferedActionForEntity(ent)
 
         if (buffered_action ~= nil) then
             buf_action_queue:Push(buffered_action)
