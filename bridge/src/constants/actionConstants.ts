@@ -15,7 +15,7 @@ const toJSONSchema = (schema: z.ZodObject): JSONSchema.JSONSchema => {
 
 export const moveToMarker = createOutgoingAction(
   'move_to_marker',
-  "Moves the player to a saved marker location by it's name.",
+  "Moves the player to a saved location by it's name.",
   toJSONSchema(
     z.strictObject({
       marker_name: z.string(),
@@ -25,7 +25,7 @@ export const moveToMarker = createOutgoingAction(
 
 export const saveMarker = createOutgoingAction(
   'save_marker',
-  'Saves the current location by name as a marker to come back to later.',
+  'Saves the current location by name to come back to later.',
   toJSONSchema(
     z.strictObject({
       marker_name: z.string(),
@@ -40,7 +40,7 @@ export const eatFood = createOutgoingAction(
 
 export const harvestNearby = createOutgoingAction(
   'harvest_nearby',
-  'Harvests nearby collectables until another action is called.',
+  'Harvests nearby entities/interactibles until another action is called.',
 );
 
 export const getEnvironmentInfo = createOutgoingAction(
@@ -55,12 +55,12 @@ export const getPlayerInfo = createOutgoingAction(
 
 export const getInventory = createOutgoingAction(
   'get_inventory',
-  'Retrieves all the items in the inventory and returns their names.',
+  'Retrieves all items in the inventory and returns their names.',
 );
 
 export const getAvailableCrafts = createOutgoingAction(
   'get_available_crafts',
-  'Retrieves all the available and valid crafting recipes that can be crafted.',
+  'Retrieves all available and valid crafting recipes that can be crafted.',
 );
 
 export const craft = createOutgoingAction(
@@ -100,7 +100,7 @@ export const retrieveCurrentGoal = createOutgoingAction(
 
 export const attackNearby = createOutgoingAction(
   'attack_nearby',
-  'Attacks all nearby entites continuously until another action is called.',
+  'Attacks all nearby entities continuously until another action is called.',
 );
 
 export const cookFood = createOutgoingAction(
@@ -110,7 +110,7 @@ export const cookFood = createOutgoingAction(
 
 export const explore = createOutgoingAction(
   'explore',
-  'Explores in a random directoin until another action is called.',
+  'Explores in a random direction until another action is called.',
 );
 
 export const retrieveNearby = createOutgoingAction(
@@ -120,7 +120,7 @@ export const retrieveNearby = createOutgoingAction(
 
 export const interact = createOutgoingAction(
   'interact',
-  'Interacts with a nearby entity/interacbile.',
+  'Interacts with a nearby entity/interactible.',
   toJSONSchema(
     z.strictObject({
       name: z.string().lowercase().min(3),
