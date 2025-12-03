@@ -15,7 +15,7 @@ end
 ---@param name string
 ---@return string
 function StringHelper.GetCharacterDescription(name)
-    return GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS[string.upper(name)]
+    return GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS[name]
 end
 
 ---@param count integer
