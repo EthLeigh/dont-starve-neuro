@@ -42,6 +42,14 @@ local function HandlePlayerStarve()
     ContextManager.HandlePlayerStarve(food_eaten)
 end
 
+local function HandleDayStart()
+    ApiBridge.HandleSendUnregister({ ApiActions.GO_TO_LIGHT_SOURCE })
+end
+
+local function HandleNightStart()
+    ApiBridge.HandleSendRegister({ ApiActions.GO_TO_LIGHT_SOURCE })
+end
+
 --- Setup listeners for necessary events
 function TriggerManager.SetupTriggerEvents()
     PlayerHealth.inst:ListenForEvent("healthdelta", function(_, data)
@@ -53,4 +61,7 @@ function TriggerManager.SetupTriggerEvents()
     end)
 
     PlayerHunger.inst:ListenForEvent("startstarving", HandlePlayerStarve)
+
+    Clock.inst:ListenForEvent("daytime", HandleDayStart)
+    Clock.inst:ListenForEvent("nighttime", HandleNightStart)
 end

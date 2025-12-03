@@ -32,6 +32,9 @@ GLOBAL = GLOBAL
 ---@type World
 World = nil
 
+---@type Clock
+Clock = nil
+
 ---@type SeasonManager
 SeasonManager = nil
 
@@ -109,6 +112,7 @@ end)
 
 AddSimPostInit(function()
     Camera = GLOBAL.TheCamera
+    Clock = GLOBAL:GetClock()
     World = GLOBAL:GetWorld()
     SeasonManager = World.components.seasonmanager
 
@@ -118,7 +122,7 @@ AddSimPostInit(function()
     Camera:SetHeadingTarget(270)
     Camera:Snap()
 
-    GlobalPlayer = GLOBAL.GetPlayer()
+    GlobalPlayer = GLOBAL:GetPlayer()
 
     if Player == nil and GlobalPlayer == nil then
         log_error("The Player object is nil")

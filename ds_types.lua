@@ -7,10 +7,11 @@
 ---@field ACTIONS table<string, table>
 ---@field GROUND table<string, table>
 ---@field TheSim TheSim
----@field GetAllRecipes fun(): table<string, Recipe>
----@field GetPlayer fun(): Player
----@field GetMap fun(): Map
----@field GetWorld fun(): World
+---@field GetAllRecipes fun(self: GLOBAL): table<string, Recipe>
+---@field GetPlayer fun(self: GLOBAL): Player
+---@field GetMap fun(self: GLOBAL): Map
+---@field GetWorld fun(self: GLOBAL): World
+---@field GetClock fun(self: GLOBAL): Clock
 ---@field tonumber fun(value: any): number?
 ---@field unpack function Type left anonymous to avoid complexity
 ---@field math mathlib
@@ -110,6 +111,10 @@
 ---@field SetControllable fun(self: Camera, state: boolean)
 ---@field SetHeadingTarget fun(self: Camera, angle: number)
 ---@field Snap function
+
+---@class Clock
+---@field Reset fun(self: Clock)
+---@field inst Instance
 
 ---@class Map
 ---@field GetTileAtPoint fun(self: Map, x: number, y: number, z: number): string
