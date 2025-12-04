@@ -95,7 +95,7 @@ function ApiBridge.HandleSendRegister(action_names)
         BridgeConstants.REGISTER_URL,
         function() end,
         "POST",
-        GLOBAL.json.encode({ actions = action_names })
+        GLOBAL.json.encode({ actionNames = action_names })
     )
 end
 
