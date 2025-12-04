@@ -6,6 +6,17 @@ Neuro-sama API integration for Don't Starve.
 
 <!-- TODO: Add a section on how to setup and use -->
 
+## Configuration
+
+> Ensure the mod is loading correctly and can be viewed under the Mods section of the Main Menu!
+
+When under the Mods section, and hovering over the "Don't Starve Neuro" mod,
+click **Configure Mod** to adjust the settings.
+
+Currently, you can:
+
+- Toggle Goal related functionality
+
 ## Development
 
 <!-- TODO: Add instructions for the API bridge -->

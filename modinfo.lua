@@ -23,7 +23,7 @@ configuration_options =
 {
     {
         name = "goals_enabled",
-        label = "Goals Action",
+        label = "Goals",
         options =
         {
             { description = "Enabled",  data = true },
