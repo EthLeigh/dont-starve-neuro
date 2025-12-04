@@ -1,4 +1,3 @@
-import type { JSONSchema } from 'zod/v4/core';
 import type {
   ActionResultMessage,
   ContextMessage,
@@ -9,11 +8,12 @@ import type {
   UnregisterActionMessage,
 } from '../types/outgoingMessageTypes.js';
 import { GAME_NAME } from '../constants/constants.js';
+import type { ZodObject } from 'zod';
 
 export const createOutgoingAction = (
   name: string,
   description: string,
-  schema: JSONSchema.JSONSchema | undefined = undefined,
+  schema: ZodObject | undefined = undefined,
 ): OutgoingAction => ({
   name,
   description,

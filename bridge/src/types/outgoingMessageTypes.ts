@@ -1,10 +1,10 @@
-import type { JSONSchema } from 'zod/v4/core';
 import type { GAME_NAME } from '../constants/constants.js';
+import type { ZodObject } from 'zod';
 
 export type OutgoingAction = {
   name: string;
   description: string;
-  schema: JSONSchema.JSONSchema | undefined;
+  schema: ZodObject | undefined;
 };
 
 export type StartupMessage = {

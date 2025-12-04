@@ -1,36 +1,21 @@
 import z from 'zod';
 import { createOutgoingAction } from '../utils/outgoingMessageUtils.js';
 import type { OutgoingAction } from '../types/outgoingMessageTypes.js';
-import type { JSONSchema } from 'zod/v4/core';
-import { schemaToJsonSchema } from '../utils/zodUtil.js';
-
-const toJSONSchema = (schema: z.ZodObject): JSONSchema.JSONSchema => {
-  const jsonSchema = schemaToJsonSchema(schema);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { $schema, additionalProperties, ...filteredJsonSchema } = jsonSchema;
-
-  return filteredJsonSchema;
-};
 
 export const moveToMarker = createOutgoingAction(
   'move_to_marker',
   "Moves the player to a saved location by it's name.",
-  toJSONSchema(
-    z.strictObject({
-      marker_name: z.string(),
-    }),
-  ),
+  z.strictObject({
+    marker_name: z.string(),
+  }),
 );
 
 export const saveMarker = createOutgoingAction(
   'save_marker',
   'Saves the current location by name to come back to later.',
-  toJSONSchema(
-    z.strictObject({
-      marker_name: z.string(),
-    }),
-  ),
+  z.strictObject({
+    marker_name: z.string(),
+  }),
 );
 
 export const eatFood = createOutgoingAction(
@@ -66,21 +51,17 @@ export const getAvailableCrafts = createOutgoingAction(
 export const craft = createOutgoingAction(
   'craft',
   'Crafts an item based on a recipe name (recipes can be retrieved through the get_available_crafts action).',
-  toJSONSchema(
-    z.strictObject({
-      recipe_name: z.string(),
-    }),
-  ),
+  z.strictObject({
+    recipe_name: z.string(),
+  }),
 );
 
 export const characterSay = createOutgoingAction(
   'character_say',
   'Makes your character say something.',
-  toJSONSchema(
-    z.strictObject({
-      dialog: z.string(),
-    }),
-  ),
+  z.strictObject({
+    dialog: z.string(),
+  }),
 );
 
 export const getPerksAndQuirks = createOutgoingAction(
@@ -121,11 +102,9 @@ export const retrieveNearby = createOutgoingAction(
 export const interact = createOutgoingAction(
   'interact',
   'Interacts with a nearby entity/interactible.',
-  toJSONSchema(
-    z.strictObject({
-      name: z.string().lowercase().min(3),
-    }),
-  ),
+  z.strictObject({
+    name: z.string(),
+  }),
 );
 
 const allActions: readonly OutgoingAction[] = [

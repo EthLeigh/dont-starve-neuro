@@ -1,4 +1,4 @@
-import type { FastifyPluginAsync } from 'fastify';
+import { type FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { sendMessage } from '../ws/wsClient.js';
 import {
   createActionResultMessage,
@@ -8,7 +8,6 @@ import {
   createUnregisterActionMessage,
 } from '../utils/outgoingMessageUtils.js';
 import z from 'zod';
-import { schemaToJsonSchema } from '../utils/zodUtil.js';
 import allActions from '../constants/actionConstants.js';
 import {
   clearPendingIncomingAction,
@@ -18,37 +17,7 @@ import {
 } from '../state/pendingIncomingAction.js';
 import { logger } from '../server.js';
 
-const SendRegisterRequestSchema = z.object({
-  actionNames: z.array(z.string()),
-});
-type SendRegisterRequest = z.infer<typeof SendRegisterRequestSchema>;
-
-const SendUnregisterRequestSchema = z.object({
-  actionNames: z.array(z.string()),
-});
-type SendUnregisterRequest = z.infer<typeof SendUnregisterRequestSchema>;
-
-const SendContextRequestSchema = z.object({
-  message: z.string(),
-  silent: z.boolean().optional(),
-});
-type SendContextRequest = z.infer<typeof SendContextRequestSchema>;
-
-const ForceRequestSchema = z.object({
-  query: z.string(),
-  actionNames: z.array(z.string()),
-  ephemeralContext: z.boolean().optional(),
-  state: z.string().optional(),
-});
-type ForceRequest = z.infer<typeof ForceRequestSchema>;
-
-const ResultRequestSchema = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-});
-type ResultRequest = z.infer<typeof ResultRequestSchema>;
-
-const actions: FastifyPluginAsync = async (app) => {
+const actions: FastifyPluginAsyncZod = async (app) => {
   app.get('/retrieve-pending', async () => {
     if (hasSentPendingIncomingAction()) return;
 
@@ -73,11 +42,13 @@ const actions: FastifyPluginAsync = async (app) => {
     '/register',
     {
       schema: {
-        body: schemaToJsonSchema(SendRegisterRequestSchema),
+        body: z.strictObject({
+          actionNames: z.array(z.string()),
+        }),
       },
     },
     async (req) => {
-      const { actionNames: actionNamesToRegister } = req.body as SendRegisterRequest;
+      const { actionNames: actionNamesToRegister } = req.body;
       const actionsToRegister = allActions.filter((action) =>
         actionNamesToRegister.includes(action.name),
       );
@@ -92,11 +63,13 @@ const actions: FastifyPluginAsync = async (app) => {
     '/unregister',
     {
       schema: {
-        body: schemaToJsonSchema(SendUnregisterRequestSchema),
+        body: z.strictObject({
+          actionNames: z.array(z.string()),
+        }),
       },
     },
     async (req) => {
-      const { actionNames: actionNamesToUnregister } = req.body as SendUnregisterRequest;
+      const { actionNames: actionNamesToUnregister } = req.body;
 
       const unregisterMessage = createUnregisterActionMessage(actionNamesToUnregister);
 
@@ -108,11 +81,14 @@ const actions: FastifyPluginAsync = async (app) => {
     '/context',
     {
       schema: {
-        body: schemaToJsonSchema(SendContextRequestSchema),
+        body: z.strictObject({
+          message: z.string(),
+          silent: z.boolean().optional(),
+        }),
       },
     },
     async (req) => {
-      const requestContextMessage = req.body as SendContextRequest;
+      const requestContextMessage = req.body;
 
       const contextMessage = createContextMessage(
         requestContextMessage.message,
@@ -127,11 +103,16 @@ const actions: FastifyPluginAsync = async (app) => {
     '/force',
     {
       schema: {
-        body: schemaToJsonSchema(ForceRequestSchema),
+        body: z.strictObject({
+          query: z.string(),
+          actionNames: z.array(z.string()),
+          ephemeralContext: z.boolean().optional(),
+          state: z.string().optional(),
+        }),
       },
     },
     async (req) => {
-      const requestForceAction = req.body as ForceRequest;
+      const requestForceAction = req.body;
 
       const forceMessage = createForceActionMessage(
         requestForceAction.query,
@@ -148,11 +129,14 @@ const actions: FastifyPluginAsync = async (app) => {
     '/result',
     {
       schema: {
-        body: schemaToJsonSchema(ResultRequestSchema),
+        body: z.strictObject({
+          success: z.boolean(),
+          message: z.string().optional(),
+        }),
       },
     },
     async (req) => {
-      const actionResult = req.body as ResultRequest;
+      const actionResult = req.body;
       const pendingIncomingAction = getPendingIncomingAction();
 
       if (!pendingIncomingAction) {

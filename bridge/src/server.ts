@@ -1,6 +1,10 @@
 import Fastify from 'fastify';
 import formbody from '@fastify/formbody';
-import type { ZodTypeProvider } from 'fastify-type-provider-zod';
+import {
+  type ZodTypeProvider,
+  serializerCompiler,
+  validatorCompiler,
+} from 'fastify-type-provider-zod';
 import { env } from './env.js';
 import api from './routes/index.js';
 import { initWs } from './ws/wsClient.js';
@@ -10,10 +14,14 @@ export const app = Fastify({
     level: 'info',
     transport: {
       target: 'pino-pretty',
+      options: { colorize: true },
     },
   },
 }).withTypeProvider<ZodTypeProvider>();
 export const logger = app.log;
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
 
 // Allows the bridge to handle urlencoded and json requests
 app.addHook('preValidation', (req, _, done) => {
