@@ -8,12 +8,12 @@ import type {
   UnregisterActionMessage,
 } from '../types/outgoingMessageTypes.js';
 import { GAME_NAME } from '../constants/constants.js';
-import type { ZodObject } from 'zod';
+import type { JSONSchema } from 'zod/v4/core';
 
 export const createOutgoingAction = (
   name: string,
   description: string,
-  schema: ZodObject | undefined = undefined,
+  schema: JSONSchema.JSONSchema | undefined = undefined,
 ): OutgoingAction => ({
   name,
   description,

@@ -1,21 +1,26 @@
 import z from 'zod';
 import { createOutgoingAction } from '../utils/outgoingMessageUtils.js';
 import type { OutgoingAction } from '../types/outgoingMessageTypes.js';
+import { schemaToJsonSchema } from '../utils/zodUtil.js';
 
 export const moveToMarker = createOutgoingAction(
   'move_to_marker',
   "Moves the player to a saved location by it's name.",
-  z.strictObject({
-    marker_name: z.string(),
-  }),
+  schemaToJsonSchema(
+    z.strictObject({
+      marker_name: z.string().nonoptional(),
+    }),
+  ),
 );
 
 export const saveMarker = createOutgoingAction(
   'save_marker',
   'Saves the current location by name to come back to later.',
-  z.strictObject({
-    marker_name: z.string(),
-  }),
+  schemaToJsonSchema(
+    z.strictObject({
+      marker_name: z.string().nonoptional(),
+    }),
+  ),
 );
 
 export const eatFood = createOutgoingAction(
@@ -51,17 +56,21 @@ export const getAvailableCrafts = createOutgoingAction(
 export const craft = createOutgoingAction(
   'craft',
   'Crafts an item based on a recipe name (recipes can be retrieved through the get_available_crafts action).',
-  z.strictObject({
-    recipe_name: z.string(),
-  }),
+  schemaToJsonSchema(
+    z.strictObject({
+      recipe_name: z.string().nonoptional(),
+    }),
+  ),
 );
 
 export const characterSay = createOutgoingAction(
   'character_say',
   'Makes your character say something.',
-  z.strictObject({
-    dialog: z.string(),
-  }),
+  schemaToJsonSchema(
+    z.strictObject({
+      dialog: z.string().nonoptional(),
+    }),
+  ),
 );
 
 export const getPerksAndQuirks = createOutgoingAction(
@@ -102,9 +111,11 @@ export const retrieveNearby = createOutgoingAction(
 export const interact = createOutgoingAction(
   'interact',
   'Interacts with a nearby entity/interactible.',
-  z.strictObject({
-    name: z.string(),
-  }),
+  schemaToJsonSchema(
+    z.strictObject({
+      name: z.string().nonoptional(),
+    }),
+  ),
 );
 
 const allActions: readonly OutgoingAction[] = [
