@@ -245,3 +245,10 @@ function AddPrefabPostInitAny(handler) end
 ---@param path string Relative path to the `.lua` file
 ---@diagnostic disable-next-line: unused-local
 function modimport(path) end
+
+--- Apparently *not* supposed to be used by modders, but fuck you it works
+---@param optionname string
+---@param modname string
+---@return unknown|nil
+---@diagnostic disable-next-line: unused-local
+function GetModConfigData(optionname, modname) end

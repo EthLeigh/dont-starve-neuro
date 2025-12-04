@@ -18,3 +18,17 @@ api_version_dst = 10
 
 forumthread = ""
 priority = 0
+
+configuration_options =
+{
+    {
+        name = "goals_enabled",
+        label = "Goals Action",
+        options =
+        {
+            { description = "Enabled",  data = true },
+            { description = "Disabled", data = false },
+        },
+        default = true,
+    },
+}

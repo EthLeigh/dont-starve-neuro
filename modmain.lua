@@ -26,6 +26,10 @@ modimport("helpers/eater_helper.lua")
 modimport("helpers/api_bridge_helper.lua")
 modimport("api_bridge.lua")
 
+CONFIG = {}
+
+CONFIG.GOALS_ENABLED = GetModConfigData("goals_enabled")
+
 ---@type GLOBAL
 GLOBAL = GLOBAL
 
@@ -228,14 +232,17 @@ AddSimPostInit(function()
 
     TriggerManager.SetupTriggerEvents()
     ContextManager.SetupContextEvents()
-    GoalManager.LoadAndStart()
+
+    if CONFIG.GOALS_ENABLED then
+        GoalManager.LoadAndStart()
+    end
 
     Player:DoPeriodicTask(1, function()
         ApiBridge.GetPending()
     end)
 
     -- Testing only (need to send valid actions only not all)
-    ApiBridge.HandleSendRegisterAll()
+    ApiBridge.HandleSendRegisterAll(CONFIG.GOALS_ENABLED)
 
     Player:ListenForEvent("killed", ContextManager.OnEntityKilled)
 end)
