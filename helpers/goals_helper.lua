@@ -14,6 +14,32 @@ GoalChecks = {
             return event_data.item.prefab == "campfire"
         end)
     end,
+    [Goals.CRAFT_PICKAXE] = function()
+        CreateListenerOnEntityForEvent(Goals.CRAFT_PICKAXE, PlayerBuilder, "builditem", function(event_data)
+            return event_data.item.prefab == "pickaxe"
+        end)
+    end,
+    [Goals.BUILD_SCIENCE_MACHINE] = function()
+        CreateListenerOnEntityForEvent(Goals.BUILD_SCIENCE_MACHINE, PlayerBuilder, "builditem", function(event_data)
+            return event_data.item.prefab == "scienceprototyper"
+        end)
+    end,
+    [Goals.CRAFT_BACKPACK] = function()
+        CreateListenerOnEntityForEvent(Goals.CRAFT_BACKPACK, PlayerBuilder, "builditem", function(event_data)
+            return event_data.item.prefab == "backpack"
+        end)
+    end,
+    [Goals.COOK_FOOD] = function()
+        -- Custom event pushing in api_bridge_helper
+        CreateListenerOnEntityForEvent(Goals.COOK_FOOD, PlayerInventory, "cookedfood", function()
+            return true
+        end)
+    end,
+    [Goals.SURVIVE_NIGHT] = function()
+        CreateListenerOnEntityForEvent(Goals.SURVIVE_NIGHT, Clock, "daycomplete", function()
+            return true
+        end)
+    end,
 }
 
 ---Listens for an event on a **Player Component**

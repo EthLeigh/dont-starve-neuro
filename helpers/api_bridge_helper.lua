@@ -153,6 +153,8 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
                 Player.components.locomotor:PushAction(act, true)
 
+                PlayerInventory.inst:PushEvent("cookedfood")
+
                 message = "Cooked the " .. StringHelper.GetPrettyName(food_to_cook.prefab) .. "."
             end
         end

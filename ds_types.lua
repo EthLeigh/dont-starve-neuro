@@ -92,6 +92,7 @@
 
 ---@class Instance
 ---@field ListenForEvent fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>), source: Instance?)
+---@field PushEvent fun(self: Instance, event_name: string, data: table<any, any>?)
 ---@field RemoveEventCallback fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>), source: Instance?)
 ---@field OnSave fun(inst: Instance, data: table<any, any>)
 
@@ -112,7 +113,7 @@
 ---@field SetHeadingTarget fun(self: Camera, angle: number)
 ---@field Snap function
 
----@class Clock
+---@class Clock: Component
 ---@field Reset fun(self: Clock)
 ---@field IsNight fun(self: Clock): boolean
 ---@field inst Instance
