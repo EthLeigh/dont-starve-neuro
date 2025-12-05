@@ -50,6 +50,14 @@ local function HandleNightStart()
     ApiBridge.HandleSendRegister({ ApiActions.GO_TO_LIGHT_SOURCE })
 end
 
+local function HandleInventoryItemChange()
+    if EaterHelper.GetBestFoodInInventory() then
+        ApiBridge.HandleSendRegister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
+    else
+        ApiBridge.HandleSendUnregister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
+    end
+end
+
 --- Setup listeners for necessary events
 function TriggerManager.SetupTriggerEvents()
     PlayerHealth.inst:ListenForEvent("healthdelta", function(_, data)
@@ -64,4 +72,7 @@ function TriggerManager.SetupTriggerEvents()
 
     Clock.inst:ListenForEvent("daytime", HandleDayStart)
     Clock.inst:ListenForEvent("nighttime", HandleNightStart)
+
+    PlayerInventory.inst:ListenForEvent("itemlose", HandleInventoryItemChange)
+    PlayerInventory.inst:ListenForEvent("itemget", HandleInventoryItemChange)
 end

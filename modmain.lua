@@ -48,6 +48,9 @@ Player = nil
 ---@type string
 PlayerName = nil
 
+---@type Inventory
+PlayerInventory = nil
+
 ---@type Health
 PlayerHealth = nil
 
@@ -84,6 +87,7 @@ end)
 
 AddPlayerPostInit(function(inst)
     Player = inst
+    PlayerInventory = Player.components.inventory
     PlayerHealth = Player.components.health
     PlayerHunger = Player.components.hunger
     PlayerSanity = Player.components.sanity

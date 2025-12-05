@@ -5,10 +5,9 @@ modimport("classes/hotbar_item.lua")
 
 ---@return HotbarItem[]
 function InventoryHelper.GetHotbarItems()
-    local inventory = Player.components.inventory
     local hotbar_items = {}
 
-    for _, hotbar_item in pairs(inventory.itemslots) do
+    for _, hotbar_item in pairs(PlayerInventory.itemslots) do
         if hotbar_item then
             table.insert(hotbar_items, HotbarItem(hotbar_item))
         end
@@ -29,6 +28,7 @@ function InventoryHelper.GetHotbarItemNames()
     return hotbar_item_names
 end
 
+-- FIXME: Literally just returns items in the inventory
 ---@return HotbarItem[]
 function InventoryHelper.GetFoodItems()
     local hotbar_items = InventoryHelper.GetHotbarItems()
