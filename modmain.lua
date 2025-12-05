@@ -175,11 +175,6 @@ AddSimPostInit(function()
     --     end
     -- end)
 
-    -- Test custom dialog
-    -- Player:DoTaskInTime(5, function()
-    --     DialogHelper.Speak("Oh my god, here we are!")
-    -- end)
-
     -- Test player helper
     -- Player:DoPeriodicTask(5, function()
     --     log_info("--- PLAYER DETAILS ---")

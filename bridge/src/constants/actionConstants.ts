@@ -63,16 +63,6 @@ export const craft = createOutgoingAction(
   ),
 );
 
-export const characterSay = createOutgoingAction(
-  'character_say',
-  'Makes your character say something.',
-  schemaToJsonSchema(
-    z.strictObject({
-      dialog: z.string().nonoptional(),
-    }),
-  ),
-);
-
 export const getPerksAndQuirks = createOutgoingAction(
   'get_perks_and_quirks',
   "Returns the current character's perks and quirks.",
@@ -128,7 +118,6 @@ const allActions: readonly OutgoingAction[] = [
   getInventory,
   getAvailableCrafts,
   craft,
-  characterSay,
   getPerksAndQuirks,
   goToLightSource,
   retrieveCurrentGoal,

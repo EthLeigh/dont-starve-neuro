@@ -35,7 +35,6 @@ this is for some more context over game functions/classes/enums/etc.
 - Get inventory - `get_inventory`: Returns all items in the inventory by name **(currently does not include total item counts)**.
 - Get available crafts - `get_available_crafts`: Returns all available and valid crafting recipes by name, this does not include items required for that recipe, or if the resulting craft is a building or item.
 - Craft - `craft`: Attempts to craft a recipe by name. Recipe names can be retrieved with `get_available_crafts`.
-- Character say - `character_say`: Makes the character say custom dialog.
 - Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs, alongside random information).
 - Go to light source - `go_to_light_source`: Runs to the nearest light source. This action is only registered at night.
 - Retrieve current goal - `retrieve_current_goal`: Sends the current goal and it's completion description.
