@@ -29,6 +29,6 @@ configuration_options =
             { description = "Enabled",  data = true },
             { description = "Disabled", data = false },
         },
-        default = true,
+        default = false,
     },
 }
