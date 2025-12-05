@@ -73,13 +73,11 @@ function ApiBridge.HandleSendStartup()
     )
 end
 
----@param goals_enabled? boolean
-function ApiBridge.HandleSendRegisterAll(goals_enabled)
+function ApiBridge.HandleSendRegisterAll()
     GLOBAL.TheSim:QueryServer(
         BridgeConstants.REGISTER_ALL_URL,
         function() end,
-        "POST",
-        GLOBAL.json.encode({ goalsEnabled = goals_enabled })
+        "GET"
     )
 end
 

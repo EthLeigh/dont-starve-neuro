@@ -55,3 +55,16 @@ function Utils.RemoveElementByValue(list, value)
 
     return false
 end
+
+---@generic V
+---@param list table<any, V>
+---@return V[]
+function Utils.UnpackValues(list)
+    local values = {}
+
+    for _, v in pairs(list) do
+        table.insert(values, v)
+    end
+
+    return values
+end

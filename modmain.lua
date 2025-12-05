@@ -242,7 +242,23 @@ AddSimPostInit(function()
     end)
 
     -- Testing only (need to send valid actions only not all)
-    ApiBridge.HandleSendRegisterAll(CONFIG.GOALS_ENABLED)
+
+    local actions_to_register = Utils.UnpackValues(ApiActions)
+
+    if not CONFIG.GOALS_ENABLED then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRIEVE_CURRENT_GOAL)
+    end
+
+    if not Clock:IsNight() then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.GO_TO_LIGHT_SOURCE)
+    end
+
+    if not EaterHelper.GetBestFoodInInventory() then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.EAT_FOOD)
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.COOK_FOOD)
+    end
+
+    ApiBridge.HandleSendRegister(actions_to_register)
 
     Player:ListenForEvent("killed", ContextManager.OnEntityKilled)
 end)

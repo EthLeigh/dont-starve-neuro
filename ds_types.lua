@@ -114,6 +114,7 @@
 
 ---@class Clock
 ---@field Reset fun(self: Clock)
+---@field IsNight fun(self: Clock): boolean
 ---@field inst Instance
 
 ---@class Map

@@ -8,7 +8,7 @@ import {
   createUnregisterActionMessage,
 } from '../utils/outgoingMessageUtils.js';
 import z from 'zod';
-import allActions, { retrieveCurrentGoal } from '../constants/actionConstants.js';
+import allActions from '../constants/actionConstants.js';
 import {
   clearPendingIncomingAction,
   consumePendingIncomingAction,
@@ -24,33 +24,13 @@ const actions: FastifyPluginAsyncZod = async (app) => {
     return consumePendingIncomingAction();
   });
 
-  app.post(
-    '/register-all',
-    {
-      schema: {
-        body: z.strictObject({
-          goalsEnabled: z.boolean().optional(),
-        }),
-      },
-    },
-    async (req) => {
-      const { goalsEnabled } = req.body;
+  app.post('/register-all', async () => {
+    const registerAllMessage = createRegisterActionMessage(allActions);
 
-      const filteredActions = allActions.filter((action) => {
-        if (action === retrieveCurrentGoal && !goalsEnabled) {
-          return false;
-        }
+    logger.info(registerAllMessage, 'Registering all actions');
 
-        return true;
-      });
-
-      const registerAllMessage = createRegisterActionMessage(filteredActions);
-
-      logger.info(registerAllMessage, 'Registering all actions');
-
-      await sendMessage(registerAllMessage);
-    },
-  );
+    await sendMessage(registerAllMessage);
+  });
 
   app.get('/unregister-all', async () => {
     const unregisterAllMessage = createUnregisterActionMessage(
