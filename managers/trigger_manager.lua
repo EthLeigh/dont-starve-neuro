@@ -1,18 +1,18 @@
 ---@class TriggerManager
 TriggerManager = {}
 
-TriggerManager.CurrentAttacker = nil
+TriggerManager.CurrentAttackerName = nil
 
---- Handles the event for when the player's health changes. Will send a context message about the current enemy attacking.
----@param health_change_cause string
-local function HandlePlayerHurt(health_change_cause)
+--- Handles the event for when the player's health decreases. Will send a context message about the current enemy attacking.
+---@param damage_cause string
+local function HandlePlayerHurt(damage_cause)
     local threats = EntityHelper.GetNearbyHostileEntities()
 
     ---@type Entity|nil
     local current_threat = nil
 
     for _, threat in pairs(threats) do
-        if threat.prefab == health_change_cause then
+        if threat.prefab == damage_cause then
             current_threat = threat
             break
         end
@@ -24,11 +24,9 @@ local function HandlePlayerHurt(health_change_cause)
 
     MovementHelper.FleeFromEntity(current_threat)
 
-    if (current_threat == TriggerManager.CurrentAttacker) then
+    if (damage_cause == TriggerManager.CurrentAttackerName) then
         return
     end
-
-    TriggerManager.CurrentAttacker = current_threat
 
     ApiBridge.HandleSendContext("You are being attacked by a " ..
         StringHelper.GetPrettyName(current_threat.prefab) ..
