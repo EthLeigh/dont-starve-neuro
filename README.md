@@ -30,6 +30,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Harvest nearby - `harvest_nearby`: Gets all nearby harvestable entities and starts a task (not blocking) to collect them. **Sends an action result immediately if harvestables are found or not.**
 - Save marker - `save_marker`: Saves a position under a name.
 - Move to marker - `move_to_marker`: Moves the player to a saved position.
+- Get markers - `get_markers`: Returns all saved markers by name.
 - Get environment information - `get_environment_info`: Returns all information about the player's surroundings. It specifically sends the ground type (grass, sand, etc.), temperature, if it's raining, if it's freezing, and the current season.
 - Get player info - `get_player_info`: Returns all information about the player. It specifically sends the character name (Wilson, Willow, etc.), health percent, hunger percent, sanity percent, if they are starving, and if they are sane.
 - Get inventory - `get_inventory`: Returns all items in the inventory by name **(currently does not include total item counts)**.

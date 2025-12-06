@@ -19,12 +19,20 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             message = "Ate " .. eaten_food_name .. "."
         end
     elseif name == ApiActions.MOVE_TO_MARKER then
-        MarkerHelper.GetMarker(
-            data["marker_name"],
-            function(x, z)
-                message = "Loaded the marker's location and started heading towards it."
+        MarkerHelper.GetMarkers(
+            function(markers)
+                local marker = markers[data["marker_name"]]
 
-                MovementHelper.MoveToPoint(x, z)
+                if not marker then
+                    success = false
+                    message = "Failed to find the saved marker."
+
+                    return
+                end
+
+                message = "Loaded the marker's location and started heading toward it."
+
+                MovementHelper.MoveToPoint(marker.x, marker.z)
             end,
             function()
                 success = false
@@ -35,6 +43,16 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         MarkerHelper.SetMarker(data["marker_name"])
 
         message = "Successfully saved current location as '" .. data["marker_name"] .. "'."
+    elseif name == ApiActions.SAVE_MARKER then
+        MarkerHelper.GetMarkers(
+            function(markers)
+                message = "Here are your saved markers: " .. table.concat(markers, ", ") .. "."
+            end,
+            function()
+                success = false
+                message = "Failed to find saved markers."
+            end
+        )
     elseif name == ApiActions.HARVEST_NEARBY then
         local harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function()
             return true

@@ -23,6 +23,11 @@ export const saveMarker = createOutgoingAction(
   ),
 );
 
+export const getMarkers = createOutgoingAction(
+  'get_markers',
+  'Retrieves all of the available markers that have been saved.',
+);
+
 export const eatFood = createOutgoingAction(
   'eat_food',
   'Eats the best food available in the inventory.',
