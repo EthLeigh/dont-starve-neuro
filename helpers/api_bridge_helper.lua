@@ -21,6 +21,12 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
     elseif name == ApiActions.MOVE_TO_MARKER then
         MarkerHelper.GetMarkers(
             function(markers)
+                if #markers == 0 then
+                    message = "There are no saved markers."
+
+                    return
+                end
+
                 local marker = markers[data["marker_name"]]
 
                 if not marker then
