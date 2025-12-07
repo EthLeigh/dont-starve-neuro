@@ -5,14 +5,15 @@ import {
   createContextMessage,
   createForceActionMessage,
   createRegisterActionMessage,
+  createShutdownReadyMessage,
   createUnregisterActionMessage,
 } from '../utils/outgoingMessageUtils.js';
 import z from 'zod';
 import allActions from '../constants/actionConstants.js';
 import {
-  clearPendingIncomingAction,
-  consumePendingIncomingAction,
-  getPendingIncomingAction,
+  clearPendingIncomingMessage,
+  consumePendingIncomingMessage,
+  getPendingIncomingMessage,
   hasSentPendingIncomingAction,
 } from '../state/pendingIncomingAction.js';
 import { logger } from '../server.js';
@@ -21,7 +22,7 @@ const actions: FastifyPluginAsyncZod = async (app) => {
   app.get('/retrieve-pending', async () => {
     if (hasSentPendingIncomingAction()) return;
 
-    return consumePendingIncomingAction();
+    return consumePendingIncomingMessage();
   });
 
   app.post('/register-all', async () => {
@@ -139,7 +140,7 @@ const actions: FastifyPluginAsyncZod = async (app) => {
     },
     async (req) => {
       const actionResult = req.body;
-      const pendingIncomingAction = getPendingIncomingAction();
+      const pendingIncomingAction = getPendingIncomingMessage();
 
       if (!pendingIncomingAction) {
         logger.error('Failed to send action result as there is no pending action');
@@ -147,7 +148,7 @@ const actions: FastifyPluginAsyncZod = async (app) => {
         return;
       }
 
-      clearPendingIncomingAction();
+      clearPendingIncomingMessage();
 
       const resultMessage = createActionResultMessage(
         pendingIncomingAction.data.id,

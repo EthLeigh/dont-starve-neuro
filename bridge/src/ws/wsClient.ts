@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import { env } from '../env.js';
-import { IncomingActionSchema } from '../types/incomingMessageTypes.js';
-import { handleNewIncomingAction } from '../state/pendingIncomingAction.js';
+import { IncomingMessageSchema } from '../types/incomingMessageTypes.js';
+import { handleNewIncomingMessage } from '../state/pendingIncomingAction.js';
 import { logger } from '../server.js';
 
 let ws: WebSocket;
@@ -27,18 +27,18 @@ export const initWs = async (): Promise<void> => {
       try {
         dataObject = JSON.parse(dataString);
       } catch (e) {
-        throw new Error('Failed to parse incoming action string', { cause: e });
+        throw new Error('Failed to parse incoming message string', { cause: e });
       }
 
-      const parsedData = IncomingActionSchema.safeParse(dataObject);
+      const parsedData = IncomingMessageSchema.safeParse(dataObject);
 
       if (!parsedData.success) {
-        throw new Error('Failed to parse incoming action object', { cause: parsedData.error });
+        throw new Error('Failed to parse incoming message object', { cause: parsedData.error });
       }
 
       logger.info({ data: parsedData.data }, 'Received data from Websocket');
 
-      handleNewIncomingAction(parsedData.data);
+      handleNewIncomingMessage(parsedData.data);
     });
 
     ws.on('error', reject);

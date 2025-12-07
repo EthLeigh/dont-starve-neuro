@@ -1,9 +1,10 @@
-import type { IncomingAction, IncomingActionData } from '../types/incomingMessageTypes.js';
+import { type IncomingMessageCommands } from '../types/common.js';
+import type { IncomingMessage, IncomingMessageData } from '../types/incomingMessageTypes.js';
 
 export const createIncomingAction = (
-  command: string,
-  data: IncomingActionData,
-): IncomingAction => ({
+  command: IncomingMessageCommands,
+  data: IncomingMessageData,
+): IncomingMessage => ({
   command,
   data,
 });

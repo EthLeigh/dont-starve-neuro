@@ -1,30 +1,30 @@
 import { logger } from '../server.js';
-import type { IncomingAction } from '../types/incomingMessageTypes.js';
+import type { IncomingMessage } from '../types/incomingMessageTypes.js';
 
 let sentToGame = false;
-let pendingIncomingAction: IncomingAction | undefined = undefined;
+let pendingIncomingMessage: IncomingMessage | undefined = undefined;
 
 export const hasSentPendingIncomingAction = (): boolean => sentToGame;
 
-export const getPendingIncomingAction = (): IncomingAction | undefined => pendingIncomingAction;
+export const getPendingIncomingMessage = (): IncomingMessage | undefined => pendingIncomingMessage;
 
-export const consumePendingIncomingAction = (): IncomingAction | undefined => {
+export const consumePendingIncomingMessage = (): IncomingMessage | undefined => {
   sentToGame = true;
 
-  return pendingIncomingAction;
+  return pendingIncomingMessage;
 };
 
-export const clearPendingIncomingAction = (): void => {
-  pendingIncomingAction = undefined;
+export const clearPendingIncomingMessage = (): void => {
+  pendingIncomingMessage = undefined;
 };
 
-export const handleNewIncomingAction = (newIncomingAction: IncomingAction): void => {
-  if (!sentToGame && pendingIncomingAction) {
+export const handleNewIncomingMessage = (newIncomingMessage: IncomingMessage): void => {
+  if (!sentToGame && pendingIncomingMessage) {
     logger.warn(
-      `A new action is overwriting an unsent action, the unsent action will be discarded: ${pendingIncomingAction.data.name}`,
+      `A new message is overwriting an unsent message, the unsent message will be discarded: ${pendingIncomingMessage.data.name}`,
     );
   }
 
-  pendingIncomingAction = newIncomingAction;
+  pendingIncomingMessage = newIncomingMessage;
   sentToGame = false;
 };

@@ -9,6 +9,14 @@ import type {
 } from '../types/outgoingMessageTypes.js';
 import { GAME_NAME } from '../constants/constants.js';
 import type { JSONSchema } from 'zod/v4/core';
+import {
+  CONTEXT_ACTION,
+  ACTIONS_FORCE_ACTION,
+  ACTIONS_REGISTER_ACTION,
+  ACTIONS_RESULT_ACTION,
+  STARTUP_ACTION,
+  ACTIONS_UNREGISTER_ACTION,
+} from '../constants/outgoingMessageActions.js';
 
 export const createOutgoingAction = (
   name: string,
@@ -21,7 +29,7 @@ export const createOutgoingAction = (
 });
 
 export const createStartupMessage = (): StartupMessage => ({
-  command: 'startup',
+  command: STARTUP_ACTION,
   game: GAME_NAME,
 });
 
@@ -29,7 +37,7 @@ export const createContextMessage = (
   message: string,
   silent: boolean | undefined,
 ): ContextMessage => ({
-  command: 'context',
+  command: CONTEXT_ACTION,
   game: GAME_NAME,
   data: {
     message,
@@ -40,7 +48,7 @@ export const createContextMessage = (
 export const createRegisterActionMessage = (
   actions: readonly OutgoingAction[],
 ): RegisterActionMessage => ({
-  command: 'actions/register',
+  command: ACTIONS_REGISTER_ACTION,
   game: GAME_NAME,
   data: {
     actions,
@@ -48,7 +56,7 @@ export const createRegisterActionMessage = (
 });
 
 export const createUnregisterActionMessage = (actionNames: string[]): UnregisterActionMessage => ({
-  command: 'actions/unregister',
+  command: ACTIONS_UNREGISTER_ACTION,
   game: GAME_NAME,
   data: {
     action_names: actionNames,
@@ -61,7 +69,7 @@ export const createForceActionMessage = (
   ephemeralContext: boolean | undefined,
   state: string | undefined,
 ): ForceActionMessage => ({
-  command: 'actions/force',
+  command: ACTIONS_FORCE_ACTION,
   game: GAME_NAME,
   data: {
     query,
@@ -76,7 +84,7 @@ export const createActionResultMessage = (
   success: boolean,
   message: string | undefined,
 ): ActionResultMessage => ({
-  command: 'action/result',
+  command: ACTIONS_RESULT_ACTION,
   game: GAME_NAME,
   data: {
     id,
