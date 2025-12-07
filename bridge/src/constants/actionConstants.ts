@@ -2,11 +2,22 @@ import z from 'zod';
 import { createOutgoingAction } from '../utils/outgoingMessageUtils.js';
 import type { OutgoingAction } from '../types/outgoingMessageTypes.js';
 import { schemaToJsonSchema } from '../utils/zodUtil.js';
+import { type JSONSchema } from 'zod/v4/core';
+
+const toJSONSchema = (schema: z.ZodObject): JSONSchema.JSONSchema => {
+  const jsonSchema = schemaToJsonSchema(schema);
+
+  // Filters out invalid schema fields
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { $schema, additionalProperties, ...filteredJsonSchema } = jsonSchema;
+
+  return filteredJsonSchema;
+};
 
 export const moveToMarker = createOutgoingAction(
   'move_to_marker',
   "Moves the player to a saved location by it's name.",
-  schemaToJsonSchema(
+  toJSONSchema(
     z.strictObject({
       marker_name: z.string().nonoptional(),
     }),
@@ -16,7 +27,7 @@ export const moveToMarker = createOutgoingAction(
 export const saveMarker = createOutgoingAction(
   'save_marker',
   'Saves the current location by name to come back to later.',
-  schemaToJsonSchema(
+  toJSONSchema(
     z.strictObject({
       marker_name: z.string().nonoptional(),
     }),
@@ -61,7 +72,7 @@ export const getAvailableCrafts = createOutgoingAction(
 export const craft = createOutgoingAction(
   'craft',
   'Crafts an item based on a recipe name (recipes can be retrieved through the get_available_crafts action).',
-  schemaToJsonSchema(
+  toJSONSchema(
     z.strictObject({
       recipe_name: z.string().nonoptional(),
     }),
@@ -101,7 +112,7 @@ export const explore = createOutgoingAction(
 export const interact = createOutgoingAction(
   'interact',
   'Interacts with a nearby entity/interactible.',
-  schemaToJsonSchema(
+  toJSONSchema(
     z.strictObject({
       name: z.string().nonoptional(),
     }),
