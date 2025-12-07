@@ -42,7 +42,6 @@ this is for some more context over game functions/classes/enums/etc.
 - Attack nearby - `attack_nearby`: Attacks all nearby entities until another action is called.
 - Cook food - `cook_food`: Cooks the best available food in the inventory using a Campfire or Fire Pit.
 - Explore - `explore`: Explores in a random direction until another action is called. **Currently quite janky and will pick a new direction every 5 seconds**.
-- Retrieve Nearby - `retrieve_nearby`: Retrieves all nearby objects/entities/enemies/interactibles and displays many there are alongside their names.
 - Interact - `interact`: Interacts with a nearby entity/interactible.
 
 ## Context Messages
@@ -61,6 +60,7 @@ this is for some more context over game functions/classes/enums/etc.
 - Freezing stop: "Your character has stopped freezing."
 - Monster attack: "You are being attacked by a `ENTITY_NAME`. There are `TOTAL_MONSTER_COUNT` monsters around you."
 - Entity slain: "You have slain a `ENTITY_NAME`."
+- Retrieve nearby: "These interactibles are nearby: `ENTITY_COUNT` `ENTITY_NAME` (`ENTITY_PREFAB_NAME`), `ENTITY_COUNT` `ENTITY_NAME` (`ENTITY_PREFAB_NAME`), ..."
 
 ## Automatic Actions
 

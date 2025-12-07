@@ -113,3 +113,24 @@ function ContextManager.SetupContextEvents()
     PlayerTemperature.inst:ListenForEvent("startfreezing", HandleFreezingStart)
     PlayerTemperature.inst:ListenForEvent("stopfreezing", HandleFreezingStop)
 end
+
+function ContextManager.HandleFetchNearbyMessage()
+    local entity_counts = EntityHelper.GetAllNearbyEntityCounts()
+
+    local message_parts = {}
+    for entity_prefab_name, entity_count in pairs(entity_counts) do
+        local entity_name = StringHelper.GetPrettyName(entity_prefab_name)
+
+        entity_name = StringHelper.ProperName(entity_count, entity_name)
+
+        message_parts[#message_parts + 1] = string.format("%d %s (%s)", entity_count, entity_name, entity_prefab_name)
+    end
+
+    if #message_parts > 0 then
+        table.sort(message_parts)
+
+        return "These interactibles are nearby: " .. table.concat(message_parts, ", ") .. "."
+    end
+
+    return "There are no interactibles nearby."
+end

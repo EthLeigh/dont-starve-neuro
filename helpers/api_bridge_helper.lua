@@ -190,24 +190,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = "Exploring until another action is called."
 
         TaskManager.StartTasks({ explore_task }, 5)
-    elseif name == ApiActions.RETRIEVE_NEARBY then
-        local entity_counts = EntityHelper.GetAllNearbyEntityCounts()
-
-        local message_parts = {}
-        for entity_prefab_name, entity_count in pairs(entity_counts) do
-            local entity_name = StringHelper.GetPrettyName(entity_prefab_name)
-
-            entity_name = StringHelper.ProperName(entity_count, entity_name)
-
-            message_parts[#message_parts + 1] = string.format("%d %s (%s)", entity_count, entity_name, entity_prefab_name)
-        end
-
-        if #message_parts > 0 then
-            table.sort(message_parts)
-            message = "These interactibles are nearby: " .. table.concat(message_parts, ", ") .. "."
-        else
-            message = "There are no interactibles nearby."
-        end
     elseif name == ApiActions.INTERACT then
         ---@type string
         local entity_name_to_interact = data.name
@@ -245,4 +227,11 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
     end
 
     ApiBridge.HandleSendResult(success, message)
+
+    -- 2 second delay to allow for the result to be sent and handled first
+    Player:DoTaskInTime(2, function()
+        local nearby_context = ContextManager.HandleFetchNearbyMessage()
+
+        ApiBridge.HandleSendContext(nearby_context, true)
+    end)
 end
