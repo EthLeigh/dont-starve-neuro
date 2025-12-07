@@ -159,6 +159,12 @@ const actions: FastifyPluginAsyncZod = async (app) => {
       await sendMessage(resultMessage);
     },
   );
+
+  app.get('/shutdown-ready', async () => {
+    const resultMessage = createShutdownReadyMessage();
+
+    await sendMessage(resultMessage);
+  });
 };
 
 export default actions;

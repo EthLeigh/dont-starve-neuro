@@ -4,6 +4,7 @@ import type {
   ForceActionMessage,
   OutgoingAction,
   RegisterActionMessage,
+  ShutdownReadyMessage,
   StartupMessage,
   UnregisterActionMessage,
 } from '../types/outgoingMessageTypes.js';
@@ -16,6 +17,7 @@ import {
   ACTIONS_RESULT_ACTION,
   STARTUP_ACTION,
   ACTIONS_UNREGISTER_ACTION,
+  SHUTDOWN_READY_ACTION,
 } from '../constants/outgoingMessageActions.js';
 
 export const createOutgoingAction = (
@@ -91,4 +93,9 @@ export const createActionResultMessage = (
     success,
     message,
   },
+});
+
+export const createShutdownReadyMessage = (): ShutdownReadyMessage => ({
+  command: SHUTDOWN_READY_ACTION,
+  game: GAME_NAME,
 });

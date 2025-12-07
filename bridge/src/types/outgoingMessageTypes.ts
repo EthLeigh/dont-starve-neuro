@@ -6,6 +6,7 @@ import type {
   ACTIONS_RESULT_ACTION,
   ACTIONS_UNREGISTER_ACTION,
   CONTEXT_ACTION,
+  SHUTDOWN_READY_ACTION,
   STARTUP_ACTION,
 } from '../constants/outgoingMessageActions.js';
 
@@ -64,4 +65,9 @@ export type ActionResultMessage = {
     success: boolean;
     message: string | undefined;
   };
+};
+
+export type ShutdownReadyMessage = {
+  command: typeof SHUTDOWN_READY_ACTION;
+  game: typeof GAME_NAME;
 };
