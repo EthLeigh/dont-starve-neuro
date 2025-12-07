@@ -13,7 +13,6 @@ modimport("managers/goal_manager.lua")
 modimport("helpers/string_helper.lua")
 modimport("helpers/goals_helper.lua")
 modimport("helpers/combat_helper.lua")
-modimport("helpers/dialog_helper.lua")
 modimport("helpers/crafting_helper.lua")
 modimport("helpers/player_helper.lua")
 modimport("helpers/harvest_helper.lua")
@@ -82,8 +81,25 @@ PlayerTemperature = nil
 Camera = nil
 
 AddClassPostConstruct("screens/mainscreen", function()
-    ApiBridge.HandleSendStartup()
+    GLOBAL.TheSim:GetPersistentString(GameInitialized, function(success, data)
+        if success and data == "true" then
+            log_warning("Skipping sending startup message as it has (probably) already been sent")
+
+            return
+        end
+
+        GLOBAL.TheSim:SetPersistentString(GameInitialized, "true")
+
+        ApiBridge.HandleSendStartup()
+    end)
 end)
+
+OriginalRequestShutdown = GLOBAL.RequestShutdown
+GLOBAL.RequestShutdown = function()
+    GLOBAL.TheSim:SetPersistentString(GameInitialized, "false")
+
+    OriginalRequestShutdown()
+end
 
 AddPlayerPostInit(function(inst)
     Player = inst
