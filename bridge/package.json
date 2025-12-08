@@ -1,7 +1,6 @@
 {
   "name": "neuro-api-bridge",
-  "version": "0.0.0",
-  "description": "",
+  "private": true,
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch src/server.ts",
@@ -10,8 +9,6 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
