@@ -4,7 +4,32 @@ Neuro-sama API integration for Don't Starve.
 
 [View open/planned Actions/Context Messages/Automatic Actions here](https://github.com/users/EthLeigh/projects/1).
 
-<!-- TODO: Add a section on how to setup and use -->
+Ensure that this repository's files are under `dont_starve/mods/dont_starve_neuro/` (Don't Starve's game directory).
+The mod should now appear under the **Mods** button in the main menu and can be enabled normally.
+
+To start the API Bridge, `cd` into `dont_starve_neuro/bridge/`, and make sure you have created an `.env` file based on the `.env.example`.
+
+> [!IMPORTANT]
+> If you do change the `PORT` variable in the `.env`, make sure that the `constants/api_bridge.lua` file is updated to match.
+
+Then run:
+
+```bash
+# Install the dependencies first...
+npm install
+
+# Build the release version...
+npm run build
+
+# Start it.
+npm start
+```
+
+Alternatively, you can also just run it in without building:
+
+```bash
+npm run dev
+```
 
 ## Configuration
 
@@ -22,7 +47,7 @@ Currently, you can:
 <!-- TODO: Add instructions for the API bridge -->
 
 Copy Don't Starve's source code (under the game files and `data/scripts`) into `external/ds/`,
-this is for some more context over game functions/classes/enums/etc.
+this is for some more context over game functions/classes/enums/etc. (This is optional)
 
 ## Available Actions
 
