@@ -44,10 +44,26 @@ Currently, you can:
 
 ## Development
 
-<!-- TODO: Add instructions for the API bridge -->
+To run a development build, ensure you have a `.env` file created under `bridge/`, and run this:
 
-Copy Don't Starve's source code (under the game files and `data/scripts`) into `external/ds/`,
-this is for some more context over game functions/classes/enums/etc. (This is optional)
+> The startup will fail if there is not a Websocket connection setup prior!
+
+```bash
+# Install dependencies (if not done already)...
+npm install
+
+# Start it in watch/development mode.
+npm run dev
+```
+
+---
+
+To view your changes to the game files/test them, you can simply exit and enter a world and the mod will be reloaded.
+There is no need to restart the game.
+
+**Optional**: You can copy Don't Starve's source code (under the game files and `data/scripts/`) into `external/ds/`,
+this is for some more context over game functions/classes/enums/etc. You can otherwise skip this step as I have
+setup types for _most_ used game scripts, or you could reference the game scripts if you need to add something new.
 
 ## Available Actions
 
