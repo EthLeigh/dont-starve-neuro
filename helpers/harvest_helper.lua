@@ -3,6 +3,35 @@ HarvestHelper = {}
 
 modimport("utils.lua")
 
+---@param filters string[]
+---@return table<string, string>
+function HarvestHelper.MapActionFiltersToPrefabs(filters)
+    local filter_prefabs = {}
+    for _, action_filter in ipairs(filters) do
+        -- TODO: Make sure the filter prefabs are correct
+
+        if table.contains(filter_prefabs, action_filter) then
+            -- Ignore duplicates
+        elseif action_filter == "tree" then
+            table.insert(filter_prefabs, action_filter, "evergreen")
+        elseif action_filter == "bush" then
+            table.insert(filter_prefabs, action_filter, "bush")
+        elseif action_filter == "rock" then
+            table.insert(filter_prefabs, action_filter, "stone")
+        elseif action_filter == "shrub" then
+            table.insert(filter_prefabs, action_filter, "shrub")
+        elseif action_filter == "grass" then
+            table.insert(filter_prefabs, action_filter, "dry_grass")
+        elseif action_filter == "flower" then
+            table.insert(filter_prefabs, action_filter, "flower")
+        else
+            log_warning("Unknown harvestable type filter:", action_filter)
+        end
+    end
+
+    return filter_prefabs
+end
+
 ---@param ent Entity
 function HarvestHelper.HarvestEntity(ent)
     local action = Utils.GetActionForEntity(ent)

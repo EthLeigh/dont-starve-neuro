@@ -68,7 +68,7 @@ setup types for _most_ used game scripts, or you could reference the game script
 ## Available Actions
 
 - Eat food - `eat_food`: Eats the best available food in the inventory
-- Harvest nearby - `harvest_nearby`: Gets all nearby harvestable entities and starts a task (not blocking) to collect them. **Sends an action result immediately if harvestables are found or not.**
+- Harvest nearby - `harvest_nearby`: Gets all nearby harvestable entities and starts a task (not blocking) to collect them until another actions is called. Available search filters are: "tree", "bush", "rock", "shrub", "grass", "flower". **Sends an action result immediately if harvestables are found or not.**
 - Save marker - `save_marker`: Saves a position under a name.
 - Move to marker - `move_to_marker`: Moves the player to a saved position.
 - Get markers - `get_markers`: Returns all saved markers by name.

@@ -1,3 +1,5 @@
+import { type JSONSchema } from 'zod/v4/core';
+import { type ZodObject } from 'zod';
 import type {
   ActionResultMessage,
   ContextMessage,
@@ -9,7 +11,6 @@ import type {
   UnregisterActionMessage,
 } from '../types/outgoingMessageTypes.js';
 import { GAME_NAME } from '../constants/constants.js';
-import type { JSONSchema } from 'zod/v4/core';
 import {
   CONTEXT_ACTION,
   ACTIONS_FORCE_ACTION,
@@ -19,15 +20,26 @@ import {
   ACTIONS_UNREGISTER_ACTION,
   SHUTDOWN_READY_ACTION,
 } from '../constants/outgoingMessageActions.js';
+import { schemaToJsonSchema } from './zodUtil.js';
+
+const toJSONSchema = (schema: ZodObject): JSONSchema.JSONSchema => {
+  const jsonSchema = schemaToJsonSchema(schema);
+
+  // Filters out invalid schema fields
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { $schema, additionalProperties, ...filteredJsonSchema } = jsonSchema;
+
+  return filteredJsonSchema;
+};
 
 export const createOutgoingAction = (
   name: string,
   description: string,
-  schema: JSONSchema.JSONSchema | undefined = undefined,
+  schema: ZodObject | undefined = undefined,
 ): OutgoingAction => ({
   name,
   description,
-  schema,
+  schema: schema ? toJSONSchema(schema) : undefined,
 });
 
 export const createStartupMessage = (): StartupMessage => ({

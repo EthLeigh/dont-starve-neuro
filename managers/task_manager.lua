@@ -28,14 +28,27 @@ local function ClearTasks()
 end
 
 ---@param type integer
+---@param args table<string | integer, any>?
 ---@return fun(): boolean "Returns whether the task was successful or not"
-local function GetTaskTypeFunction(type)
+local function GetTaskTypeFunction(type, args)
     if type == TaskManager.TASK_TYPES.HARVEST then
         return function()
-            -- TODO: Add filtering for specific harvestables
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
-            local _, nearby_harvestable = GLOBAL.next(nearby_harvestables, nil)
+            local filtered_nearby_harvestables = {}
+            if args ~= nil and args.filter_prefabs ~= nil and #args.filter_prefabs > 0 then
+                for _, ent in pairs(nearby_harvestables) do
+                    for _, filter_ent in pairs(args.filter_prefabs) do
+                        if ent.prefab == filter_ent then
+                            table.insert(filtered_nearby_harvestables, ent)
+                        end
+                    end
+                end
+            else
+                filtered_nearby_harvestables = nearby_harvestables
+            end
+
+            local _, nearby_harvestable = GLOBAL.next(filtered_nearby_harvestables, nil)
 
             if not nearby_harvestable then
                 log_warning("No harvestables found nearby.")
@@ -86,7 +99,7 @@ end
 ---@param task Task
 ---@param task_cooldown integer?
 local function StartTask(task, task_cooldown)
-    local task_function = GetTaskTypeFunction(task.type)
+    local task_function = GetTaskTypeFunction(task.type, task.args)
 
     if not task_function then
         log_error("Task type not found when starting a new task")
@@ -137,7 +150,7 @@ function TaskManager.StartTasks(tasks, task_cooldown)
     local first_task = TaskManager._task_queue:Pop()
 
     if not first_task then
-        log_error("No tasks were sent to execute")
+        log_error("No tasks were sent to execute.")
 
         return
     end

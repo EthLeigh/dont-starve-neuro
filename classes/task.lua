@@ -7,7 +7,7 @@ Task.__index = Task
 
 ---@param type integer
 ---@param success_check_fn fun(current_iteration: integer, args: table<string, any>?): boolean
----@param args table<string, any>?
+---@param args table<string | integer, any>?
 ---@return Task
 function Task:new(type, success_check_fn, args)
     local task = GLOBAL.setmetatable({}, self)

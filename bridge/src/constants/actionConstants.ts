@@ -1,37 +1,21 @@
 import z from 'zod';
 import { createOutgoingAction } from '../utils/outgoingMessageUtils.js';
 import type { OutgoingAction } from '../types/outgoingMessageTypes.js';
-import { schemaToJsonSchema } from '../utils/zodUtil.js';
-import { type JSONSchema } from 'zod/v4/core';
-
-const toJSONSchema = (schema: z.ZodObject): JSONSchema.JSONSchema => {
-  const jsonSchema = schemaToJsonSchema(schema);
-
-  // Filters out invalid schema fields
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { $schema, additionalProperties, ...filteredJsonSchema } = jsonSchema;
-
-  return filteredJsonSchema;
-};
 
 export const moveToMarker = createOutgoingAction(
   'move_to_marker',
   "Moves the player to a saved location by it's name.",
-  toJSONSchema(
-    z.strictObject({
-      marker_name: z.string().nonoptional(),
-    }),
-  ),
+  z.strictObject({
+    marker_name: z.string().nonoptional(),
+  }),
 );
 
 export const saveMarker = createOutgoingAction(
   'save_marker',
   'Saves the current location by name to come back to later.',
-  toJSONSchema(
-    z.strictObject({
-      marker_name: z.string().nonoptional(),
-    }),
-  ),
+  z.strictObject({
+    marker_name: z.string().nonoptional(),
+  }),
 );
 
 export const getMarkers = createOutgoingAction(
@@ -46,7 +30,11 @@ export const eatFood = createOutgoingAction(
 
 export const harvestNearby = createOutgoingAction(
   'harvest_nearby',
-  'Harvests nearby entities/interactibles until another action is called.',
+  'Harvests nearby entities/interactibles until another action is called. ' +
+    'Available search filters are: "tree", "bush", "rock", "shrub", "grass", "flower".',
+  z.strictObject({
+    filters: z.array(z.string().nonoptional()).optional(),
+  }),
 );
 
 export const getEnvironmentInfo = createOutgoingAction(
@@ -72,11 +60,9 @@ export const getAvailableCrafts = createOutgoingAction(
 export const craft = createOutgoingAction(
   'craft',
   'Crafts an item based on a recipe name (recipes can be retrieved through the get_available_crafts action).',
-  toJSONSchema(
-    z.strictObject({
-      recipe_name: z.string().nonoptional(),
-    }),
-  ),
+  z.strictObject({
+    recipe_name: z.string().nonoptional(),
+  }),
 );
 
 export const getPerksAndQuirks = createOutgoingAction(
@@ -112,11 +98,9 @@ export const explore = createOutgoingAction(
 export const interact = createOutgoingAction(
   'interact',
   'Interacts with a nearby entity/interactible.',
-  toJSONSchema(
-    z.strictObject({
-      name: z.string().nonoptional(),
-    }),
-  ),
+  z.strictObject({
+    name: z.string().nonoptional(),
+  }),
 );
 
 const allActions: readonly OutgoingAction[] = [
