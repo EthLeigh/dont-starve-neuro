@@ -30,15 +30,9 @@ end
 
 ---@param ent Entity
 function HarvestHelper.HarvestEntity(ent)
-    local action = Utils.GetActionForEntity(ent)
+    local _, buffer_action = Utils.GetBufferedActionForEntity(ent)
 
-    if action == nil then
-        log_info("No action enum was found for entity:", ent.prefab)
-
-        return
-    end
-
-    local buffer_action = GLOBAL.BufferedAction(Player, ent, action)
+    if not buffer_action then return end
 
     PlayerLocomotor:PushAction(buffer_action, true)
 end
