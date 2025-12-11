@@ -68,3 +68,14 @@ function Utils.UnpackValues(list)
 
     return values
 end
+
+---@param list table<any, any>
+---@return integer
+function Utils.GetTableLength(list)
+    local count = 0
+    for _ in pairs(list) do
+        count = count + 1
+    end
+
+    return count
+end
