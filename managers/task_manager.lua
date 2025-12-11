@@ -58,7 +58,7 @@ local function GetTaskTypeFunction(type, args)
 
             return true
         end
-    elseif type == TaskManager.TASK_TYPES.ATTACK_NEARBY then
+    elseif type == TaskManager.TASK_TYPES.EXPLORE then
         return function()
             local direction = GLOBAL.math.random(-4, 4) * 0.25
             local angle = direction * GLOBAL.math.pi
@@ -71,7 +71,7 @@ local function GetTaskTypeFunction(type, args)
 
             return true
         end
-    elseif type == TaskManager.TASK_TYPES.EXPLORE then
+    elseif type == TaskManager.TASK_TYPES.ATTACK_NEARBY then
         return function()
             local nearby_hostiles = EntityHelper.GetNearbyHostileEntities()
             local nearby_animals = EntityHelper.GetNearbyAnimals()
