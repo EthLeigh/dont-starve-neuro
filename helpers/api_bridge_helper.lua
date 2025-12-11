@@ -60,10 +60,10 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             end
         )
     elseif name == ApiActions.HARVEST_NEARBY then
-        local prefab_filters = HarvestHelper.MapActionFiltersToPrefabs(data.filters)
+        local entity_prefab_filters = HarvestHelper.MapActionFiltersToPrefabs(data.filters)
         local harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function()
             return true
-        end, prefab_filters)
+        end, { prefab_filters = entity_prefab_filters })
 
         message = "Started harvesting nearby things until another action is called."
 

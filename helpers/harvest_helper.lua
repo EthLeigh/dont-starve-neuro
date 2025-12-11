@@ -8,22 +8,18 @@ modimport("utils.lua")
 function HarvestHelper.MapActionFiltersToPrefabs(filters)
     local filter_prefabs = {}
     for _, action_filter in ipairs(filters) do
-        -- TODO: Make sure the filter prefabs are correct
-
-        if table.contains(filter_prefabs, action_filter) then
-            -- Ignore duplicates
-        elseif action_filter == "tree" then
-            table.insert(filter_prefabs, action_filter, "evergreen")
+        if action_filter == "tree" or action_filter == "evergreen" then
+            filter_prefabs[action_filter] = "evergreen"
         elseif action_filter == "bush" then
-            table.insert(filter_prefabs, action_filter, "bush")
+            filter_prefabs[action_filter] = "bush"
         elseif action_filter == "rock" then
-            table.insert(filter_prefabs, action_filter, "stone")
-        elseif action_filter == "shrub" then
-            table.insert(filter_prefabs, action_filter, "shrub")
+            filter_prefabs[action_filter] = "rock1"
+        elseif action_filter == "shrub" or action_filter == "sapling" then
+            filter_prefabs[action_filter] = "sapling"
         elseif action_filter == "grass" then
-            table.insert(filter_prefabs, action_filter, "dry_grass")
+            filter_prefabs[action_filter] = "grass"
         elseif action_filter == "flower" then
-            table.insert(filter_prefabs, action_filter, "flower")
+            filter_prefabs[action_filter] = "flower"
         else
             log_warning("Unknown harvestable type filter:", action_filter)
         end

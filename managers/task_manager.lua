@@ -36,12 +36,11 @@ local function GetTaskTypeFunction(type, args)
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
             local filtered_nearby_harvestables = {}
-            if args ~= nil and args.filter_prefabs ~= nil and #args.filter_prefabs > 0 then
-                for _, ent in pairs(nearby_harvestables) do
-                    for _, filter_ent in pairs(args.filter_prefabs) do
-                        if ent.prefab == filter_ent then
-                            table.insert(filtered_nearby_harvestables, ent)
-                        end
+            if args ~= nil and args.prefab_filters ~= nil and Utils.GetTableLength(args.prefab_filters) > 0 then
+                for _, entity in pairs(nearby_harvestables) do
+                    if table.contains(args.prefab_filters, entity.prefab) then
+                        log_info(entity.prefab)
+                        table.insert(filtered_nearby_harvestables, entity)
                     end
                 end
             else

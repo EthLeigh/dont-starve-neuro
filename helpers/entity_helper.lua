@@ -116,7 +116,7 @@ function EntityHelper.GetAllNearbyEntityCounts()
 
         if table.contains(inventory_item_names, prefab) then
             Utils.RemoveElementByValue(inventory_item_names, prefab)
-        elseif prefab ~= nil and not table.contains(GLOBAL.IGNORE_PREFABS, string.upper(prefab)) then
+        elseif prefab ~= nil then
             entity_counts[prefab] = (entity_counts[prefab] or 0) + 1
         end
     end

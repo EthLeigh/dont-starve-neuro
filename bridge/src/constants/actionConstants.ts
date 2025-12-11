@@ -31,7 +31,7 @@ export const eatFood = createOutgoingAction(
 export const harvestNearby = createOutgoingAction(
   'harvest_nearby',
   'Harvests nearby entities/interactibles until another action is called. ' +
-    'Available search filters are: "tree", "bush", "rock", "shrub", "grass", "flower".',
+    'Available search filters are: "evergreen", "bush", "rock", "sapling", "grass", "flower".',
   z.strictObject({
     filters: z.array(z.string().nonoptional()).optional(),
   }),
