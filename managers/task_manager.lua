@@ -39,7 +39,6 @@ local function GetTaskTypeFunction(type, args)
             if args ~= nil and args.prefab_filters ~= nil and Utils.GetTableLength(args.prefab_filters) > 0 then
                 for _, entity in pairs(nearby_harvestables) do
                     if table.contains(args.prefab_filters, entity.prefab) then
-                        log_info(entity.prefab)
                         table.insert(filtered_nearby_harvestables, entity)
                     end
                 end
