@@ -1,6 +1,10 @@
 ---@class MovementHelper
 MovementHelper = {}
 
+function MovementHelper.Stop()
+    PlayerLocomotor:Stop()
+end
+
 ---@param pos Vector3
 function MovementHelper.MoveToPosition(pos)
     PlayerLocomotor:GoToPoint(pos, nil, true)
