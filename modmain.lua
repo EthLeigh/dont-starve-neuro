@@ -132,6 +132,12 @@ AddPlayerPostInit(function(inst)
 
         player_original_on_save(inst, data)
     end
+
+    Player:ListenForEvent("death", function()
+        ApiBridge.HandleSendForce("What do you want to do?",
+            { ApiActions.RETRY, ApiActions.EXIT_TO_MAIN_MENU },
+            true, "Your character has died and the game is over.")
+    end)
 end)
 
 AddSimPostInit(function()
@@ -256,9 +262,10 @@ AddSimPostInit(function()
         ApiBridge.GetPending()
     end)
 
-    -- Testing only (need to send valid actions only not all)
-
     local actions_to_register = Utils.UnpackValues(ApiActions)
+
+    Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRY)
+    Utils.RemoveElementByValue(actions_to_register, ApiActions.EXIT_TO_MAIN_MENU)
 
     if not CONFIG.GOALS_ENABLED then
         Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRIEVE_CURRENT_GOAL)

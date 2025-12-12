@@ -103,6 +103,12 @@ export const interact = createOutgoingAction(
   }),
 );
 
+// Game over only
+export const retry = createOutgoingAction('retry', 'Creates another world.');
+
+// Game over only
+export const exitToMainMenu = createOutgoingAction('exit_to_main_menu', 'Exits to the main menu..');
+
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
@@ -120,6 +126,8 @@ const allActions: readonly OutgoingAction[] = [
   cookFood,
   explore,
   interact,
+  retry,
+  exitToMainMenu,
 ];
 
 export default allActions;

@@ -227,6 +227,23 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = "An unexpected error has occurred as that action was not found."
     end
 
+    -- Handle game over forced action
+    if name == ApiActions.RETRY then
+        -- TODO: Handle retry
+
+        ApiBridge.HandleSendUnregisterAll()
+
+        message = "Creating new world..."
+        success = true
+    elseif name == ApiActions.EXIT_TO_MAIN_MENU then
+        -- TODO: Handle return to main menu
+
+        ApiBridge.HandleSendUnregisterAll()
+
+        message = "Exiting to main menu..."
+        success = true
+    end
+
     ApiBridge.HandleSendResult(success, message)
 
     -- 2 second delay to allow for the result to be sent and handled first
