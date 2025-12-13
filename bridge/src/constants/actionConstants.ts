@@ -103,6 +103,14 @@ export const interact = createOutgoingAction(
   }),
 );
 
+export const prototype = createOutgoingAction(
+  'prototype',
+  'Prototypes (and crafts) a valid recipe. Requires your character to be near a science prototyper.',
+  z.strictObject({
+    recipe_name: z.string().nonoptional(),
+  }),
+);
+
 // Game over only
 export const retry = createOutgoingAction('retry', 'Creates a new save.');
 export const exitToMainMenu = createOutgoingAction('exit_to_main_menu', 'Exits to the main menu.');
@@ -124,6 +132,7 @@ const allActions: readonly OutgoingAction[] = [
   cookFood,
   explore,
   interact,
+  prototype,
   retry,
   exitToMainMenu,
 ];

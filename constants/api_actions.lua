@@ -17,6 +17,7 @@ ApiActions.ATTACK_NEARBY = "attack_nearby"
 ApiActions.COOK_FOOD = "cook_food"
 ApiActions.EXPLORE = "explore"
 ApiActions.INTERACT = "interact"
+ApiActions.PROTOTYPE = "prototype"
 
 -- Game over only
 ApiActions.RETRY = "retry"

@@ -84,6 +84,7 @@ setup types for _most_ used game scripts, or you could reference the game script
 - Cook food - `cook_food`: Cooks the best available food in the inventory using a Campfire or Fire Pit.
 - Explore - `explore`: Explores in a random direction until another action is called. **Currently quite janky and will pick a new direction every 5 seconds**.
 - Interact - `interact`: Interacts with a nearby entity/interactible.
+- Prototype Recipe - `prototype`: Learns a new recipe and crafts it using available items and a science prototyper.
 
 > These actions will only be registered when the game over screen is visible.
 
