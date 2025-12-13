@@ -1,6 +1,8 @@
 -- This is not a comprehensive list of the real fields/params, just the ones used in the mod
 
 ---@class GLOBAL
+---@field CHEATS_ENABLED boolean
+---@field require fun(file: string)
 ---@field BufferedAction fun(player: Player, ent: Entity, action: table, invobject: ItemSlot?): BufferedAction
 ---@field Vector3 fun(x: number, y: number, z: number): Vector3
 ---@field TheCamera Camera

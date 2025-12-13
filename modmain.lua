@@ -25,6 +25,9 @@ modimport("helpers/eater_helper.lua")
 modimport("helpers/api_bridge_helper.lua")
 modimport("api_bridge.lua")
 
+GLOBAL.CHEATS_ENABLED = true
+GLOBAL.require("debugkeys")
+
 CONFIG = {}
 
 CONFIG.GOALS_ENABLED = GetModConfigData("goals_enabled")
