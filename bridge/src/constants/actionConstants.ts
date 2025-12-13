@@ -54,12 +54,12 @@ export const getInventory = createOutgoingAction(
 
 export const getAvailableCrafts = createOutgoingAction(
   'get_available_crafts',
-  'Retrieves all available and valid crafting recipes that can be crafted.',
+  'Retrieves all valid crafting and prototype recipes that can be crafted/learned. Prototype recipes require a nearby science prototyper',
 );
 
 export const craft = createOutgoingAction(
   'craft',
-  'Crafts an item based on a recipe name (recipes can be retrieved through the get_available_crafts action).',
+  'Crafts an item based on a recipe name.',
   z.strictObject({
     recipe_name: z.string().nonoptional(),
   }),

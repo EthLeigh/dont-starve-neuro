@@ -15,6 +15,21 @@ function CraftingHelper.GetAvailableBuildables()
     return valid_recipes
 end
 
+---@return table<string, Recipe>
+function CraftingHelper.GetAvailablePrototypes()
+    ---@type table<string, Recipe>
+    local valid_prototypes = {}
+
+    for prototype_recipe_name, prototype_recipe in pairs(GLOBAL:GetAllRecipes()) do
+        if PlayerBuilder:CanBuild(prototype_recipe_name) and not PlayerBuilder:KnowsRecipe(prototype_recipe_name) then
+            log_info("PROTOTYPE:", prototype_recipe_name, prototype_recipe.name, prototype_recipe.prefab)
+            valid_prototypes[prototype_recipe_name] = prototype_recipe
+        end
+    end
+
+    return valid_prototypes
+end
+
 ---@param recipe_name string
 ---@return boolean "If the craft was successful or not"
 function CraftingHelper.BuildFromRecipeName(recipe_name)

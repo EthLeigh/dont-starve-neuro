@@ -79,17 +79,34 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = "Your inventory items are: " .. table.concat(inventory_item_names, ", ") .. "."
     elseif name == ApiActions.GET_AVAILABLE_CRAFTS then
         local available_craftables = CraftingHelper.GetAvailableBuildables()
-        local available_craftable_names = {}
 
+        local available_craftable_names = {}
         for craftable_name, _ in pairs(available_craftables) do
             table.insert(available_craftable_names, craftable_name)
         end
 
-        if #available_craftable_names == 0 then
+        if Utils.GetTableLength(available_craftable_names) == 0 then
             message = "There are no available craftables."
         else
             message = "Your available craftable items/buildings are: " ..
                 table.concat(available_craftable_names, ", ") .. "."
+        end
+
+        local nearby_science_prototyper = EntityHelper.GetNearbySciencePrototyper()
+        local available_prototypes = CraftingHelper.GetAvailablePrototypes()
+
+        if not nearby_science_prototyper then
+            message = message .. " No science prototyper was found nearby."
+        elseif Utils.GetTableLength(available_prototypes) == 0 then
+            message = message .. " No prototype recipes are available."
+        else
+            local available_prototype_names = {}
+            for prototype_name, _ in pairs(available_prototypes) do
+                table.insert(available_prototype_names, prototype_name)
+            end
+
+            message = message ..
+                " Available prototype recipes: " .. table.concat(available_prototype_names, ", ") .. "."
         end
     elseif name == ApiActions.GET_PLAYER_INFO then
         message = "The current character is " .. PlayerHelper.GetName()

@@ -123,3 +123,25 @@ function EntityHelper.GetAllNearbyEntityCounts()
 
     return entity_counts
 end
+
+---@return Entity|nil
+function EntityHelper.GetNearbySciencePrototyper()
+    local x, y, z = Player.Transform:GetWorldPosition()
+
+    local nearby_structures = GLOBAL.TheSim:FindEntities(
+        x, y, z,
+        GameConstants.SCIENCE_PROTOTYPER_SEARCH_RADIUS,
+        { "structure" },
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" }
+    )
+    local science_prototyper = nil
+
+    for _, structure in pairs(nearby_structures) do
+        log_info(structure.prefab)
+        if structure.prefab == "researchlab" then
+            science_prototyper = structure
+        end
+    end
+
+    return science_prototyper
+end

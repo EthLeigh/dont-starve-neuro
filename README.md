@@ -75,7 +75,7 @@ setup types for _most_ used game scripts, or you could reference the game script
 - Get environment information - `get_environment_info`: Returns all information about the player's surroundings. It specifically sends the ground type (grass, sand, etc.), temperature, if it's raining, if it's freezing, and the current season.
 - Get player info - `get_player_info`: Returns all information about the player. It specifically sends the character name (Wilson, Willow, etc.), health percent, hunger percent, sanity percent, if they are starving, and if they are sane.
 - Get inventory - `get_inventory`: Returns all items in the inventory by name **(currently does not include total item counts)**.
-- Get available crafts - `get_available_crafts`: Returns all available and valid crafting recipes by name, this does not include items required for that recipe, or if the resulting craft is a building or item.
+- Get available crafts - `get_available_crafts`: Returns all valid and prototype and crafting recipes by name, this does not include items required for that recipe, or if the resulting craft is a building or item.
 - Craft - `craft`: Attempts to craft a recipe by name. Recipe names can be retrieved with `get_available_crafts`.
 - Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs, alongside random information).
 - Go to light source - `go_to_light_source`: Runs to the nearest light source. This action is only registered at night.
