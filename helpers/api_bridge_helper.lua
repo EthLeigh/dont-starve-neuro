@@ -257,7 +257,32 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         local action_name, buffered_action = Utils.GetBufferedActionForEntity(entity_to_interact)
 
         if entity_to_interact and buffered_action then
-            PlayerLocomotor:PushAction(buffered_action, true)
+            local action_item = nil
+            local hotbar_items = InventoryHelper.GetHotbarItems()
+            for _, hotbar_item in pairs(hotbar_items) do
+                if (action_name == "mine" and hotbar_item.prefab == "pickaxe") or
+                    (action_name == "chop" and hotbar_item.prefab == "axe") then
+                    action_item = hotbar_item.item
+                end
+            end
+
+            if action_item then
+                PlayerInventory:Equip(action_item)
+            end
+
+            local function handle_workable()
+                PlayerLocomotor:PushAction(buffered_action, true)
+
+                if not entity_to_interact or not entity_to_interact.components.workable then
+                    return
+                end
+
+                if entity_to_interact.components.workable.workleft > 1 then
+                    Player:DoTaskInTime(1, function() handle_workable() end)
+                end
+            end
+
+            handle_workable()
 
             message = "Performing the " .. action_name .. " action on the " .. entity_name_to_interact .. "."
         elseif not entity_to_interact then

@@ -19,8 +19,8 @@ end
 ---@return table<integer, string>
 function InventoryHelper.GetHotbarItemNames()
     local hotbar_items = InventoryHelper.GetHotbarItems()
-    local hotbar_item_names = {}
 
+    local hotbar_item_names = {}
     for _, hotbar_item in pairs(hotbar_items) do
         table.insert(hotbar_item_names, StringHelper.GetPrettyName(hotbar_item.item.prefab))
     end
@@ -41,4 +41,20 @@ function InventoryHelper.GetFoodItems()
     end
 
     return food_items
+end
+
+---@param prefab string
+---@return boolean
+function InventoryHelper.HasItem(prefab)
+    for _, hotbar_item in pairs(InventoryHelper.GetHotbarItems()) do
+        if hotbar_item.prefab == prefab then
+            return true
+        end
+    end
+
+    if PlayerInventory.activeitem and PlayerInventory.activeitem.prefab then
+        return true
+    end
+
+    return false
 end

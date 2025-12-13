@@ -157,6 +157,9 @@
 
 ---@class Inventory: Component
 ---@field itemslots ItemSlot[]
+---@field activeitem ItemSlot|nil
+---@field Equip fun(self: Inventory, item: ItemSlot)
+---@field FindItem fun(self: Inventory, fn: fun(item: ItemSlot): boolean): ItemSlot|nil
 
 ---@class Locomotor: Component
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)
