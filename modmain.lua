@@ -137,6 +137,8 @@ AddPlayerPostInit(function(inst)
     end
 
     Player:ListenForEvent("death", function()
+        ApiBridge.HandleSendRegister({ ApiActions.RETRY, ApiActions.EXIT_TO_MAIN_MENU })
+
         ApiBridge.HandleSendForce("What do you want to do?",
             { ApiActions.RETRY, ApiActions.EXIT_TO_MAIN_MENU },
             true, "Your character has died and the game is over.")

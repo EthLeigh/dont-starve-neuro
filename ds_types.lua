@@ -3,6 +3,10 @@
 ---@class GLOBAL
 ---@field CHEATS_ENABLED boolean
 ---@field require fun(file: string)
+---@field TheFrontEnd table
+---@field StartNextInstance fun(in_params: table?)
+---@field SaveGameIndex table
+---@field RESET_ACTION table<string, any>
 ---@field BufferedAction fun(player: Player, ent: Entity, action: table, invobject: ItemSlot?): BufferedAction
 ---@field Vector3 fun(x: number, y: number, z: number): Vector3
 ---@field TheCamera Camera

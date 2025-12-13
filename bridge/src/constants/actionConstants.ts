@@ -104,10 +104,8 @@ export const interact = createOutgoingAction(
 );
 
 // Game over only
-export const retry = createOutgoingAction('retry', 'Creates another world.');
-
-// Game over only
-export const exitToMainMenu = createOutgoingAction('exit_to_main_menu', 'Exits to the main menu..');
+export const retry = createOutgoingAction('retry', 'Creates a new save.');
+export const exitToMainMenu = createOutgoingAction('exit_to_main_menu', 'Exits to the main menu.');
 
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,

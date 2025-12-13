@@ -229,14 +229,22 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
     -- Handle game over forced action
     if name == ApiActions.RETRY then
-        -- TODO: Handle retry
+        GLOBAL.TheFrontEnd:Fade(false, 2, function()
+            GLOBAL.StartNextInstance({
+                reset_action = GLOBAL.RESET_ACTION.LOAD_SLOT,
+                save_slot = GLOBAL.SaveGameIndex
+                    :GetCurrentSaveSlot()
+            })
+        end)
 
         ApiBridge.HandleSendUnregisterAll()
 
         message = "Creating new world..."
         success = true
     elseif name == ApiActions.EXIT_TO_MAIN_MENU then
-        -- TODO: Handle return to main menu
+        GLOBAL.TheFrontEnd:Fade(false, 2, function()
+            GLOBAL.StartNextInstance()
+        end)
 
         ApiBridge.HandleSendUnregisterAll()
 

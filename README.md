@@ -85,6 +85,11 @@ setup types for _most_ used game scripts, or you could reference the game script
 - Explore - `explore`: Explores in a random direction until another action is called. **Currently quite janky and will pick a new direction every 5 seconds**.
 - Interact - `interact`: Interacts with a nearby entity/interactible.
 
+> These actions will only be registered when the game over screen is visible.
+
+- Retry - `retry`: Creates a new save.
+- Exit to Main Menu - `exit_to_main_menu`: Exits to the main menu.
+
 ## Context Messages
 
 - Enter Darkness: "Your character is in the dark, run to the nearest light source or make one. Your character will lose sanity and get attacked by shadow monsters."
