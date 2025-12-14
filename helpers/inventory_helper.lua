@@ -52,7 +52,7 @@ function InventoryHelper.HasItem(prefab)
         end
     end
 
-    if PlayerInventory.activeitem and PlayerInventory.activeitem.prefab then
+    if PlayerInventory.equipslots.hands and PlayerInventory.equipslots.hands.prefab == prefab then
         return true
     end
 
