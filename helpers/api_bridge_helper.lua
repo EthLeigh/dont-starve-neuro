@@ -73,10 +73,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = message .. ", it is " .. (EnvironmentHelper.IsRaining() and "raining" or "not raining")
         message = message .. ", the season is " .. EnvironmentHelper.GetSeason()
         message = message .. " and it is " .. (EnvironmentHelper.IsFreezing() and "freezing." or "not freezing.")
-    elseif name == ApiActions.GET_INVENTORY then
-        local inventory_item_names = InventoryHelper.GetHotbarItemNames()
-
-        message = "Your inventory items are: " .. table.concat(inventory_item_names, ", ") .. "."
     elseif name == ApiActions.GET_AVAILABLE_CRAFTS then
         local available_craftables = CraftingHelper.GetAvailableBuildables()
 
@@ -345,5 +341,16 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         local nearby_context = ContextManager.HandleFetchNearbyMessage()
 
         ApiBridge.HandleSendContext(nearby_context, true)
+
+        local inventory_item_names = InventoryHelper.GetHotbarItemNames()
+
+        local inventory_context = nil
+        if Utils.GetTableLength(inventory_item_names) > 0 then
+            inventory_context = "Your inventory items are: " .. table.concat(inventory_item_names, ", ") .. "."
+        else
+            inventory_context = "Your character has no items in their inventory."
+        end
+
+        ApiBridge.HandleSendContext(inventory_context, true)
     end)
 end
