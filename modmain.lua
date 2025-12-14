@@ -97,18 +97,20 @@ AddClassPostConstruct("screens/mainscreen", function()
     end)
 end)
 
-OriginalStartNextInstance = GLOBAL.StartNextInstance
-GLOBAL.StartNextInstance = function()
+local OriginalStartNextInstance = GLOBAL.StartNextInstance
+---@param in_params table?
+GLOBAL.StartNextInstance = function(in_params)
     ApiBridge.HandleSendUnregisterAll()
 
-    OriginalStartNextInstance()
+    OriginalStartNextInstance(in_params)
 end
 
-OriginalRequestShutdown = GLOBAL.RequestShutdown
-GLOBAL.RequestShutdown = function()
+local OriginalRequestShutdown = GLOBAL.RequestShutdown
+---@param callback function
+GLOBAL.RequestShutdown = function(callback)
     GLOBAL.TheSim:SetPersistentString(GameInitialized, "false")
 
-    OriginalRequestShutdown()
+    OriginalRequestShutdown(callback)
 end
 
 AddPlayerPostInit(function(inst)
