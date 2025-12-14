@@ -97,6 +97,13 @@ AddClassPostConstruct("screens/mainscreen", function()
     end)
 end)
 
+OriginalStartNextInstance = GLOBAL.StartNextInstance
+GLOBAL.StartNextInstance = function()
+    ApiBridge.HandleSendUnregisterAll()
+
+    OriginalStartNextInstance()
+end
+
 OriginalRequestShutdown = GLOBAL.RequestShutdown
 GLOBAL.RequestShutdown = function()
     GLOBAL.TheSim:SetPersistentString(GameInitialized, "false")

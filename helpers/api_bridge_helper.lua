@@ -310,16 +310,12 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             })
         end)
 
-        ApiBridge.HandleSendUnregisterAll()
-
         message = "Creating new world..."
         success = true
     elseif name == ApiActions.EXIT_TO_MAIN_MENU then
         GLOBAL.TheFrontEnd:Fade(false, 2, function()
             GLOBAL.StartNextInstance()
         end)
-
-        ApiBridge.HandleSendUnregisterAll()
 
         message = "Exiting to main menu..."
         success = true
