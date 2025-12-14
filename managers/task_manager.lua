@@ -105,7 +105,7 @@ local function StartTask(task, task_cooldown)
         return
     end
 
-    local task_handler = function()
+    TaskManager._task_loop = Player:DoPeriodicTask(task_cooldown or 1, function()
         TaskManager._task_loop_iteration = TaskManager._task_loop_iteration + 1
 
         local task_execution_success = task_function()
@@ -126,11 +126,7 @@ local function StartTask(task, task_cooldown)
 
             StartTask(next_task, task_cooldown)
         end
-    end
-
-    task_handler()
-
-    TaskManager._task_loop = Player:DoPeriodicTask(task_cooldown or 1, task_handler)
+    end)
 end
 
 local function StopTasks()
