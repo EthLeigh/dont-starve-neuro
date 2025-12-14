@@ -15,14 +15,14 @@ function Utils.GetActionForEntity(ent)
         return "harvest", GLOBAL.ACTIONS.HARVEST
     elseif ent.components.crop and ent.components.crop:IsReadyForHarvest() then
         return "harvest", GLOBAL.ACTIONS.HARVEST
-    elseif InventoryHelper.HasItem("pickaxe") ~= nil and ent.prefab == "rock1" or ent.prefab == "rock2" or ent.prefab == "rock_flintless" then
+    elseif InventoryHelper.HasItem("pickaxe") and ent.prefab == "rock1" or ent.prefab == "rock2" or ent.prefab == "rock_flintless" then
         return "mine", GLOBAL.ACTIONS.MINE
-    elseif InventoryHelper.HasItem("axe") ~= nil and ent.prefab == "evergreen" or ent.prefab == "evergreen_normal" or ent.prefab == "evergreen_short" or
+    elseif InventoryHelper.HasItem("axe") and ent.prefab == "evergreen" or ent.prefab == "evergreen_normal" or ent.prefab == "evergreen_short" or
         ent.prefab == "evergreen_tall" or ent.prefab == "evergreen_sparse" or ent.prefab == "evergreen_sparse_normal"
         or ent.prefab == "evergreen_sparse_short" or ent.prefab == "evergreen_sparse_tall" or ent.prefab == "evergreen_burnt"
         or ent.prefab == "evergreen_stump" then
         return "chop", GLOBAL.ACTIONS.CHOP
-    elseif ent.components.inspectable then
+    elseif ent.components.inspectable and not ent.components.harvestable and not ent.components.pickable and not ent.components.inventoryitem then
         -- TODO: Add a context message for the character response
         return "examine", GLOBAL.ACTIONS.LOOKAT
     end
