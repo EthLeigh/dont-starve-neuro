@@ -22,7 +22,9 @@ local function HandlePlayerHurt(damage_cause)
         return
     end
 
-    MovementHelper.FleeFromEntity(current_threat)
+    Player:DoTaskInTime(0.5, function()
+        MovementHelper.FleeFromEntity(current_threat)
+    end)
 
     if (damage_cause == TriggerManager.CurrentAttackerName) then
         return
