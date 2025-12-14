@@ -28,7 +28,7 @@ local function ClearTasks()
 end
 
 ---@param type integer
----@param args table<string | integer, any>?
+---@param args table<string | integer, any>
 ---@return fun(): boolean "Returns whether the task was successful or not"
 local function GetTaskTypeFunction(type, args)
     if type == TaskManager.TASK_TYPES.HARVEST then
@@ -36,7 +36,7 @@ local function GetTaskTypeFunction(type, args)
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
             local filtered_nearby_harvestables = {}
-            if args ~= nil and args.prefab_filters ~= nil and Utils.GetTableLength(args.prefab_filters) > 0 then
+            if args.prefab_filters ~= nil and Utils.GetTableLength(args.prefab_filters) > 0 then
                 for _, entity in pairs(nearby_harvestables) do
                     if table.contains(args.prefab_filters, entity.prefab) then
                         table.insert(filtered_nearby_harvestables, entity)
