@@ -40,20 +40,20 @@ function EntityHelper.GetNearbyHostileEntities()
     )
 end
 
+---@param tags string[]?
 ---@return table<integer, Entity>
-function EntityHelper.GetNearbyHarvestables()
+function EntityHelper.GetNearbyHarvestables(tags)
     local x, y, z = Player.Transform:GetWorldPosition()
     local nearby_harvestables = GLOBAL.TheSim:FindEntities(
         x, y, z,
         GameConstants.SEARCH_RADIUS,
-        nil,
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE",
-            "item", "isinventoryitem" }
+        tags,
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
     )
 
     local filtered_harvestables = {}
     for _, harvestable in pairs(nearby_harvestables) do
-        if Utils.GetActionForEntity(harvestable) ~= nil then
+        if Utils.GetActionForEntity(harvestable) ~= nil and (harvestable.components.inventoryitem and not harvestable.components.inventoryitem.owner) then
             table.insert(filtered_harvestables, harvestable)
         end
     end
@@ -132,7 +132,7 @@ function EntityHelper.GetNearbySciencePrototyper()
         x, y, z,
         GameConstants.SCIENCE_PROTOTYPER_SEARCH_RADIUS,
         { "structure" },
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" }
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand", "shadowskittish" }
     )
     local science_prototyper = nil
 

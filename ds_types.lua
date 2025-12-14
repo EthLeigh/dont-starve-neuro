@@ -157,7 +157,7 @@
 
 ---@class Inventory: Component
 ---@field itemslots ItemSlot[]
----@field activeitem ItemSlot|nil
+---@field equipslots InventoryEquipSlots
 ---@field Equip fun(self: Inventory, item: ItemSlot)
 ---@field FindItem fun(self: Inventory, fn: fun(item: ItemSlot): boolean): ItemSlot|nil
 
@@ -199,6 +199,9 @@
 ---@field GetCurrent fun(self: Temperature): number
 ---@field IsFreezing fun(self: Temperature): boolean
 
+---@class LootDropper: Component
+---@field DropLoot fun(self: LootDropper, point: Vector3?)
+
 ---@class ItemSlot
 ---@field name string
 ---@field prefab string
@@ -233,6 +236,9 @@
 
 ---@class Recipe
 ---@field name string
+
+---@class InventoryEquipSlots
+---@field hands ItemSlot|nil
 
 -- Global functions
 

@@ -60,7 +60,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             end
         )
     elseif name == ApiActions.HARVEST_NEARBY then
-        local entity_prefab_filters = HarvestHelper.MapActionFiltersToPrefabs(data.filters)
+        local entity_prefab_filters = HarvestHelper.MapActionFiltersToPrefabs(data and data.filters or {})
         local harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function()
             return true
         end, { prefab_filters = entity_prefab_filters })
@@ -270,6 +270,16 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
                 PlayerInventory:Equip(action_item)
             end
 
+            local entities_to_harvest = 0
+            if entity_to_interact.components.lootdropper then
+                local OriginalSpawnLootPrefab = entity_to_interact.components.lootdropper.SpawnLootPrefab
+                entity_to_interact.components.lootdropper.SpawnLootPrefab = function(self, lootprefab, pt)
+                    OriginalSpawnLootPrefab(self, lootprefab, pt)
+
+                    entities_to_harvest = entities_to_harvest + 1
+                end
+            end
+
             local function handle_workable()
                 PlayerLocomotor:PushAction(buffered_action, true)
 
@@ -279,6 +289,13 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
                 if entity_to_interact.components.workable.workleft > 1 then
                     Player:DoTaskInTime(1, function() handle_workable() end)
+                else
+                    local cleanup_harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function(current_iteration)
+                        log_info(current_iteration, entities_to_harvest, current_iteration <= entities_to_harvest)
+                        return current_iteration > entities_to_harvest
+                    end, nil)
+
+                    TaskManager.StartTasks({ cleanup_harvest_task })
                 end
             end
 
