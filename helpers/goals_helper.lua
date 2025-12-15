@@ -42,6 +42,17 @@ GoalChecks = {
     end,
 }
 
+---@type string[]
+GoalsOrder = {
+    Goals.CRAFT_AXE,
+    Goals.MAKE_CAMPFIRE,
+    Goals.CRAFT_PICKAXE,
+    Goals.BUILD_SCIENCE_MACHINE,
+    Goals.CRAFT_BACKPACK,
+    Goals.COOK_FOOD,
+    Goals.SURVIVE_NIGHT,
+}
+
 ---Listens for an event on a **Player Component**
 ---@param component Component
 ---@param event_name string
@@ -55,7 +66,18 @@ function CreateListenerOnEntityForEvent(goal_name, component, event_name, comple
         if not complete then return end
 
         log_info("Completed goal:", goal_name)
-        next_goal = GLOBAL.next(GoalChecks, goal_name)
+
+        local get_next_goal = false
+        local next_goal = nil
+        for _, ordered_goal_name in ipairs(GoalsOrder) do
+            if ordered_goal_name == goal_name then
+                get_next_goal = true
+            elseif get_next_goal then
+                next_goal = ordered_goal_name
+
+                break
+            end
+        end
 
         if not next_goal then
             log_warning("No more goals left!")
