@@ -142,12 +142,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             success = false
             message = "That is not a valid prototype recipe."
         end
-        message = "The current character is " .. PlayerHelper.GetName()
-        message = message .. ", health is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetHealth() * 100)) .. "%"
-        message = message .. ", hunger is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetHunger() * 100)) .. "%"
-        message = message .. ", sanity is " .. tostring(GLOBAL.math.ceil(PlayerHelper.GetSanity() * 100)) .. "%"
-        message = message .. ", they are " .. (PlayerHelper.IsHungry() and "hungry" or "not hungry")
-        message = message .. ", and are " .. (PlayerHelper.IsSane() and "sane." or "insane.")
     elseif name == ApiActions.CRAFT then
         local recipe_name = data["recipe_name"]
         local available_craftables = CraftingHelper.GetAvailableBuildables()
