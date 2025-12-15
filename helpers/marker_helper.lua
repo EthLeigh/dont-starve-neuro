@@ -21,7 +21,7 @@ function MarkerHelper.SetMarker(name)
 end
 
 --- Loads a saved position as a persistent string by it's name
----@param on_done fun(markers: table<string, table<'x' | 'z', number>>)
+---@param on_done fun(markers: table<string, table<"x" | "z", number>>)
 ---@param on_error function
 function MarkerHelper.GetMarkers(on_done, on_error)
     GLOBAL.TheSim:GetPersistentString(SAVE_NAME, function(success, data)
@@ -36,3 +36,15 @@ function MarkerHelper.GetMarkers(on_done, on_error)
         on_done(markers)
     end)
 end
+
+local function SetupSave()
+    GLOBAL.TheSim:GetPersistentString(SAVE_NAME, function(success)
+        if success then
+            return
+        end
+
+        GLOBAL.TheSim:SetPersistentString(SAVE_NAME, "{}")
+    end)
+end
+
+SetupSave()
