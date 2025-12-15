@@ -49,10 +49,16 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         MarkerHelper.SetMarker(data["marker_name"])
 
         message = "Successfully saved current location as '" .. data["marker_name"] .. "'."
-    elseif name == ApiActions.SAVE_MARKER then
+    elseif name == ApiActions.GET_MARKERS then
         MarkerHelper.GetMarkers(
             function(markers)
-                message = "Here are your saved markers: " .. table.concat(markers, ", ") .. "."
+                local marker_names = {}
+
+                for marker_name, _ in pairs(markers) do
+                    table.insert(marker_names, marker_name)
+                end
+
+                message = "Here are your saved markers: " .. table.concat(marker_names, ", ") .. "."
             end,
             function()
                 success = false

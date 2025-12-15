@@ -198,6 +198,14 @@ AddSimPostInit(function()
         Utils.RemoveElementByValue(actions_to_register, ApiActions.COOK_FOOD)
     end
 
+    if not MarkerHelper.HasMarkers() then
+        MarkerHelper.REGISTERED_GET_ACTION = false
+
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.GET_MARKERS)
+    else
+        MarkerHelper.REGISTERED_GET_ACTION = true
+    end
+
     ApiBridge.HandleSendRegister(actions_to_register)
 
     Player:ListenForEvent("killed", ContextManager.OnEntityKilled)

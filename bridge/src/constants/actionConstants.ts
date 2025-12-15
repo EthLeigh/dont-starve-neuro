@@ -113,6 +113,7 @@ export const exitToMainMenu = createOutgoingAction('exit_to_main_menu', 'Exits t
 const allActions: readonly OutgoingAction[] = [
   moveToMarker,
   saveMarker,
+  getMarkers,
   eatFood,
   harvestNearby,
   getEnvironmentInfo,

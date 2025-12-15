@@ -4,6 +4,8 @@ MarkerHelper = {}
 
 local SAVE_NAME = "dns_markers"
 
+MarkerHelper.REGISTERED_GET_ACTION = false
+
 --- Saves a position as a persistent string for later use
 ---@param name string
 function MarkerHelper.SetMarker(name)
@@ -15,6 +17,10 @@ function MarkerHelper.SetMarker(name)
         local encoded_markers = GLOBAL.json.encode(markers)
 
         GLOBAL.TheSim:SetPersistentString(SAVE_NAME, encoded_markers)
+
+        ApiBridge.HandleSendRegister({ ApiActions.GET_MARKERS })
+
+        MarkerHelper.REGISTERED_GET_ACTION = true
     end, function()
         log_error("Failed to set marker:", name)
     end)
@@ -35,6 +41,18 @@ function MarkerHelper.GetMarkers(on_done, on_error)
 
         on_done(markers)
     end)
+end
+
+--- Checks if there are any markers currently saved
+---@return boolean
+function MarkerHelper.HasMarkers()
+    local marker_count = 0
+
+    MarkerHelper.GetMarkers(function(markers)
+        marker_count = Utils.GetTableLength(markers)
+    end, function() end)
+
+    return marker_count > 0
 end
 
 local function SetupSave()
