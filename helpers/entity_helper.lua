@@ -43,9 +43,9 @@ end
 ---@param tags string[]?
 ---@return table<integer, Entity>
 function EntityHelper.GetNearbyHarvestables(tags)
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
     local nearby_harvestables = GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SEARCH_RADIUS,
         tags,
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
@@ -53,7 +53,7 @@ function EntityHelper.GetNearbyHarvestables(tags)
 
     local filtered_harvestables = {}
     for _, harvestable in pairs(nearby_harvestables) do
-        if Utils.GetActionForEntity(harvestable) ~= nil and (harvestable.components.inventoryitem and not harvestable.components.inventoryitem.owner) then
+        if Utils.GetActionForEntity(harvestable) ~= nil then
             table.insert(filtered_harvestables, harvestable)
         end
     end
