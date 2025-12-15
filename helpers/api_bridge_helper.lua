@@ -291,7 +291,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
                 if entity_to_interact.components.workable.workleft > 1 then
                     Player:DoTaskInTime(1, function() handle_workable() end)
-                else
+                elseif entities_to_harvest > 0 then
                     local cleanup_harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function(current_iteration)
                         log_info(current_iteration, entities_to_harvest, current_iteration <= entities_to_harvest)
                         return current_iteration > entities_to_harvest
