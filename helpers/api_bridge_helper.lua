@@ -167,15 +167,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             success = false
             message = "That is not a valid craft recipe."
         end
-    elseif name == ApiActions.GET_PERKS_AND_QUIRKS then
-        local character_desc = StringHelper.GetCharacterDescription(PlayerName)
-        character_desc = character_desc:gsub("*", ""):gsub("%s*\n%s*(%a)", function(c)
-            return ", " .. c:gsub(" ", ""):lower()
-        end) .. "."
-
-        message = "You are playing as " ..
-            StringHelper.GetPrettyCharacterName(PlayerName) .. ". Their traits are: " .. character_desc
-        success = true
     elseif name == ApiActions.GO_TO_LIGHT_SOURCE then
         local light_sources = EntityHelper.GetNearbyLightSources()
 

@@ -60,11 +60,6 @@ export const craft = createOutgoingAction(
   }),
 );
 
-export const getPerksAndQuirks = createOutgoingAction(
-  'get_perks_and_quirks',
-  "Returns the current character's perks and quirks.",
-);
-
 export const goToLightSource = createOutgoingAction(
   'go_to_light_source',
   'Runs to the nearest light source.',
@@ -120,7 +115,6 @@ const allActions: readonly OutgoingAction[] = [
   getPlayerInfo,
   getAvailableCrafts,
   craft,
-  getPerksAndQuirks,
   goToLightSource,
   retrieveCurrentGoal,
   attackNearby,
