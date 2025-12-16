@@ -19,6 +19,10 @@ function log_entries(table)
         log_error("Unable to log entries on table, as it is nil.")
 
         return
+    elseif type(table) ~= "table" then
+        log_error("Unable to log entries as a non-table was used (" .. type(table) .. ")")
+
+        return
     end
 
     log_info("Started logging entries for: ", table)
