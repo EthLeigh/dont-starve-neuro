@@ -1,8 +1,6 @@
-# Don't Starve Neuro (WIP)
+# Don't Starve Neuro
 
-Neuro-sama API integration for Don't Starve.
-
-[View open/planned Actions/Context Messages/Automatic Actions here](https://github.com/users/EthLeigh/projects/1).
+Neuro-sama SDK integration for Don't Starve.
 
 ## Setup
 
@@ -95,15 +93,13 @@ Message me on Discord if you need any help, [`ethleigh`](https://discordapp.com/
 - Get markers - `get_markers`: Returns all saved markers by name.
 - Get environment information - `get_environment_info`: Returns all information about the player's surroundings. It specifically sends the ground type (grass, sand, etc.), temperature, if it's raining, if it's freezing, and the current season.
 - Get player info - `get_player_info`: Returns all information about the player. It specifically sends the character name (Wilson, Willow, etc.), health percent, hunger percent, sanity percent, if they are starving, and if they are sane.
-- Get inventory - `get_inventory`: Returns all items in the inventory by name **(currently does not include total item counts)**.
 - Get available crafts - `get_available_crafts`: Returns all valid and prototype and crafting recipes by name, this does not include items required for that recipe, or if the resulting craft is a building or item.
 - Craft - `craft`: Attempts to craft a recipe by name. Recipe names can be retrieved with `get_available_crafts`.
-- Get perks and quirks - `get_perks_and_quirks`: Returns the current character's perks and quirks (character-specific buffs and debuffs, alongside random information).
 - Go to light source - `go_to_light_source`: Runs to the nearest light source. This action is only registered at night.
 - Retrieve current goal - `retrieve_current_goal`: Sends the current goal and it's completion description.
 - Attack nearby - `attack_nearby`: Attacks all nearby entities until another action is called.
 - Cook food - `cook_food`: Cooks the best available food in the inventory using a Campfire or Fire Pit.
-- Explore - `explore`: Explores in a random direction until another action is called. **Currently quite janky and will pick a new direction every 5 seconds**.
+- Explore - `explore`: Explores in a random direction until another action is called. **Quite janky and will pick a new direction every 5 seconds, as the pathfinding is simply not doing anything**.
 - Interact - `interact`: Interacts with a nearby entity/interactible.
 - Prototype Recipe - `prototype`: Learns a new recipe and crafts it using available items and a science prototyper.
 
@@ -129,6 +125,7 @@ Message me on Discord if you need any help, [`ethleigh`](https://discordapp.com/
 - Monster attack: "You are being attacked by a `ENTITY_NAME`. There are `TOTAL_MONSTER_COUNT` monsters around you."
 - Entity slain: "You have slain a `ENTITY_NAME`."
 - Retrieve nearby: "These interactibles are nearby: `ENTITY_COUNT` `ENTITY_NAME` (`ENTITY_PREFAB_NAME`), `ENTITY_COUNT` `ENTITY_NAME` (`ENTITY_PREFAB_NAME`), ..."
+- Inventory items: Your inventory items are: `ITEM_NAME`, `ITEM_NAME`. **(sends 2 seconds after an action is called)**.
 
 ## Automatic Actions
 
