@@ -5,10 +5,10 @@ EntityHelper.GENERIC_AVOID_TAGS = { "FX", "NOCLICK", "DECOR", "INLIMBO" }
 
 ---@return Entity[]
 function EntityHelper.GetNearbyAnimals()
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
 
     return GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SEARCH_RADIUS,
         nil,
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster" },
@@ -18,10 +18,10 @@ end
 
 ---@return Entity[]
 function EntityHelper.GetNearbyMonsters()
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
 
     return GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SEARCH_RADIUS,
         { "monster" },
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure" }
@@ -30,10 +30,10 @@ end
 
 ---@return Entity[]
 function EntityHelper.GetNearbyHostileEntities()
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
 
     return GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SEARCH_RADIUS,
         { "HASCOMBATCOMPONENT", "hostile" },
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure" }
@@ -77,10 +77,10 @@ end
 
 ---@return table<string, Entity>
 function EntityHelper.GetNearbyLightSources()
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
 
     return GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SEARCH_RADIUS,
         { "lightsource" }
     )
@@ -89,10 +89,10 @@ end
 ---@param tags string[]?
 ---@return table<string, Entity>
 function EntityHelper.GetNearbyEntities(tags)
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
 
     return GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SEARCH_RADIUS,
         nil,
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" },
@@ -126,10 +126,10 @@ end
 
 ---@return Entity|nil
 function EntityHelper.GetNearbySciencePrototyper()
-    local x, y, z = Player.Transform:GetWorldPosition()
+    local x, _, z = Player.Transform:GetWorldPosition()
 
     local nearby_structures = GLOBAL.TheSim:FindEntities(
-        x, y, z,
+        x, 0, z,
         GameConstants.SCIENCE_PROTOTYPER_SEARCH_RADIUS,
         { "structure" },
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand", "shadowskittish" }

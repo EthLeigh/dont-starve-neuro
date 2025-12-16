@@ -77,9 +77,9 @@ local function GetTaskTypeFunction(type, args)
             local nearby_animals = EntityHelper.GetNearbyAnimals()
 
             local ent_to_attack = nil
-            if #nearby_hostiles > 0 then
+            if Utils.GetTableLength(nearby_hostiles) > 0 then
                 _, ent_to_attack = GLOBAL.next(nearby_hostiles, nil)
-            elseif #nearby_animals > 0 then
+            elseif Utils.GetTableLength(nearby_animals) > 0 then
                 _, ent_to_attack = GLOBAL.next(nearby_animals, nil)
             else
                 return false
