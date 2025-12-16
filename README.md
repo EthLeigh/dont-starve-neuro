@@ -4,6 +4,8 @@ Neuro-sama API integration for Don't Starve.
 
 [View open/planned Actions/Context Messages/Automatic Actions here](https://github.com/users/EthLeigh/projects/1).
 
+## Setup
+
 Ensure that this repository's files are under `dont_starve/mods/dont_starve_neuro/` (Don't Starve's game directory).
 The mod should now appear under the **Mods** button in the main menu and can be enabled normally.
 
@@ -31,7 +33,12 @@ Alternatively, you can also just run it in without building:
 npm run dev
 ```
 
-## Configuration
+## Usage
+
+> [!IMPORTANT]
+> Make sure you have a [similar API to the one described here](https://github.com/VedalAI/neuro-sdk/) running with a Websocket connection (not the Bridge API).
+
+### Configuration
 
 > Ensure the mod is loading correctly and can be viewed under the Mods section of the Main Menu!
 
@@ -41,6 +48,16 @@ click **Configure Mod** to adjust the settings.
 Currently, you can:
 
 - Toggle Goal related functionality
+
+---
+
+Once everything is configured and ready...
+
+Start up the Bridge, and then open the game. The startup command only sends _once_ on game startup.
+
+Create a new save and keep everything default. If any DLCs are installed/available, ignore them and only select **DS**.
+
+Once the world is created, the mod will communicate with the Bridge to register actions, which will send it over to the Neuro API.
 
 ## Development
 
@@ -64,6 +81,10 @@ There is no need to restart the game.
 **Optional**: You can copy Don't Starve's source code (under the game files and `data/scripts/`) into `external/ds/`,
 this is for some more context over game functions/classes/enums/etc. You can otherwise skip this step as I have
 setup types for _most_ used game scripts, or you could reference the game scripts if you need to add something new.
+
+## Contact / Support
+
+Message me on Discord if you need any help, [`ethleigh`](https://discordapp.com/users/ethleigh/).
 
 ## Available Actions
 
