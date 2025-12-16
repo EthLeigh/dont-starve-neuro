@@ -75,7 +75,7 @@ function EntityHelper.GetNearbyUniqueHarvestables()
     return nearby_unique_ents
 end
 
----@return table<string, Entity>
+---@return Entity[]
 function EntityHelper.GetNearbyLightSources()
     local x, _, z = Player.Transform:GetWorldPosition()
 

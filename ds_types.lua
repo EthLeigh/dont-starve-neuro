@@ -7,7 +7,7 @@
 ---@field StartNextInstance fun(in_params: table?)
 ---@field SaveGameIndex table
 ---@field RESET_ACTION table<string, any>
----@field BufferedAction fun(player: Player, ent: Entity, action: table, invobject: ItemSlot?): BufferedAction
+---@field BufferedAction fun(player: Player, ent: Entity, action: table, invobject: ItemSlot?, pos: Vector3?): BufferedAction
 ---@field Vector3 fun(x: number, y: number, z: number): Vector3
 ---@field TheCamera Camera
 ---@field ACTIONS table<string, table>
@@ -160,6 +160,8 @@
 ---@field equipslots InventoryEquipSlots
 ---@field Equip fun(self: Inventory, item: ItemSlot)
 ---@field FindItem fun(self: Inventory, fn: fun(item: ItemSlot): boolean): ItemSlot|nil
+---@field RemoveItem fun(self: Inventory, item: ItemSlot): ItemSlot
+---@field GiveItem fun(self: Inventory, item: ItemSlot)
 
 ---@class Locomotor: Component
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)
@@ -201,6 +203,10 @@
 
 ---@class LootDropper: Component
 ---@field DropLoot fun(self: LootDropper, point: Vector3?)
+
+---@class FireFX: Component
+---@field percent number
+---@field level integer
 
 ---@class ItemSlot
 ---@field name string

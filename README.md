@@ -134,3 +134,4 @@ Message me on Discord if you need any help, [`ethleigh`](https://discordapp.com/
 
 - Eat food when starving
 - Run away when attacked
+- Keep nearby fire lit at night

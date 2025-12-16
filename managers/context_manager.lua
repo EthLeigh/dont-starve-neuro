@@ -1,21 +1,16 @@
 ContextManager = {}
 
-ContextManager._sent_for_darkness = false
-
 ContextManager._debounce_starve = true
 
 local sent_season_update = false
 
---- Checks if the player is in/leaving darkness and sends context
-local function HandleCheckPlayerEnterDarkness()
-    if PlayerLightWatcher:IsInLight() and ContextManager._sent_for_darkness then
-        ContextManager._sent_for_darkness = false
-        ApiBridge.HandleSendContext("Your character is no longer in the dark.", true)
-    elseif not PlayerLightWatcher:IsInLight() and not ContextManager._sent_for_darkness then
-        ContextManager._sent_for_darkness = true
-        ApiBridge.HandleSendContext("Your character is in the dark, run to the nearest light source or " ..
-            "make one. Your character will lose sanity in the dark and get attacked by shadow monsters.")
-    end
+function ContextManager.HandlePlayerEnterDarkness()
+    ApiBridge.HandleSendContext("Your character is in the dark, run to the nearest light source or " ..
+        "make one. Your character will lose sanity in the dark and get attacked by shadow monsters.")
+end
+
+function ContextManager.HandlePlayerExitDarkness()
+    ApiBridge.HandleSendContext("Your character is no longer in the dark.", true)
 end
 
 --- Handles the event for when the player starts starving. Called by the starving trigger.
@@ -99,8 +94,6 @@ end
 
 --- Setup listeners for necessary events
 function ContextManager.SetupContextEvents()
-    Player:DoPeriodicTask(3, HandleCheckPlayerEnterDarkness)
-
     PlayerHunger.inst:ListenForEvent("stopstarving", HandlePlayerStopStarve)
 
     PlayerSanity.inst:ListenForEvent("goinsane", HandlePlayerGoInsane)

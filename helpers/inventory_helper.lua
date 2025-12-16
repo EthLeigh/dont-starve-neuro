@@ -58,3 +58,18 @@ function InventoryHelper.HasItem(prefab)
 
     return false
 end
+
+---@return HotbarItem|nil
+function InventoryHelper.GetFuel()
+    for _, hotbar_item in pairs(InventoryHelper.GetHotbarItems()) do
+        if hotbar_item.item.components.fuel then
+            return hotbar_item
+        end
+    end
+
+    if PlayerInventory.equipslots.hands and PlayerInventory.equipslots.hands.components.fuel then
+        return HotbarItem(PlayerInventory.equipslots.hands)
+    end
+
+    return nil
+end

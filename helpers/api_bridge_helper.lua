@@ -183,12 +183,20 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             success = false
             message = "Failed to find a nearby light source"
         else
-            local light_source = light_sources[1]
-            local x, _, z = light_source.Transform:GetWorldPosition()
-            local light_radius = light_source.components.firefx.current_radius
+            local best_light_source = light_sources[1]
+            for _, light_source in pairs(light_sources) do
+                log_info(light_source.prefab)
+                if light_source.prefab == "campfirefire" then
+                    best_light_source = light_source
+
+                    break
+                end
+            end
+
+            local x, _, z = best_light_source.Transform:GetWorldPosition()
 
             -- Offset to avoid collision and endless running
-            MovementHelper.MoveToPoint(x, z + (light_radius / 2))
+            MovementHelper.MoveToPoint(x, z + 1)
 
             success = true
             message = "Successfully moved toward nearest light source"
