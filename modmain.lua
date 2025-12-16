@@ -199,11 +199,12 @@ AddSimPostInit(function()
     end
 
     if not MarkerHelper.HasMarkers() then
-        MarkerHelper.REGISTERED_GET_ACTION = false
+        MarkerHelper.HAS_REGISTERED_GET_ACTIONS = false
 
         Utils.RemoveElementByValue(actions_to_register, ApiActions.GET_MARKERS)
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.MOVE_TO_MARKER)
     else
-        MarkerHelper.REGISTERED_GET_ACTION = true
+        MarkerHelper.HAS_REGISTERED_GET_ACTIONS = true
     end
 
     ApiBridge.HandleSendRegister(actions_to_register)
