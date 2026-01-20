@@ -25,7 +25,6 @@
 ---@field next next
 ---@field json json
 ---@field STRINGS STRINGS
----@field IGNORE_PREFABS string[]
 ---@field RequestShutdown fun(callback: function)
 
 -- Neuro API Classes
