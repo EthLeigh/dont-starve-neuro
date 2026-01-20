@@ -1,1 +1,1 @@
--- Required file, not used in the mod
+-- Required for compilation

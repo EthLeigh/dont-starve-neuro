@@ -1,3 +1,5 @@
+# API Bridge Overview
+
 These are some high level overviews on how the API Bridge works.
 
 > [!IMPORTANT]

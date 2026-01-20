@@ -1,8 +1,10 @@
 ---@class BridgeConstants
 BridgeConstants = {}
 
+-- TODO: Replace this with proper configs
 BridgeConstants.BRIDGE_PORT = 9003
 BridgeConstants.BRIDGE_BASE_URL = "http://localhost:" .. BridgeConstants.BRIDGE_PORT .. "/api"
+
 BridgeConstants.STARTUP_URL = BridgeConstants.BRIDGE_BASE_URL .. "/send-startup"
 BridgeConstants.REGISTER_ALL_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/register-all"
 BridgeConstants.UNREGISTER_ALL_URL = BridgeConstants.BRIDGE_BASE_URL .. "/actions/unregister-all"

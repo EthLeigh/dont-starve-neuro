@@ -1,6 +1,8 @@
-# Don't Starve Neuro
+# Don't Starve Neuro (WIP)
 
-Neuro-sama SDK integration for Don't Starve.
+Co-op Neuro-sama SDK integration for Don't Starve.
+
+If you are looking for the **completed singleplayer** integration it is under the `single` branch, and the releases are marked with `single-*`.
 
 ## Setup
 
@@ -43,17 +45,13 @@ npm run dev
 When under the Mods section, and hovering over the "Don't Starve Neuro" mod,
 click **Configure Mod** to adjust the settings.
 
-Currently, you can:
-
-- Toggle Goal related functionality
-
 ---
 
 Once everything is configured and ready...
 
 Start up the Bridge, and then open the game. The startup command only sends _once_ on game startup.
 
-Create a new save and keep everything default. If any DLCs are installed/available, ignore them and only select **DS**.
+Create a new save and keep everything default. If any DLCs are installed/available, ignore them and only select **DS** (may change later).
 
 Once the world is created, the mod will communicate with the Bridge to register actions, which will send it over to the Neuro API.
 
@@ -76,7 +74,7 @@ npm run dev
 To view your changes to the game files/test them, you can simply exit and enter a world and the mod will be reloaded.
 There is no need to restart the game.
 
-**Optional**: You can copy Don't Starve's source code (under the game files and `data/scripts/`) into `external/ds/`,
+**Optional**: You can open Don't Starve's source code (under the game files and `data/scripts/`),
 this is for some more context over game functions/classes/enums/etc. You can otherwise skip this step as I have
 setup types for _most_ used game scripts, or you could reference the game scripts if you need to add something new.
 
@@ -86,49 +84,12 @@ Message me on Discord if you need any help, [`ethleigh`](https://discordapp.com/
 
 ## Available Actions
 
-- Eat food - `eat_food`: Eats the best available food in the inventory
-- Harvest nearby - `harvest_nearby`: Gets all nearby harvestable entities and starts a task (not blocking) to collect them until another actions is called. Available search filters are: "tree", "bush", "rock", "shrub", "grass", "flower". **Sends an action result immediately if harvestables are found or not.**
-- Save marker - `save_marker`: Saves a position under a name.
-- Move to marker - `move_to_marker`: Moves the player to a saved position.
-- Get markers - `get_markers`: Returns all saved markers by name.
-- Get environment information - `get_environment_info`: Returns all information about the player's surroundings. It specifically sends the ground type (grass, sand, etc.), temperature, if it's raining, if it's freezing, and the current season.
-- Get player info - `get_player_info`: Returns all information about the player. It specifically sends the character name (Wilson, Willow, etc.), health percent, hunger percent, sanity percent, if they are starving, and if they are sane.
-- Get available crafts - `get_available_crafts`: Returns all valid and prototype and crafting recipes by name, this does not include items required for that recipe, or if the resulting craft is a building or item.
-- Craft - `craft`: Attempts to craft a recipe by name. Recipe names can be retrieved with `get_available_crafts`.
-- Go to light source - `go_to_light_source`: Runs to the nearest light source. This action is only registered at night.
-- Retrieve current goal - `retrieve_current_goal`: Sends the current goal and it's completion description.
-- Attack nearby - `attack_nearby`: Attacks all nearby entities until another action is called.
-- Cook food - `cook_food`: Cooks the best available food in the inventory using a Campfire or Fire Pit.
-- Explore - `explore`: Explores in a random direction until another action is called. **Quite janky and will pick a new direction every 5 seconds, as the pathfinding is simply not doing anything**.
-- Interact - `interact`: Interacts with a nearby entity/interactible.
-- Prototype Recipe - `prototype`: Learns a new recipe and crafts it using available items and a science prototyper.
-
-> These actions will only be registered when the game over screen is visible.
-
-- Retry - `retry`: Creates a new save.
-- Exit to Main Menu - `exit_to_main_menu`: Exits to the main menu.
+Work in progress...
 
 ## Context Messages
 
-- Enter Darkness: "Your character is in the dark, run to the nearest light source or make one. Your character will lose sanity and get attacked by shadow monsters."
-- Exit Darkness/Enter Light: "Your character is no longer in the dark."
-- Starving (automatically eat available food): "Your character started starving but ate food to stay fed."
-- Starving (no food available): "Your character is starving and will take damage until you eat but there is no food in your character's inventory."
-- Stopped Starving: "Your character is no longer starving."
-- Going insane: "Your character is going insane from sanity loss."
-- Becoming sane: "Your character is no longer insane."
-- Season change: "The season is now `SEASON_NAME`."
-- Rain start: "It has started to rain."
-- Rain stop: "It stopped raining."
-- Freezing start: "Your character is freezing."
-- Freezing stop: "Your character has stopped freezing."
-- Monster attack: "You are being attacked by a `ENTITY_NAME`. There are `TOTAL_MONSTER_COUNT` monsters around you."
-- Entity slain: "You have slain a `ENTITY_NAME`."
-- Retrieve nearby: "These interactibles are nearby: `ENTITY_COUNT` `ENTITY_NAME` (`ENTITY_PREFAB_NAME`), `ENTITY_COUNT` `ENTITY_NAME` (`ENTITY_PREFAB_NAME`), ..."
-- Inventory items: Your inventory items are: `ITEM_NAME`, `ITEM_NAME`. **(sends 2 seconds after an action is called)**.
+Work in progress...
 
 ## Automatic Actions
 
-- Eat food when starving
-- Run away when attacked
-- Keep nearby fire lit at night
+Work in progress...

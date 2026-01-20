@@ -1,9 +1,9 @@
 ---@diagnostic disable: lowercase-global
 
-name = "Don't Starve Neuro"
+name = "Don't Starve Neuro Co-op"
 version = "0.0.0"
 author = "EthLeigh"
-description = "Allows Neuro-sama (or Evil) to play Don't Starve."
+description = "Allows Neuro-sama to play Don't Starve as a companion."
 
 dont_starve_compatible = true
 dst_compatible = false
@@ -18,17 +18,3 @@ api_version_dst = 10
 
 forumthread = ""
 priority = 0
-
-configuration_options =
-{
-    {
-        name = "goals_enabled",
-        label = "Goals",
-        options =
-        {
-            { description = "Enabled",  data = true },
-            { description = "Disabled", data = false },
-        },
-        default = false,
-    },
-}

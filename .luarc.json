@@ -1,20 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "runtime.version": "Lua 5.1",
-  "workspace.library": [
-    "./types.lua",
-    "./external/ds"
-  ],
+  "workspace.library": ["./types.lua"],
   "workspace.checkThirdParty": false,
-  "diagnostics.disable": [
-    "duplicate-set-field",
-    "lowercase-global"
-  ],
-  "runtime.path": [
-    "?.lua",
-    "?/init.lua",
-    "?.lua",
-    "?/init.lua"
-  ],
+  "diagnostics.disable": ["duplicate-set-field", "lowercase-global"],
+  "runtime.path": ["?.lua", "?/init.lua", "?.lua", "?/init.lua"],
   "completion.autoRequire": false
 }
