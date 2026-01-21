@@ -1,8 +1,9 @@
-# Don't Starve Neuro (WIP)
+# Don't Starve Neuro Co-op (WIP)
+
+> [!IMPORTANT]
+> If you are looking for the **completed singleplayer** integration it is under the `single` branch, and the releases are marked with `single-*`.
 
 Co-op Neuro-sama SDK integration for Don't Starve.
-
-If you are looking for the **completed singleplayer** integration it is under the `single` branch, and the releases are marked with `single-*`.
 
 ## Setup
 
