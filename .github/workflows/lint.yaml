@@ -13,10 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
 
-      - run: ls -la
-
       - name: Luacheck Linter
         uses: judaew/luacheck-action@v0.2.2
         with:
           targets: "."
-          args: "--config ${{ github.workspace }}/.luacheckrc"
