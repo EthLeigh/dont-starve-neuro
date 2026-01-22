@@ -48,7 +48,8 @@ function EntityHelper.GetNearbyHarvestables(tags)
         x, 0, z,
         GameConstants.SEARCH_RADIUS,
         tags,
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS),
+            "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
     )
 
     local filtered_harvestables = {}
