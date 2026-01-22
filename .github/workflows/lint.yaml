@@ -17,4 +17,4 @@ jobs:
         uses: judaew/luacheck-action@v0.2.2
         with:
           targets: "."
-          args: "-d"
+          args: "--config .luacheckrc"
