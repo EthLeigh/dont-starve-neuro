@@ -15,7 +15,11 @@ function Utils.GetActionForEntity(ent)
         return "harvest", GLOBAL.ACTIONS.HARVEST
     elseif ent.components.crop and ent.components.crop:IsReadyForHarvest() then
         return "harvest", GLOBAL.ACTIONS.HARVEST
-    elseif ent.components.inspectable and not ent.components.harvestable and not ent.components.lootdropper and not ent.components.pickable and not ent.components.inventoryitem then
+    elseif ent.components.inspectable and
+        not ent.components.harvestable and
+        not ent.components.lootdropper and
+        not ent.components.pickable and
+        not ent.components.inventoryitem then
         -- TODO: Add a context message for the character response
         return "examine", GLOBAL.ACTIONS.LOOKAT
     end

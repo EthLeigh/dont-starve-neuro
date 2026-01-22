@@ -1,9 +1,9 @@
 ApiBridge = {}
 
 ---@param action_payload string
----@param is_successful boolean
----@param result_code integer
-local function HandlePendingAction(action_payload, is_successful, result_code)
+---@param _is_successful boolean
+---@param _result_code integer
+local function HandlePendingAction(action_payload, _is_successful, _result_code)
     if action_payload == '[]' or action_payload == '' then
         return
     end
