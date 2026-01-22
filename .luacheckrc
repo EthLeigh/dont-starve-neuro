@@ -1,3 +1,4 @@
 std = {
-  read_globals = {"GLOBAL", "TheWorld", "TheSim"}
+  global = false,
+  exclude_files = {".vscode/kei.meta.lua", "dont-starve-neuro/types.lua"}
 }
