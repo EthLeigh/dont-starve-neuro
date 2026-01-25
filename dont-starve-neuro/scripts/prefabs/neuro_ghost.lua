@@ -25,7 +25,10 @@ local function auratest(inst, target)
     if target == GetPlayer() then return false end
 
     local leader = inst.components.follower.leader
-    if target.components.combat.target and (target.components.combat.target == inst or target.components.combat.target == leader) then return true end
+    if target.components.combat.target and
+        (target.components.combat.target == inst or target.components.combat.target == leader) then
+        return true
+    end
     if inst.components.combat.target == target then return true end
 
     if leader then
