@@ -3,7 +3,7 @@
 name = "Don't Starve Neuro Co-op"
 version = "0.0.0"
 author = "EthLeigh"
-description = "Allows Neuro-sama to play Don't Starve as a companion."
+description = "Allows Neuro-sama to play Don't Starve as a ghost companion."
 
 dont_starve_compatible = true
 dst_compatible = false
@@ -14,7 +14,6 @@ shipwrecked_compatible = true
 hamlet_compatible = true
 
 api_version = 6
-api_version_dst = 10
 
 forumthread = ""
 priority = 0

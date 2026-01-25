@@ -1,3 +1,7 @@
+PrefabFiles = {
+    "neuro_ghost",
+}
+
 modimport("logging.lua")
 modimport("constants/game.lua")
 modimport("constants/api_bridge.lua")
@@ -77,6 +81,15 @@ AddSimPostInit(function()
     SeasonManager = World.components.seasonmanager
 
     PlayerName = Player.profile:GetValue("characterinthrone")
+
+    local existing_neuro_ghost = EntityHelper.GetNearbyEntities({ "neuro" })
+
+    if Utils.GetTableLength(existing_neuro_ghost) == 0 then
+        local ghost = GLOBAL.SpawnPrefab("neuro_ghost")
+        local x, _, z = Player.Transform:GetWorldPosition()
+
+        ghost.Transform:SetPosition(x, 0, z + 10)
+    end
 
     Player:DoPeriodicTask(1, function()
         ApiBridge.GetPending()

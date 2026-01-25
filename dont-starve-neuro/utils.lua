@@ -1,7 +1,5 @@
 Utils = {}
 
-modimport("classes/action_queue.lua")
-
 ---@param ent Entity | nil
 ---@return string | nil, table | nil
 function Utils.GetActionForEntity(ent)
