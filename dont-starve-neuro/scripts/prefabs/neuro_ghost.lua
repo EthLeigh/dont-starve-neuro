@@ -53,9 +53,10 @@ local function fn()
     light:SetRadius(.5)
     light:SetFalloff(.6)
     light:Enable(true)
-    light:SetColour(180 / 255, 195 / 255, 225 / 255)
+    light:SetColour(225 / 255, 180 / 255, 222 / 255)
 
-    inst.DynamicShadow:SetSize(2, .75)
+    local brain = require "brains/neuro_ghost_brain"
+    inst:SetBrain(brain)
 
     anim:SetBank("ghost")
     anim:SetBuild("ghost_wendy_build")
@@ -71,6 +72,12 @@ local function fn()
     inst:AddTag("companion")
     inst:AddTag("notraptrigger")
     inst:AddTag("noauradamage")
+
+    inst:AddComponent("locomotor") -- locomotor must be constructed before the stategraph
+    inst.components.locomotor.walkspeed = CONSTANTS.WALK_SPEED
+    inst.components.locomotor.runspeed = CONSTANTS.RUN_SPEED
+
+    inst:SetStateGraph("neuro_ghost_sg")
 
     inst:AddComponent("inspectable")
     inst.components.inspectable.getstatus = function(_) return "woah neuro" end
@@ -90,9 +97,12 @@ local function fn()
     inst.components.aura.ignoreallies = true
     inst.components.aura.auratestfn = auratest
 
-    inst:AddComponent("locomotor") -- locomotor must be constructed before the stategraph
-    inst.components.locomotor.walkspeed = CONSTANTS.WALK_SPEED
-    inst.components.locomotor.runspeed = CONSTANTS.RUN_SPEED
+    inst:AddComponent("follower")
+    local player = GetPlayer()
+    if player and player.components.leader then
+        print("MAKING FOLLOW")
+        player.components.leader:AddFollower(inst)
+    end
 
     -- inst:ListenForEvent("newcombattarget", OnAttacked)
     -- inst:ListenForEvent("attacked", OnAttacked)

@@ -1,4 +1,5 @@
 -- This is not a comprehensive list of the real fields/params, just the ones used in the mod
+-- This list of types is also very likely wrong, it is better to read from the source
 
 ---@class GLOBAL
 ---@field CHEATS_ENABLED boolean
@@ -109,6 +110,8 @@
 ---@field DynamicShadow DynamicShadow
 ---@field AnimState AnimState
 ---@field AddTag fun(self: Instance, name: string)
+---@field SetBrain fun(self: Instance, brain: Brain)
+---@field SetStateGraph fun(self: Instance, file_path: string)
 ---@field AddComponent fun(self: Instance, name: string)
 ---@field ListenForEvent fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>), source: Instance?)
 ---@field PushEvent fun(self: Instance, event_name: string, data: table<any, any>?)
@@ -169,6 +172,8 @@
 ---@field eater Eater
 ---@field talker Talker
 ---@field temperature Temperature
+---@field leader Leader
+---@field follower Follower
 
 ---@class PlayerComponents
 ---@field health Health
@@ -181,6 +186,13 @@
 ---@field eater Eater
 ---@field talker Talker
 ---@field temperature Temperature
+---@field leader Leader
+
+---@class Leader
+---@field AddFollower fun(self: Leader, ent: Instance)
+
+---@class Follower
+---@field leader Instance
 
 ---@class Inspectable: Component
 ---@field getstatus function
@@ -268,6 +280,12 @@
 ---@field percent number
 ---@field level integer
 
+---@class Brain: Component
+---@field OnStart fun(self: Brain)
+---@field bt BehaviourTree
+
+---@class StateGraph
+
 ---@class ItemSlot
 ---@field name string
 ---@field prefab string
@@ -308,7 +326,17 @@
 
 ---@class Asset
 
+---@class Follow
+
+---@class BehaviourTree
+
 -- Global functions
+
+---@param self any
+---@param ... any
+---@return any
+---@diagnostic disable-next-line: unused-local, missing-return
+function Class(self, ...) end
 
 ---@param callback fun(inst: Player)
 ---@diagnostic disable-next-line: unused-local
@@ -349,6 +377,48 @@ function Prefab(name, fn, assets, deps) end
 ---@return Asset
 ---@diagnostic disable-next-line: unused-local, missing-return
 function Asset(type, file, param) end
+
+---@param type string
+---@param file string
+---@param param any?
+---@return Brain
+---@diagnostic disable-next-line: unused-local, missing-return
+function Brain(type, file, param) end
+
+---@param name string
+---@param states table<string, any>
+---@param events table<string, any>
+---@param default_state string
+---@return StateGraph
+---@diagnostic disable-next-line: unused-local, missing-return
+function StateGraph(name, states, events, default_state) end
+
+---@param inst Instance
+---@param root Instance
+---@return BehaviourTree
+---@diagnostic disable-next-line: unused-local, missing-return
+function BT(inst, root) end
+
+---@param children any[]
+---@param period number
+---@return Instance
+---@diagnostic disable-next-line: unused-local, missing-return
+function PriorityNode(children, period) end
+
+---@param inst Instance
+---@param target function | Instance
+---@param min_dist number
+---@param target_dist number
+---@param max_dist number
+---@param canrun boolean
+---@diagnostic disable-next-line: unused-local
+function Follow(inst, target, min_dist, target_dist, max_dist, canrun) end
+
+---@param inst Instance
+---@param target function | Instance
+---@param max_dist number
+---@diagnostic disable-next-line: unused-local
+function Wander(inst, target, max_dist) end
 
 ---@return Instance
 ---@diagnostic disable-next-line: unused-local, missing-return
