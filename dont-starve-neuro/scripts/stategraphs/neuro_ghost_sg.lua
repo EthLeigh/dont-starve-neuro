@@ -104,7 +104,7 @@ local states =
 
         events =
         {
-            EventHandler("animover", function(inst, data)
+            EventHandler("animover", function(inst, _data)
                 if inst.components.lootdropper then
                     inst.components.lootdropper:DropLoot()
                 end
