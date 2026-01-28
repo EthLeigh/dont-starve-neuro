@@ -1,18 +1,13 @@
 require("stategraphs/commonstates")
 
 local function startaura(inst)
-    inst.Light:SetColour(255 / 255, 32 / 255, 32 / 255)
-    if inst:HasTag("girl") then
-        inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_attack_LP", "angry")
-    else
-        inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_attack_LP", "angry")
-    end
-
-    inst.AnimState:SetMultColour(207 / 255, 92 / 255, 92 / 255, 1)
+    inst.Light:SetColour(255 / 255, 32 / 255, 236 / 255)
+    inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_attack_LP", "angry")
+    inst.AnimState:SetMultColour(207 / 255, 92 / 255, 205 / 255, 1)
 end
 
 local function stopaura(inst)
-    inst.Light:SetColour(180 / 255, 195 / 255, 225 / 255)
+    inst.Light:SetColour(201 / 255, 180 / 255, 225 / 255)
     inst.SoundEmitter:KillSound("angry")
     inst.AnimState:SetMultColour(1, 1, 1, 1)
 end
@@ -51,11 +46,7 @@ local states =
         name = "appear",
         onenter = function(inst)
             inst.AnimState:PlayAnimation("appear")
-            if inst:HasTag("girl") then
-                inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_howl")
-            else
-                inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_howl")
-            end
+            inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_howl")
         end,
 
         events =
@@ -72,12 +63,7 @@ local states =
         tags = { "busy" },
 
         onenter = function(inst)
-            if inst:HasTag("girl") then
-                inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_howl")
-            else
-                inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_howl")
-            end
-
+            inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_howl")
             inst.AnimState:PlayAnimation("hit")
             inst.Physics:Stop()
         end,
@@ -94,23 +80,8 @@ local states =
             inst.Physics:Stop()
             inst.AnimState:PlayAnimation("dissipate")
             inst.components.aura:Enable(false)
-
-            if inst:HasTag("girl") then
-                inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_howl")
-            else
-                inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_howl")
-            end
+            inst.SoundEmitter:PlaySound("dontstarve/ghost/ghost_girl_howl")
         end,
-
-        events =
-        {
-            EventHandler("animover", function(inst, _data)
-                if inst.components.lootdropper then
-                    inst.components.lootdropper:DropLoot()
-                end
-                inst:Remove()
-            end)
-        },
     },
 }
 

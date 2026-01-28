@@ -8,10 +8,10 @@ local NeuroGhostBrain = Class(Brain, function(self, inst)
     Brain._ctor(self, inst)
 end)
 
-local MIN_FOLLOW = 4
-local MAX_FOLLOW = 11
-local MED_FOLLOW = 6
-local MAX_WANDER_DIST = 10
+local MIN_FOLLOW = 2
+local MAX_FOLLOW = 10
+local MED_FOLLOW = 5
+local MAX_WANDER_DIST = 9
 -- local MAX_CHASE_TIME = 6
 
 local function GetFaceTargetFn(inst)

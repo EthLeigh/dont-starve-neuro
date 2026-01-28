@@ -53,7 +53,7 @@ local function fn()
     light:SetRadius(.5)
     light:SetFalloff(.6)
     light:Enable(true)
-    light:SetColour(225 / 255, 180 / 255, 222 / 255)
+    light:SetColour(240 / 255, 120 / 255, 232 / 255)
 
     local brain = require "brains/neuro_ghost_brain"
     inst:SetBrain(brain)
@@ -80,7 +80,6 @@ local function fn()
     inst:SetStateGraph("neuro_ghost_sg")
 
     inst:AddComponent("inspectable")
-    inst.components.inspectable.getstatus = function(_) return "woah neuro" end
 
     inst:AddComponent("health")
     inst.components.health:SetMaxHealth(CONSTANTS.HEALTH)
@@ -100,7 +99,6 @@ local function fn()
     inst:AddComponent("follower")
     local player = GetPlayer()
     if player and player.components.leader then
-        print("MAKING FOLLOW")
         player.components.leader:AddFollower(inst)
     end
 
