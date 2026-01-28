@@ -56,8 +56,8 @@ app.listen({ port: env.PORT, host: '0.0.0.0' }).catch((e) => {
 
 try {
   await initWs();
-} catch {
-  app.log.error('Failed to initialize Websocket connection');
+} catch (err) {
+  app.log.error({ err }, 'Failed to initialize Websocket connection');
 
   app.close();
   process.exit(1);
