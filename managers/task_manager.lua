@@ -33,7 +33,7 @@ end
 local function GetTaskTypeFunction(type, args)
     if type == TaskManager.TASK_TYPES.HARVEST then
         return function()
-            local nearby_harvestables = EntityHelper.GetNearbyHarvestables(args.tag_filters)
+            local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
             local filtered_nearby_harvestables = {}
             if args.prefab_filters ~= nil and Utils.GetTableLength(args.prefab_filters) > 0 then

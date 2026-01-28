@@ -67,13 +67,38 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         )
     elseif name == ApiActions.HARVEST_NEARBY then
         local entity_prefab_filters = HarvestHelper.MapActionFiltersToPrefabs(data and data.filters or {})
-        local harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function()
-            return true
-        end, { prefab_filters = entity_prefab_filters })
 
-        message = "Started harvesting nearby things until another action is called."
+        if ((table.contains(entity_prefab_filters, "evergreen") and not InventoryHelper.HasItem("axe"))
+                or (table.contains(entity_prefab_filters, "rock1") and not InventoryHelper.HasItem("pickaxe"))) then
+            success = false
+            message = "Unable to harvest with provided filters, as a tool is required for harvesting."
+        else
+            local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
-        TaskManager.StartTasks({ harvest_task })
+            local harvestables_exist = false
+            if entity_prefab_filters ~= nil and Utils.GetTableLength(entity_prefab_filters) > 0 then
+                for _, entity in pairs(nearby_harvestables) do
+                    if table.contains(entity_prefab_filters, entity.prefab) then
+                        harvestables_exist = true
+
+                        break
+                    end
+                end
+            end
+
+            if not harvestables_exist then
+                success = false
+                message = "No harvestables found with provided filters."
+            else
+                message = "Started harvesting nearby things until another action is called."
+
+                local harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function()
+                    return true
+                end, { prefab_filters = entity_prefab_filters })
+
+                TaskManager.StartTasks({ harvest_task })
+            end
+        end
     elseif name == ApiActions.GET_ENVIRONMENT_INFO then
         message = "The floor is " .. EnvironmentHelper.GetGroundName()
         message = message .. ", it is " .. (EnvironmentHelper.IsRaining() and "raining" or "not raining")
