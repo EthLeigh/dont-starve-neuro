@@ -17,7 +17,6 @@ local function stopaura(inst)
     inst.AnimState:SetMultColour(1, 1, 1, 1)
 end
 
-
 local events =
 {
     CommonHandlers.OnLocomote(true, true),
@@ -40,8 +39,7 @@ end
 
 local states =
 {
-    State
-    {
+    State {
         name = "idle",
         tags = { "idle", "canrotate", "canslide" },
         onenter = function(inst)
@@ -49,8 +47,7 @@ local states =
         end,
     },
 
-    State
-    {
+    State {
         name = "appear",
         onenter = function(inst)
             inst.AnimState:PlayAnimation("appear")
@@ -63,12 +60,11 @@ local states =
 
         events =
         {
-            EventHandler("animover", function(inst, data)
+            EventHandler("animover", function(inst, _data)
                 inst.components.aura:Enable(true)
                 inst.sg:GoToState("idle")
             end)
         },
-
     },
 
     State {
@@ -92,8 +88,7 @@ local states =
         },
     },
 
-    State
-    {
+    State {
         name = "dissipate",
         onenter = function(inst)
             inst.Physics:Stop()
@@ -117,9 +112,7 @@ local states =
             end)
         },
     },
-
 }
-
 
 CommonStates.AddSimpleWalkStates(states, getidleanim)
 CommonStates.AddSimpleRunStates(states, getidleanim)

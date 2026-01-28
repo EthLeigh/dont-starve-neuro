@@ -406,6 +406,13 @@ function BT(inst, root) end
 function PriorityNode(children, period) end
 
 ---@param inst Instance
+---@param getfn function
+---@param keepfn function
+---@param timeout number?
+---@diagnostic disable-next-line: unused-local
+function FaceEntity(inst, getfn, keepfn, timeout) end
+
+---@param inst Instance
 ---@param target function | Instance
 ---@param min_dist number
 ---@param target_dist number
@@ -423,6 +430,24 @@ function Wander(inst, target, max_dist) end
 ---@return Instance
 ---@diagnostic disable-next-line: unused-local, missing-return
 function CreateEntity() end
+
+---@param x number
+---@param y number
+---@param z number
+---@return any
+---@diagnostic disable-next-line: unused-local, missing-return
+function Point(x, y, z) end
+
+---@param evt string
+---@param fn function
+---@return any
+---@diagnostic disable-next-line: unused-local, missing-return
+function EventHandler(evt, fn) end
+
+---@param data table<string, any>
+---@return any
+---@diagnostic disable-next-line: unused-local, missing-return
+function State(data) end
 
 ---@param inst Instance
 ---@param mass number
@@ -446,3 +471,21 @@ function modimport(path) end
 ---@return unknown|nil
 ---@diagnostic disable-next-line: unused-local
 function GetModConfigData(optionname, modname) end
+
+-- other odd classes
+
+---@class CommonHandlers
+---@field OnLocomote function
+---@type CommonHandlers
+CommonHandlers = {
+    OnLocomote = function() end
+}
+
+---@class CommonStates
+---@field AddSimpleWalkStates function
+---@field AddSimpleRunStates function
+---@type CommonStates
+CommonStates = {
+    AddSimpleWalkStates = function() end,
+    AddSimpleRunStates = function() end
+}

@@ -13,6 +13,7 @@
     "editor.detectIndentation": false
   },
   "[lua]": {
-    "editor.defaultFormatter": "sumneko.lua"
+    "editor.defaultFormatter": "sumneko.lua",
+    "editor.rulers": [120]
   }
 }
