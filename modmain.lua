@@ -83,6 +83,37 @@ PlayerTemperature = nil
 ---@type Camera
 Camera = nil
 
+local function FilterAndRegisterActions()
+    local actions_to_register = Utils.UnpackValues(ApiActions)
+
+    Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRY)
+    Utils.RemoveElementByValue(actions_to_register, ApiActions.EXIT_TO_MAIN_MENU)
+
+    if not CONFIG.GOALS_ENABLED then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRIEVE_CURRENT_GOAL)
+    end
+
+    if not Clock:IsNight() then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.GO_TO_LIGHT_SOURCE)
+    end
+
+    if not EaterHelper.GetBestFoodInInventory() then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.EAT_FOOD)
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.COOK_FOOD)
+    end
+
+    if not MarkerHelper.HasMarkers() then
+        MarkerHelper.HAS_REGISTERED_GET_ACTIONS = false
+
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.GET_MARKERS)
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.MOVE_TO_MARKER)
+    else
+        MarkerHelper.HAS_REGISTERED_GET_ACTIONS = true
+    end
+
+    ApiBridge.HandleSendRegister(actions_to_register)
+end
+
 AddClassPostConstruct("screens/mainscreen", function()
     GLOBAL.TheSim:GetPersistentString(GameInitialized, function(success, data)
         if success and data == "true" then
@@ -126,8 +157,6 @@ AddPlayerPostInit(function(inst)
     PlayerLightWatcher = Player.LightWatcher
     PlayerTemperature = Player.components.temperature
 
-    -- Player.components.playercontroller:Enable(false)
-
     player_original_on_save = Player.OnSave
 
     -- Handle stuff when player gets saved
@@ -135,7 +164,13 @@ AddPlayerPostInit(function(inst)
         -- Commented out for testing/dev
         -- GoalManager.SaveCurrentGoal()
 
-        player_original_on_save(inst, data)
+        if not player_original_on_save then
+            log_error("Missing player save function! Failed to save data.")
+
+            return
+        end
+
+        player_original_on_save(Player, data)
     end
 
     Player:ListenForEvent("death", function()
@@ -159,6 +194,23 @@ AddSimPostInit(function()
     Camera:SetHeadingTarget(270)
     Camera:Snap()
 
+    -- If no time has passed in the first cycle, we assume it's a new world
+    if (Clock.timeLeftInEra == Clock.totalEraTime and Clock.numcycles == 0) then
+        ApiBridge.HandleSendContext('A tall man said to you, "Say pal, you don\'t look so good. ' ..
+            'You better find something to eat before night comes!", and then he dissapeared.')
+
+        PlayerHudShowDefault = Player.HUD.Show
+        Player.HUD.Show = function(...)
+            -- Register actions when the player's hud is shown
+            FilterAndRegisterActions()
+
+            -- Do whatever default stuff the game does
+            PlayerHudShowDefault(...)
+        end
+    else
+        FilterAndRegisterActions()
+    end
+
     GlobalPlayer = GLOBAL:GetPlayer()
 
     if Player == nil and GlobalPlayer == nil then
@@ -179,35 +231,6 @@ AddSimPostInit(function()
     Player:DoPeriodicTask(1, function()
         ApiBridge.GetPending()
     end)
-
-    local actions_to_register = Utils.UnpackValues(ApiActions)
-
-    Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRY)
-    Utils.RemoveElementByValue(actions_to_register, ApiActions.EXIT_TO_MAIN_MENU)
-
-    if not CONFIG.GOALS_ENABLED then
-        Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRIEVE_CURRENT_GOAL)
-    end
-
-    if not Clock:IsNight() then
-        Utils.RemoveElementByValue(actions_to_register, ApiActions.GO_TO_LIGHT_SOURCE)
-    end
-
-    if not EaterHelper.GetBestFoodInInventory() then
-        Utils.RemoveElementByValue(actions_to_register, ApiActions.EAT_FOOD)
-        Utils.RemoveElementByValue(actions_to_register, ApiActions.COOK_FOOD)
-    end
-
-    if not MarkerHelper.HasMarkers() then
-        MarkerHelper.HAS_REGISTERED_GET_ACTIONS = false
-
-        Utils.RemoveElementByValue(actions_to_register, ApiActions.GET_MARKERS)
-        Utils.RemoveElementByValue(actions_to_register, ApiActions.MOVE_TO_MARKER)
-    else
-        MarkerHelper.HAS_REGISTERED_GET_ACTIONS = true
-    end
-
-    ApiBridge.HandleSendRegister(actions_to_register)
 
     Player:ListenForEvent("killed", ContextManager.OnEntityKilled)
 end)

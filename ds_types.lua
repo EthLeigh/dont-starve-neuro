@@ -111,6 +111,7 @@
 ---@field LightWatcher LightWatcher
 ---@field profile Profile
 ---@field components PlayerComponents
+---@field HUD HUD
 
 ---@class Profile
 ---@field GetValue fun(self: Profile, field: string): string
@@ -124,9 +125,15 @@
 ---@field Reset fun(self: Clock)
 ---@field IsNight fun(self: Clock): boolean
 ---@field inst Instance
+---@field timeLeftInEra number
+---@field totalEraTime integer
+---@field numcycles integer
 
 ---@class Map
 ---@field GetTileAtPoint fun(self: Map, x: number, y: number, z: number): string
+
+---@class HUD
+---@field Show function
 
 ---@class Transform
 ---@field GetWorldPosition fun(): number, number, number
