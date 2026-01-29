@@ -3,6 +3,7 @@ TriggerManager = {}
 
 TriggerManager.CurrentAttackerName = nil
 TriggerManager._sent_for_darkness = false
+TriggerManager.food_actions_registered = false
 
 --- Handles the event for when the player's health decreases. Will send a context message about the current enemy attacking.
 ---@param damage_cause string
@@ -52,10 +53,16 @@ local function HandleNightStart()
 end
 
 local function HandleInventoryItemChange()
-    if EaterHelper.GetBestFoodInInventory() then
-        ApiBridge.HandleSendRegister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
-    else
+    local food_exists = EaterHelper.GetBestFoodInInventory() ~= nil
+
+    if food_exists and TriggerManager.food_actions_registered then
+        return
+    elseif not food_exists and TriggerManager.food_actions_registered then
         ApiBridge.HandleSendUnregister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
+        TriggerManager.food_actions_registered = false
+    else
+        ApiBridge.HandleSendRegister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
+        TriggerManager.food_actions_registered = true
     end
 end
 
