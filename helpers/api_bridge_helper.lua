@@ -80,7 +80,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             local nearby_harvestables = EntityHelper.GetNearbyHarvestables()
 
             local harvestables_exist = false
-            if entity_prefab_filters ~= nil and Utils.GetTableLength(entity_prefab_filters) > 0 then
+            if entity_prefab_filters ~= nil then
                 for _, entity in pairs(nearby_harvestables) do
                     if table.contains(entity_prefab_filters, entity.prefab) then
                         harvestables_exist = true
@@ -90,7 +90,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
                 end
             end
 
-            if not harvestables_exist then
+            if not harvestables_exist and Utils.GetTableLength(entity_prefab_filters) > 0 then
                 success = false
                 message = "No harvestables found with provided filters."
             else
