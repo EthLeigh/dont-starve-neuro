@@ -17,6 +17,10 @@ ApiActions.EXPLORE = "explore"
 ApiActions.INTERACT = "interact"
 ApiActions.PROTOTYPE = "prototype"
 
+-- Saving and loading (main menu only)
+ApiActions.CREATE_NEW_WORLD = "create_new_world"
+ApiActions.LOAD_WORLD = "load_world"
+
 -- Game over only
 ApiActions.RETRY = "retry"
 ApiActions.EXIT_TO_MAIN_MENU = "exit_to_main_menu"

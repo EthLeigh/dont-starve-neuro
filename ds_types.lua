@@ -27,6 +27,7 @@
 ---@field STRINGS STRINGS
 ---@field IGNORE_PREFABS string[]
 ---@field RequestShutdown fun(callback: function)
+---@field scheduler table<string, any>
 
 -- Neuro API Classes
 

@@ -86,6 +86,9 @@ Camera = nil
 local function FilterAndRegisterActions()
     local actions_to_register = Utils.UnpackValues(ApiActions)
 
+    Utils.RemoveElementByValue(actions_to_register, ApiActions.CREATE_NEW_WORLD)
+    Utils.RemoveElementByValue(actions_to_register, ApiActions.LOAD_WORLD)
+
     Utils.RemoveElementByValue(actions_to_register, ApiActions.RETRY)
     Utils.RemoveElementByValue(actions_to_register, ApiActions.EXIT_TO_MAIN_MENU)
 
@@ -114,7 +117,9 @@ local function FilterAndRegisterActions()
     ApiBridge.HandleSendRegister(actions_to_register)
 end
 
-AddClassPostConstruct("screens/mainscreen", function()
+AddClassPostConstruct("screens/mainscreen", function(self)
+    ApiBridgeHelper.OutsideOfSim = true
+
     GLOBAL.TheSim:GetPersistentString(GameInitialized, function(success, data)
         if success and data == "true" then
             log_warning("Skipping sending startup message as it has (probably) already been sent")
@@ -126,6 +131,31 @@ AddClassPostConstruct("screens/mainscreen", function()
 
         ApiBridge.HandleSendStartup()
     end)
+
+    local actions_to_register = { ApiActions.CREATE_NEW_WORLD }
+    if GLOBAL.SaveGameIndex:GetCurrentMode(1) ~= nil then
+        table.insert(actions_to_register, ApiActions.LOAD_WORLD)
+    end
+
+    ApiBridge.HandleSendRegister(actions_to_register)
+
+    local CHECK_INTERVAL = 2
+    local original_OnUpdate = self.OnUpdate
+
+    local time_accumulator = 0
+    self.OnUpdate = function(update_self, dt)
+        if original_OnUpdate then
+            original_OnUpdate(update_self, dt)
+        end
+
+        time_accumulator = time_accumulator + dt
+
+        if time_accumulator >= CHECK_INTERVAL then
+            time_accumulator = 0
+
+            ApiBridge.GetPending()
+        end
+    end
 end)
 
 local OriginalStartNextInstance = GLOBAL.StartNextInstance
@@ -183,6 +213,8 @@ AddPlayerPostInit(function(inst)
 end)
 
 AddSimPostInit(function()
+    ApiBridgeHelper.OutsideOfSim = false
+
     Camera = GLOBAL.TheCamera
     Clock = GLOBAL:GetClock()
     World = GLOBAL:GetWorld()

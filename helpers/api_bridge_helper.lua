@@ -1,13 +1,17 @@
 ---@class ApiBridgeHelper
 ApiBridgeHelper = {}
 
+ApiBridgeHelper.OutsideOfSim = true
+
 ---@param name string
 ---@param data table<string, any>
 function ApiBridgeHelper.HandleActionExecution(name, data)
     local success = true
     local message
 
-    TaskManager.StopTasks()
+    if not ApiBridgeHelper.OutsideOfSim then
+        TaskManager.StopTasks()
+    end
 
     if name == ApiActions.EAT_FOOD then
         local eaten_food_name = EaterHelper.EatBestFoodInInventory()
@@ -332,6 +336,46 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             success = false
             message = "An unexpected error occurred."
         end
+    elseif name == ApiActions.CREATE_NEW_WORLD then
+        local NewGameScreen = GLOBAL.require("screens/newgamescreen")
+
+        GLOBAL.SaveGameIndex:DeleteSlot(1)
+
+        local screen = NewGameScreen(1)
+        GLOBAL.TheFrontEnd:PushScreen(screen)
+        GLOBAL.TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
+
+        GLOBAL.scheduler:ExecuteInTime(1, function()
+            GLOBAL.TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
+            screen.Vanilla_btn.is_enabled = true
+            screen.Vanilla_btn.checkbox:SetTint(1, 1, 1, 1)
+            screen.Vanilla_btn.image:SetTint(1, 1, 1, 1)
+            screen.Vanilla_btn.checkbox:SetTexture("images/ui.xml", "button_checkbox2.tex")
+
+            screen.menu:SetItemEnabled(1, true)
+            screen.menu:SetItemEnabled(#screen.dlc_buttons + 2, true)
+            screen.menu:SetItemEnabled(#screen.dlc_buttons + 3, true)
+
+            GLOBAL.scheduler:ExecuteInTime(2, function()
+                GLOBAL.TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
+
+                GLOBAL.TheFrontEnd:Fade(false, 2, function()
+                    GLOBAL.SaveGameIndex:StartSurvivalMode(1, "wilson", {}, function()
+                        GLOBAL.StartNextInstance({ reset_action = GLOBAL.RESET_ACTION.LOAD_SLOT, save_slot = 1 })
+                    end)
+                end)
+            end)
+        end)
+
+        success = true
+        message = "Creating new world..."
+    elseif name == ApiActions.LOAD_WORLD then
+        GLOBAL.TheFrontEnd:Fade(false, 1, function()
+            GLOBAL.StartNextInstance({ reset_action = GLOBAL.RESET_ACTION.LOAD_SLOT, save_slot = 1 })
+        end)
+
+        success = true
+        message = "Loading saved world..."
     else
         success = false
         message = "An unexpected error has occurred as that action was not found."
@@ -360,21 +404,24 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
     ApiBridge.HandleSendResult(success, message)
 
-    -- 2 second delay to allow for the result to be sent and handled first
-    Player:DoTaskInTime(2, function()
-        local nearby_context = ContextManager.HandleFetchNearbyMessage()
 
-        ApiBridge.HandleSendContext(nearby_context, true)
+    if not ApiBridgeHelper.OutsideOfSim then
+        -- 2 second delay to allow for the result to be sent and handled first
+        Player:DoTaskInTime(2, function()
+            local nearby_context = ContextManager.HandleFetchNearbyMessage()
 
-        local inventory_item_names = InventoryHelper.GetHotbarItemNames()
+            ApiBridge.HandleSendContext(nearby_context, true)
 
-        local inventory_context = nil
-        if Utils.GetTableLength(inventory_item_names) > 0 then
-            inventory_context = "Your inventory items are: " .. table.concat(inventory_item_names, ", ") .. "."
-        else
-            inventory_context = "Your character has no items in their inventory."
-        end
+            local inventory_item_names = InventoryHelper.GetHotbarItemNames()
 
-        ApiBridge.HandleSendContext(inventory_context, true)
-    end)
+            local inventory_context = nil
+            if Utils.GetTableLength(inventory_item_names) > 0 then
+                inventory_context = "Your inventory items are: " .. table.concat(inventory_item_names, ", ") .. "."
+            else
+                inventory_context = "Your character has no items in their inventory."
+            end
+
+            ApiBridge.HandleSendContext(inventory_context, true)
+        end)
+    end
 end

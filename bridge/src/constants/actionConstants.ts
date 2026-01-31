@@ -101,6 +101,10 @@ export const prototype = createOutgoingAction(
   }),
 );
 
+// Main menu only
+export const createNewWorld = createOutgoingAction('create_new_world', 'does new game stuff');
+export const loadWorld = createOutgoingAction('load_world', 'does load stuff');
+
 // Game over only
 export const retry = createOutgoingAction('retry', 'Creates a new save.');
 export const exitToMainMenu = createOutgoingAction('exit_to_main_menu', 'Exits to the main menu.');
@@ -124,6 +128,8 @@ const allActions: readonly OutgoingAction[] = [
   prototype,
   retry,
   exitToMainMenu,
+  createNewWorld,
+  loadWorld,
 ];
 
 export default allActions;
