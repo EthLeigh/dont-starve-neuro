@@ -7,13 +7,13 @@ Co-op Neuro-sama SDK integration for Don't Starve.
 
 ## Setup
 
-Ensure that this repository's files are under `dont_starve/mods/dont_starve_neuro/` (Don't Starve's game directory).
+Ensure that this repository's files are under `dont_starve/mods/dont-starve-neuro/` (Don't Starve's game directory).
 The mod should now appear under the **Mods** button in the main menu and can be enabled normally.
 
-To start the API Bridge, `cd` into `dont_starve_neuro/bridge/`, and make sure you have created an `.env` file based on the `.env.example`.
+To start the API Bridge, `cd` into `api-bridge/`, and make sure you have created an `.env` file based on the `.env.example`.
 
 > [!IMPORTANT]
-> If you do change the `PORT` variable in the `.env`, make sure that the `constants/api_bridge.lua` file is updated to match.
+> If you do change the `PORT` variable in the `.env`, make sure that the `dont-starve-neuro/constants/api_bridge.lua` file is updated to match.
 
 Then run:
 
@@ -58,7 +58,7 @@ Once the world is created, the mod will communicate with the Bridge to register 
 
 ## Development
 
-To run a development build, ensure you have a `.env` file created under `bridge/`, and run this:
+To run a development build, ensure you have a `.env` file created under `api-bridge/`, and run this:
 
 > The startup will fail if there is not a Websocket connection setup prior!
 
@@ -75,7 +75,7 @@ npm run dev
 To view your changes to the game files/test them, you can simply exit and enter a world and the mod will be reloaded.
 There is no need to restart the game.
 
-**Optional**: You can open Don't Starve's source code (under the game files and `data/scripts/`),
+**Optional**: You can open Don't Starve's source code (under the game files and `dont_starve/data/scripts/`),
 this is for some more context over game functions/classes/enums/etc. You can otherwise skip this step as I have
 setup types for _most_ used game scripts, or you could reference the game scripts if you need to add something new.
 
