@@ -103,6 +103,14 @@ local function FilterAndRegisterActions()
     if not EaterHelper.GetBestFoodInInventory() then
         Utils.RemoveElementByValue(actions_to_register, ApiActions.EAT_FOOD)
         Utils.RemoveElementByValue(actions_to_register, ApiActions.COOK_FOOD)
+    else
+        TriggerManager.food_actions_registered = true
+    end
+
+    if Utils.GetTableLength(CraftingHelper.GetAvailableBuildables()) == 0 then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.CRAFT)
+    else
+        TriggerManager.craft_action_registered = true
     end
 
     if not MarkerHelper.HasMarkers() then

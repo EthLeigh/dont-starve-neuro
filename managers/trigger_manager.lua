@@ -4,6 +4,7 @@ TriggerManager = {}
 TriggerManager.CurrentAttackerName = nil
 TriggerManager._sent_for_darkness = false
 TriggerManager.food_actions_registered = false
+TriggerManager.craft_action_registered = false
 
 --- Handles the event for when the player's health decreases. Will send a context message about the current enemy attacking.
 ---@param damage_cause string
@@ -52,17 +53,35 @@ local function HandleNightStart()
     ApiBridge.HandleSendRegister({ ApiActions.GO_TO_LIGHT_SOURCE })
 end
 
-local function HandleInventoryItemChange()
+local function HandleInventoryItemChange(craft_check)
     local food_exists = EaterHelper.GetBestFoodInInventory() ~= nil
 
-    if food_exists and TriggerManager.food_actions_registered then
-        return
-    elseif not food_exists and TriggerManager.food_actions_registered then
-        ApiBridge.HandleSendUnregister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
-        TriggerManager.food_actions_registered = false
-    else
-        ApiBridge.HandleSendRegister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
-        TriggerManager.food_actions_registered = true
+    if food_exists ~= TriggerManager.food_actions_registered then
+        if food_exists then
+            ApiBridge.HandleSendRegister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
+        else
+            ApiBridge.HandleSendUnregister({ ApiActions.EAT_FOOD, ApiActions.COOK_FOOD })
+        end
+
+        TriggerManager.food_actions_registered = food_exists
+    end
+
+    if craft_check then
+        Player:DoTaskInTime(0.1, function()
+            local available_craftables = CraftingHelper.GetAvailableBuildables()
+            log_info(Utils.GetTableLength(available_craftables))
+            local can_craft = Utils.GetTableLength(available_craftables) > 0
+
+            if can_craft ~= TriggerManager.craft_action_registered then
+                if can_craft then
+                    ApiBridge.HandleSendRegister({ ApiActions.CRAFT })
+                else
+                    ApiBridge.HandleSendUnregister({ ApiActions.CRAFT })
+                end
+
+                TriggerManager.craft_action_registered = can_craft
+            end
+        end)
     end
 end
 
@@ -151,6 +170,7 @@ function TriggerManager.SetupTriggerEvents()
     Clock.inst:ListenForEvent("daytime", HandleDayStart)
     Clock.inst:ListenForEvent("nighttime", HandleNightStart)
 
-    PlayerInventory.inst:ListenForEvent("itemlose", HandleInventoryItemChange)
-    PlayerInventory.inst:ListenForEvent("itemget", HandleInventoryItemChange)
+    PlayerInventory.inst:ListenForEvent("itemlose", function() HandleInventoryItemChange(true) end)
+    PlayerInventory.inst:ListenForEvent("itemget", function() HandleInventoryItemChange(false) end)
+    PlayerInventory.inst:ListenForEvent("gotnewitem", function() HandleInventoryItemChange(true) end)
 end
