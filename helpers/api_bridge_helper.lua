@@ -349,24 +349,12 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         GLOBAL.TheFrontEnd:PushScreen(screen)
         GLOBAL.TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
 
-        GLOBAL.scheduler:ExecuteInTime(1, function()
+        GLOBAL.scheduler:ExecuteInTime(2, function()
             GLOBAL.TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
-            screen.Vanilla_btn.is_enabled = true
-            screen.Vanilla_btn.checkbox:SetTint(1, 1, 1, 1)
-            screen.Vanilla_btn.image:SetTint(1, 1, 1, 1)
-            screen.Vanilla_btn.checkbox:SetTexture("images/ui.xml", "button_checkbox2.tex")
 
-            screen.menu:SetItemEnabled(1, true)
-            screen.menu:SetItemEnabled(#screen.dlc_buttons + 2, true)
-            screen.menu:SetItemEnabled(#screen.dlc_buttons + 3, true)
-
-            GLOBAL.scheduler:ExecuteInTime(2, function()
-                GLOBAL.TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
-
-                GLOBAL.TheFrontEnd:Fade(false, 2, function()
-                    GLOBAL.SaveGameIndex:StartSurvivalMode(1, "wilson", {}, function()
-                        GLOBAL.StartNextInstance({ reset_action = GLOBAL.RESET_ACTION.LOAD_SLOT, save_slot = 1 })
-                    end)
+            GLOBAL.TheFrontEnd:Fade(false, 2, function()
+                GLOBAL.SaveGameIndex:StartSurvivalMode(1, "wilson", {}, function()
+                    GLOBAL.StartNextInstance({ reset_action = GLOBAL.RESET_ACTION.LOAD_SLOT, save_slot = 1 })
                 end)
             end)
         end)
