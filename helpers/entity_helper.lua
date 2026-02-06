@@ -96,7 +96,7 @@ function EntityHelper.GetNearbyEntities(tags)
         x, 0, z,
         GameConstants.SEARCH_RADIUS,
         nil,
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" },
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand", "shadowskittish" },
         tags
     )
 
