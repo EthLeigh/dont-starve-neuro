@@ -92,13 +92,22 @@ end
 function EntityHelper.GetNearbyEntities(tags)
     local x, _, z = Player.Transform:GetWorldPosition()
 
-    return GLOBAL.TheSim:FindEntities(
+    local ents = GLOBAL.TheSim:FindEntities(
         x, 0, z,
         GameConstants.SEARCH_RADIUS,
         nil,
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand" },
         tags
     )
+
+    local filtered_ents = {}
+    for _, ent in pairs(ents) do
+        if ent and not ent:HasTag("INLIMBO") then
+            table.insert(filtered_ents, ent)
+        end
+    end
+
+    return filtered_ents
 end
 
 ---@return table<string, integer>

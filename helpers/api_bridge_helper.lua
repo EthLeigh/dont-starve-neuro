@@ -205,7 +205,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         else
             local best_light_source = light_sources[1]
             for _, light_source in pairs(light_sources) do
-                log_info(light_source.prefab)
                 if light_source.prefab == "campfirefire" then
                     best_light_source = light_source
 

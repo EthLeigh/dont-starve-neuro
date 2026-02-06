@@ -95,8 +95,9 @@
 ---@field prefab string
 ---@field Transform Transform
 ---@field components table<string, table>
----@field DoPeriodicTask fun(self: Player, duration: number, callback: function): PeriodicTask
----@field DoTaskInTime fun(self: Player, duration: number, callback: function)
+---@field DoPeriodicTask fun(self: Entity, duration: number, callback: function): PeriodicTask
+---@field DoTaskInTime fun(self: Entity, duration: number, callback: function)
+---@field HasTag fun(self: Entity, tag: string): boolean
 
 ---@class Instance
 ---@field ListenForEvent fun(self: Instance, event_name: string, callback: fun(inst: table<any, any>, data: table<any, any>), source: Instance?)

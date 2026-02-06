@@ -22,7 +22,6 @@ function CraftingHelper.GetAvailablePrototypes()
 
     for prototype_recipe_name, prototype_recipe in pairs(GLOBAL:GetAllRecipes()) do
         if PlayerBuilder:CanBuild(prototype_recipe_name) and not PlayerBuilder:KnowsRecipe(prototype_recipe_name) then
-            log_info("PROTOTYPE:", prototype_recipe_name, prototype_recipe.name, prototype_recipe.prefab)
             valid_prototypes[prototype_recipe_name] = prototype_recipe
         end
     end
