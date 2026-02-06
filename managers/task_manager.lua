@@ -49,7 +49,19 @@ local function GetTaskTypeFunction(type, args)
             local _, nearby_harvestable = GLOBAL.next(filtered_nearby_harvestables, nil)
 
             if not nearby_harvestable then
-                log_warning("No harvestables found nearby.")
+                log_warning("No more harvestable stuff nearby with provided filters")
+
+                if args.prefab_filters and Utils.GetTableLength(args.prefab_filters) > 0 then
+                    prefab_filter_names = {}
+                    for _, prefab in pairs(args.prefab_filters) do
+                        table.insert(prefab_filter_names, prefab)
+                    end
+
+                    ApiBridge.HandleSendContext(
+                        "Nothing left to harvest of " .. table.concat(prefab_filter_names, ", ") .. ".", true)
+                else
+                    ApiBridge.HandleSendContext("Nothing left to harvest.")
+                end
 
                 return false
             end
