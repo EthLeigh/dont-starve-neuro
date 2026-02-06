@@ -277,7 +277,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         end
 
         -- Will return nil if the ent is nil
-        local action_name, buffered_action = Utils.GetBufferedActionForEntity(entity_to_interact)
+        local action_name, buffered_action, response_message = Utils.GetBufferedActionForEntity(entity_to_interact)
 
         if entity_to_interact and buffered_action then
             local action_item = nil
@@ -330,7 +330,12 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             message = "That entity/interactible was not found."
         elseif not buffered_action then
             success = false
-            message = "That entity/interactible is not supported and cannot be interacted with."
+
+            if response_message then
+                message = response_message
+            else
+                message = "That entity/interactible is not supported and cannot be interacted with."
+            end
         else
             success = false
             message = "An unexpected error occurred."

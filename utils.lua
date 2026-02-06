@@ -3,9 +3,9 @@ Utils = {}
 modimport("classes/action_queue.lua")
 
 ---@param ent Entity | nil
----@return string | nil, table | nil
+---@return string | nil, table | nil, string | nil
 function Utils.GetActionForEntity(ent)
-    if ent == nil or ent.components == nil or ent.components.inventoryitem ~= nil then return end
+    if ent == nil or ent.components == nil then return end
 
     if ent.components.inventoryitem and ent.components.inventoryitem.canbepickedup then
         return "pickup", GLOBAL.ACTIONS.PICKUP
@@ -15,13 +15,21 @@ function Utils.GetActionForEntity(ent)
         return "harvest", GLOBAL.ACTIONS.HARVEST
     elseif ent.components.crop and ent.components.crop:IsReadyForHarvest() then
         return "harvest", GLOBAL.ACTIONS.HARVEST
-    elseif InventoryHelper.HasItem("pickaxe") and (ent.prefab == "rock1" or ent.prefab == "rock2" or ent.prefab == "rock_flintless") then
-        return "mine", GLOBAL.ACTIONS.MINE
-    elseif InventoryHelper.HasItem("axe") and (ent.prefab == "evergreen" or ent.prefab == "evergreen_normal" or ent.prefab == "evergreen_short" or
+    elseif (ent.prefab == "rock1" or ent.prefab == "rock2" or ent.prefab == "rock_flintless") then
+        if InventoryHelper.HasItem("pickaxe") then
+            return "mine", GLOBAL.ACTIONS.MINE
+        else
+            return nil, nil, "A pickaxe is required to mine the " .. ent.prefab .. "."
+        end
+    elseif (ent.prefab == "evergreen" or ent.prefab == "evergreen_normal" or ent.prefab == "evergreen_short" or
             ent.prefab == "evergreen_tall" or ent.prefab == "evergreen_sparse" or ent.prefab == "evergreen_sparse_normal"
             or ent.prefab == "evergreen_sparse_short" or ent.prefab == "evergreen_sparse_tall" or ent.prefab == "evergreen_burnt"
             or ent.prefab == "evergreen_stump") then
-        return "chop", GLOBAL.ACTIONS.CHOP
+        if InventoryHelper.HasItem("axe") then
+            return "chop", GLOBAL.ACTIONS.CHOP
+        else
+            return nil, nil, "An axe is required to chop the " .. ent.prefab .. "."
+        end
     elseif ent.components.inspectable and not ent.components.harvestable and not ent.components.lootdropper and not ent.components.pickable and not ent.components.inventoryitem then
         -- TODO: Add a context message for the character response
         return "examine", GLOBAL.ACTIONS.LOOKAT
@@ -29,15 +37,15 @@ function Utils.GetActionForEntity(ent)
 end
 
 ---@param ent Entity|nil
----@return string|nil, BufferedAction|nil
+---@return string|nil, BufferedAction|nil, string|nil
 function Utils.GetBufferedActionForEntity(ent)
     if ent == nil then return end
 
-    local action_name, action = Utils.GetActionForEntity(ent)
+    local action_name, action, response_message = Utils.GetActionForEntity(ent)
 
-    if action == nil then return end
+    if action == nil then return nil, nil, response_message end
 
-    return action_name, GLOBAL.BufferedAction(Player, ent, action)
+    return action_name, GLOBAL.BufferedAction(Player, ent, action), response_message
 end
 
 function Utils.GetEnumKey(enum, value)
