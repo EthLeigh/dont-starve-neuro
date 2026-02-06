@@ -20,6 +20,10 @@ function HarvestHelper.MapActionFiltersToPrefabs(filters)
             filter_prefabs[action_filter] = "grass"
         elseif action_filter == "flower" then
             filter_prefabs[action_filter] = "flower"
+        elseif action_filter == "flint" then
+            filter_prefabs[action_filter] = "flint"
+        elseif action_filter == "carrot" then
+            filter_prefabs[action_filter] = "carrot_planted"
         else
             log_warning("Unknown harvestable type filter:", action_filter)
         end

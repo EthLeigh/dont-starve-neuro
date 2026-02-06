@@ -54,7 +54,7 @@ function EntityHelper.GetNearbyHarvestables(tags)
 
     local filtered_harvestables = {}
     for _, harvestable in pairs(nearby_harvestables) do
-        if Utils.GetActionForEntity(harvestable) ~= nil then
+        if harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") then
             table.insert(filtered_harvestables, harvestable)
         end
     end
