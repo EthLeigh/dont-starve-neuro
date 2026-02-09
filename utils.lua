@@ -9,7 +9,7 @@ function Utils.GetActionForEntity(ent)
 
     if ent.components.inventoryitem and ent.components.inventoryitem.canbepickedup then
         return "pickup", GLOBAL.ACTIONS.PICKUP
-    elseif ent.components.pickable and ent.components.pickable:CanBePicked() then
+    elseif ent.components.pickable and ent.components.pickable:CanBePicked() and ent.components.pickable.caninteractwith then
         return "pick", GLOBAL.ACTIONS.PICK
     elseif ent.components.harvestable and ent.components.harvestable:CanBeHarvested() then
         return "harvest", GLOBAL.ACTIONS.HARVEST
