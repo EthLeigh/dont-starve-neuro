@@ -60,7 +60,7 @@ local function GetTaskTypeFunction(type, args)
                     ApiBridge.HandleSendContext(
                         "Nothing left to harvest of " .. table.concat(prefab_filter_names, ", ") .. ".", true)
                 else
-                    ApiBridge.HandleSendContext("Nothing left to harvest.")
+                    ApiBridge.HandleSendContext("Ran out of things to harvest.")
                 end
 
                 return false
