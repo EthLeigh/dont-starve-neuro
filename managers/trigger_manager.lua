@@ -3,6 +3,7 @@ TriggerManager = {}
 
 TriggerManager.CurrentAttackerName = nil
 TriggerManager._sent_for_darkness = false
+TriggerManager.drop_item_action_registered = false
 TriggerManager.food_actions_registered = false
 TriggerManager.craft_action_registered = false
 
@@ -53,7 +54,7 @@ local function HandleNightStart()
     ApiBridge.HandleSendRegister({ ApiActions.GO_TO_LIGHT_SOURCE })
 end
 
-local function HandleInventoryItemChange(craft_check)
+local function HandleInventoryItemChange(inventory_check)
     local food_exists = EaterHelper.GetBestFoodInInventory() ~= nil
 
     if food_exists ~= TriggerManager.food_actions_registered then
@@ -66,10 +67,21 @@ local function HandleInventoryItemChange(craft_check)
         TriggerManager.food_actions_registered = food_exists
     end
 
-    if craft_check then
+    if inventory_check then
         Player:DoTaskInTime(0.1, function()
+            local has_item = InventoryHelper.HasItems()
+
+            if has_item ~= TriggerManager.drop_item_action_registered then
+                if has_item then
+                    ApiBridge.HandleSendRegister({ ApiActions.DROP_ITEM })
+                else
+                    ApiBridge.HandleSendUnregister({ ApiActions.DROP_ITEM })
+                end
+
+                TriggerManager.drop_item_action_registered = has_item
+            end
+
             local available_craftables = CraftingHelper.GetAvailableBuildables()
-            log_info(Utils.GetTableLength(available_craftables))
             local can_craft = Utils.GetTableLength(available_craftables) > 0
 
             if can_craft ~= TriggerManager.craft_action_registered then

@@ -100,6 +100,10 @@ local function FilterAndRegisterActions()
         Utils.RemoveElementByValue(actions_to_register, ApiActions.GO_TO_LIGHT_SOURCE)
     end
 
+    if not InventoryHelper.HasItems() then
+        Utils.RemoveElementByValue(actions_to_register, ApiActions.DROP_ITEM)
+    end
+
     if not EaterHelper.GetBestFoodInInventory() then
         Utils.RemoveElementByValue(actions_to_register, ApiActions.EAT_FOOD)
         Utils.RemoveElementByValue(actions_to_register, ApiActions.COOK_FOOD)

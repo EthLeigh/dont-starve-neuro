@@ -171,6 +171,7 @@
 ---@field FindItem fun(self: Inventory, fn: fun(item: ItemSlot): boolean): ItemSlot|nil
 ---@field RemoveItem fun(self: Inventory, item: ItemSlot): ItemSlot
 ---@field GiveItem fun(self: Inventory, item: ItemSlot)
+---@field DropItem fun(self: Inventory, item: ItemSlot, wholestack: boolean?, randomdir: boolean?, pos: Vector3?): ItemSlot
 
 ---@class Locomotor: Component
 ---@field PushAction fun(self: Locomotor, action: BufferedAction, force?: boolean)

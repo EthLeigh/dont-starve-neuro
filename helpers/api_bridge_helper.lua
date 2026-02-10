@@ -325,6 +325,10 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             handle_workable()
 
             message = "Performing the " .. action_name .. " action on the " .. entity_name_to_interact .. "."
+
+            if response_message then
+                message = message .. " " .. response_message
+            end
         elseif not entity_to_interact then
             success = false
             message = "That entity/interactible was not found."
@@ -339,6 +343,30 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         else
             success = false
             message = "An unexpected error occurred."
+        end
+    elseif name == ApiActions.DROP_ITEM then
+        local hotbar_items = InventoryHelper.GetHotbarItems()
+
+        local item_to_drop = nil
+        for _, hotbar_item in pairs(hotbar_items) do
+            if hotbar_item.name == data["item_name"] or hotbar_item.prefab == data["item_name"] then
+                item_to_drop = hotbar_item
+
+                break
+            end
+        end
+
+        if not item_to_drop then
+            message = "No item was found in your character's inventory with that name."
+            success = false
+        else
+            if item_to_drop.item.components.trap then
+                message = "Set up trap."
+            else
+                message = "Dropped " .. item_to_drop.name .. "."
+            end
+
+            PlayerInventory:DropItem(item_to_drop.item)
         end
     elseif name == ApiActions.CREATE_NEW_WORLD then
         local NewGameScreen = GLOBAL.require("screens/newgamescreen")

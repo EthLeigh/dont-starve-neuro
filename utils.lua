@@ -3,11 +3,14 @@ Utils = {}
 modimport("classes/action_queue.lua")
 
 ---@param ent Entity | nil
----@return string | nil, table | nil, string | nil
+---@return string | nil action_name, table | nil action_enum, string | nil response_message
 function Utils.GetActionForEntity(ent)
     if ent == nil or ent.components == nil then return end
 
-    if ent.components.inventoryitem and ent.components.inventoryitem.canbepickedup then
+    if ent.components.trap and ent.components.trap.issprung then
+        return "check trap", GLOBAL.ACTIONS.CHECKTRAP,
+            "Got " .. table.concat(ent.components.trap.lootprefabs, ", ") .. " from the trap."
+    elseif ent.components.inventoryitem and ent.components.inventoryitem.canbepickedup then
         return "pickup", GLOBAL.ACTIONS.PICKUP
     elseif ent.components.pickable and ent.components.pickable:CanBePicked() and ent.components.pickable.caninteractwith then
         return "pick", GLOBAL.ACTIONS.PICK

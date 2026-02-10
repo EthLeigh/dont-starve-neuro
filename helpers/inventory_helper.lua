@@ -73,3 +73,8 @@ function InventoryHelper.GetFuel()
 
     return nil
 end
+
+---@return boolean
+function InventoryHelper.HasItems()
+    return Utils.GetTableLength(InventoryHelper.GetHotbarItems()) > 0
+end

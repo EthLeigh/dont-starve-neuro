@@ -93,6 +93,14 @@ export const interact = createOutgoingAction(
   }),
 );
 
+export const dropItem = createOutgoingAction(
+  'drop_item',
+  "Drops an item from the inventory. Will also set traps when they're dropped.",
+  z.strictObject({
+    item_name: z.string().nonoptional(),
+  }),
+);
+
 export const prototype = createOutgoingAction(
   'prototype',
   'Prototypes (and crafts) a valid recipe. Requires your character to be near a science prototyper.',
@@ -130,6 +138,7 @@ const allActions: readonly OutgoingAction[] = [
   exitToMainMenu,
   createNewWorld,
   loadWorld,
+  dropItem,
 ];
 
 export default allActions;
