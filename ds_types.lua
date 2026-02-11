@@ -163,6 +163,7 @@
 ---@field eater Eater
 ---@field talker Talker
 ---@field temperature Temperature
+---@field resurrectable Resurrectable
 
 ---@class Inventory: Component
 ---@field itemslots ItemSlot[]
@@ -213,6 +214,9 @@
 
 ---@class LootDropper: Component
 ---@field DropLoot fun(self: LootDropper, point: Vector3?)
+
+---@class Resurrectable: Component
+---@field CanResurrect fun(self: Resurrectable): boolean
 
 ---@class FireFX: Component
 ---@field percent number

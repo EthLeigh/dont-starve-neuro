@@ -216,6 +216,21 @@ AddPlayerPostInit(function(inst)
     end
 
     Player:ListenForEvent("death", function()
+        if Player.components.resurrectable and Player.components.resurrectable:CanResurrect() then
+            ApiBridge.HandleSendUnregisterAll()
+
+            ApiBridge.HandleSendContext(
+                "Your character has died, and will be resurrected at the resurrection stone you activated...")
+
+            Player:DoTaskInTime(9, function()
+                FilterAndRegisterActions()
+
+                ApiBridge.HandleSendContext("Respawned at the resurrection stone.")
+            end)
+
+            return
+        end
+
         ApiBridge.HandleSendRegister({ ApiActions.RETRY, ApiActions.EXIT_TO_MAIN_MENU })
 
         ApiBridge.HandleSendForce("What do you want to do?",

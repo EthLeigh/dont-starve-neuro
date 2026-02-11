@@ -7,7 +7,9 @@ modimport("classes/action_queue.lua")
 function Utils.GetActionForEntity(ent)
     if ent == nil or ent.components == nil then return end
 
-    if ent.components.trap and ent.components.trap.issprung then
+    if ent.prefab == "resurrectionstone" then
+        return "activate", GLOBAL.ACTIONS.ACTIVATE, "Instead of dying your character will respawn at the stone."
+    elseif ent.components.trap and ent.components.trap.issprung then
         return "check trap", GLOBAL.ACTIONS.CHECKTRAP,
             "Got " .. table.concat(ent.components.trap.lootprefabs, ", ") .. " from the trap."
     elseif ent.components.inventoryitem and ent.components.inventoryitem.canbepickedup then
