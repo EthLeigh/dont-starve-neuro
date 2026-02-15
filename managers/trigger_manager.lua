@@ -153,8 +153,9 @@ local function HandleCheckPlayerEnterDarkness()
 
         local fuel_item = PlayerInventory:RemoveItem(fuel.item)
 
-        if (nearby_light_source.components.fueled and nearby_light_source.components.fueled:TakeFuelItem(fuel_item)) or
-            (nearby_light_source.parent.components.fueled and nearby_light_source.parent.components.fueled:TakeFuelItem(fuel_item)) then
+        if (nearby_light_source.components.fueled and nearby_light_source.components.fueled:TakeFuelItem(fuel_item))
+            or (nearby_light_source.parent and nearby_light_source.parent.components.fueled
+                and nearby_light_source.parent.components.fueled:TakeFuelItem(fuel_item)) then
             ApiBridge.HandleSendContext("Used " ..
                 fuel.name .. " to fuel the " .. nearby_light_source.prefab .. ".", true)
         else
