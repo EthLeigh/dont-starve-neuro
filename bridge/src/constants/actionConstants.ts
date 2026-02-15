@@ -48,8 +48,18 @@ export const getPlayerInfo = createOutgoingAction(
 );
 
 export const getAvailableCrafts = createOutgoingAction(
-  'get_available_crafts',
-  'Retrieves all valid crafting and prototype recipes that can be crafted/learned. Prototype recipes require a nearby science prototyper',
+  'get_craftable_recipes',
+  'Retrieves all crafting recipes that can be crafted/built. ',
+);
+
+export const getCraftRecipes = createOutgoingAction(
+  'get_uncraftable_recipes',
+  'Retrieves all crafting recipes that are missing ingredients.',
+);
+
+export const getPrototypeRecipes = createOutgoingAction(
+  'get_prototype_recipes',
+  'Retrieves any prototype recipes that can be learned. Prototype recipes require a nearby science machine.',
 );
 
 export const craft = createOutgoingAction(
@@ -126,6 +136,8 @@ const allActions: readonly OutgoingAction[] = [
   getEnvironmentInfo,
   getPlayerInfo,
   getAvailableCrafts,
+  getCraftRecipes,
+  getPrototypeRecipes,
   craft,
   goToLightSource,
   retrieveCurrentGoal,

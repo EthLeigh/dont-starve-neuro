@@ -74,6 +74,12 @@
 ---@field CHARACTER_DESCRIPTIONS table<string, string>
 ---@field NAMES table<string, string>
 
+---@class PrototyperTrees
+---@field ANCIENT number
+---@field MAGIC number
+---@field SCIENCE number
+---@field LOST number
+
 -- Global classes
 
 ---@class TheSim
@@ -188,6 +194,7 @@
 ---@field CanBuild fun(self: Builder, recipe_name: string): boolean
 ---@field DoBuild fun(self: Builder, recipe_name: string, point?: Vector3, rotation?: number): boolean, string
 ---@field KnowsRecipe fun(self: Builder, recipe_name: string): boolean
+---@field EvaluateTechTrees fun(self: Builder)
 
 ---@class Health: Component
 ---@field GetPercent fun(self: Health): number
@@ -217,6 +224,9 @@
 
 ---@class Resurrectable: Component
 ---@field CanResurrect fun(self: Resurrectable): boolean
+
+---@class Prototyper: Component
+---@field trees PrototyperTrees
 
 ---@class FireFX: Component
 ---@field percent number
@@ -256,6 +266,12 @@
 
 ---@class Recipe
 ---@field name string
+---@field ingredients Ingredient[]
+---@field level PrototyperTrees
+
+---@class Ingredient
+---@field type string
+---@field amount integer
 
 ---@class InventoryEquipSlots
 ---@field hands ItemSlot|nil

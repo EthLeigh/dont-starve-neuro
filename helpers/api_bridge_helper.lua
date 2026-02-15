@@ -108,7 +108,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         message = message .. ", it is " .. (EnvironmentHelper.IsRaining() and "raining" or "not raining")
         message = message .. ", the season is " .. EnvironmentHelper.GetSeason()
         message = message .. " and it is " .. (EnvironmentHelper.IsFreezing() and "freezing." or "not freezing.")
-    elseif name == ApiActions.GET_AVAILABLE_CRAFTS then
+    elseif name == ApiActions.GET_CRAFTABLE_RECIPES then
         local available_craftables = CraftingHelper.GetAvailableBuildables()
 
         local available_craftable_names = {}
@@ -138,6 +138,50 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
 
             message = message ..
                 " Available prototype recipes: " .. table.concat(available_prototype_names, ", ") .. "."
+        end
+    elseif name == ApiActions.GET_UNCRAFTABLE_RECIPES then
+        local known_recipes = CraftingHelper.GetUnlockedRecipes()
+
+        local recipe_strings = {}
+        for _, recipe in pairs(known_recipes) do
+            local ingredient_names = {}
+            for _, ingredient in pairs(recipe.ingredients) do
+                local ingredient_name = ingredient.type .. ": " .. ingredient.amount
+
+                table.insert(ingredient_names, ingredient_name)
+            end
+
+            local recipe_string = StringHelper.GetPrettyName(recipe.name) ..
+                " (" .. recipe.name .. "): { " .. table.concat(ingredient_names, ", ") .. " }"
+            table.insert(recipe_strings, recipe_string)
+        end
+
+        message = "You have these recipes unlocked but are missing ingredients: [" ..
+            table.concat(recipe_strings, ", ") .. "]"
+    elseif name == ApiActions.GET_PROTOTYPE_RECIPES then
+        local nearby_science_prototyper = EntityHelper.GetNearbySciencePrototyper()
+        local available_prototypes = CraftingHelper.GetAvailablePrototypes()
+
+        if not nearby_science_prototyper then
+            message = " No science prototyper was found nearby."
+        elseif Utils.GetTableLength(available_prototypes) == 0 then
+            message = " No prototype recipes are available."
+        else
+            local recipe_strings = {}
+            for _, recipe in pairs(available_prototypes) do
+                local ingredient_names = {}
+                for _, ingredient in pairs(recipe.ingredients) do
+                    local ingredient_name = ingredient.type .. ": " .. ingredient.amount
+
+                    table.insert(ingredient_names, ingredient_name)
+                end
+
+                local recipe_string = StringHelper.GetPrettyName(recipe.name) ..
+                    " (" .. recipe.name .. "): { " .. table.concat(ingredient_names, ", ") .. " }"
+                table.insert(recipe_strings, recipe_string)
+            end
+
+            message = "Available prototype recipes: [" .. table.concat(recipe_strings, ", ") .. "]."
         end
     elseif name == ApiActions.GET_PLAYER_INFO then
         message = "The current character is " .. PlayerHelper.GetName()

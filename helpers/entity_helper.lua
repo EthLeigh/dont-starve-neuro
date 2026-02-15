@@ -147,7 +147,6 @@ function EntityHelper.GetNearbySciencePrototyper()
     local science_prototyper = nil
 
     for _, structure in pairs(nearby_structures) do
-        log_info(structure.prefab)
         if structure.prefab == "researchlab" then
             science_prototyper = structure
         end

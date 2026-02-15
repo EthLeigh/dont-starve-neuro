@@ -20,9 +20,23 @@ function CraftingHelper.GetAvailablePrototypes()
     ---@type table<string, Recipe>
     local valid_prototypes = {}
 
+    local nearby_prototyper = EntityHelper.GetNearbySciencePrototyper()
+
+    if not nearby_prototyper then
+        return {}
+    end
+
+    ---@type PrototyperTrees
+    local protoype_trees = nearby_prototyper.components.prototyper.trees
+
     for prototype_recipe_name, prototype_recipe in pairs(GLOBAL:GetAllRecipes()) do
-        if PlayerBuilder:CanBuild(prototype_recipe_name) and not PlayerBuilder:KnowsRecipe(prototype_recipe_name) then
-            valid_prototypes[prototype_recipe_name] = prototype_recipe
+        if not PlayerBuilder:CanBuild(prototype_recipe_name) and not PlayerBuilder:KnowsRecipe(prototype_recipe_name) then
+            if prototype_recipe.level.ANCIENT <= protoype_trees.ANCIENT
+                and prototype_recipe.level.MAGIC <= protoype_trees.MAGIC
+                and prototype_recipe.level.SCIENCE <= protoype_trees.SCIENCE
+                and prototype_recipe.level.LOST <= protoype_trees.LOST then
+                valid_prototypes[prototype_recipe_name] = prototype_recipe
+            end
         end
     end
 
@@ -35,4 +49,20 @@ function CraftingHelper.BuildFromRecipeName(recipe_name)
     local craft_success, _ = PlayerBuilder:DoBuild(recipe_name)
 
     return craft_success
+end
+
+--- Will filter out recipes that CAN be crafted, and include those that are unlocked but are missing ingredients.
+---@return Recipe[]
+function CraftingHelper.GetUnlockedRecipes()
+    local unlocked_recipes = {}
+
+    for recipe_name, recipe in pairs(GLOBAL:GetAllRecipes()) do
+        if PlayerBuilder:KnowsRecipe(recipe_name) then
+            if not PlayerBuilder:CanBuild(recipe_name) then
+                table.insert(unlocked_recipes, recipe)
+            end
+        end
+    end
+
+    return unlocked_recipes
 end
