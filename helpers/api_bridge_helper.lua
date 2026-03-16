@@ -73,7 +73,8 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         local entity_prefab_filters = HarvestHelper.MapActionFiltersToPrefabs(data and data.filters or {})
 
         if ((table.contains(entity_prefab_filters, "evergreen") and not InventoryHelper.HasItem("axe"))
-                or (table.contains(entity_prefab_filters, "rock1") and not InventoryHelper.HasItem("pickaxe"))) then
+                or (table.contains(entity_prefab_filters, "rock1") and not InventoryHelper.HasItem("pickaxe"))
+                or (table.contains(entity_prefab_filters, "rock2") and not InventoryHelper.HasItem("pickaxe"))) then
             success = false
             message = "Unable to harvest with provided filters, as a tool is required for harvesting."
         else
