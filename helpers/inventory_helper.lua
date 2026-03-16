@@ -13,6 +13,10 @@ function InventoryHelper.GetHotbarItems()
         end
     end
 
+    if (PlayerInventory.equipslots.hands) then
+        table.insert(hotbar_items, HotbarItem(PlayerInventory.equipslots.hands))
+    end
+
     return hotbar_items
 end
 
