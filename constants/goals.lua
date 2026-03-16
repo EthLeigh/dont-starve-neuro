@@ -11,7 +11,7 @@ Goals.CRAFT_BACKPACK = "craft_backpack"
 Goals.COOK_FOOD = "cook_food"
 Goals.SURVIVE_NIGHT = "survive_night"
 
-GoalCompletionDescriptions[Goals.CRAFT_AXE] = "Craft an axe."
+GoalCompletionDescriptions[Goals.CRAFT_AXE] = "Craft an axe (requires twigs and flint)."
 GoalCompletionDescriptions[Goals.MAKE_CAMPFIRE] = "Create a campfire (requires an axe to cut down trees)."
 GoalCompletionDescriptions[Goals.CRAFT_PICKAXE] = "Craft a pickaxe (requires flint and twigs, which can be harvested)."
 GoalCompletionDescriptions[Goals.BUILD_SCIENCE_MACHINE] =
