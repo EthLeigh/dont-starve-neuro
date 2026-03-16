@@ -6,6 +6,10 @@ modimport("utils.lua")
 ---@param filters string[]
 ---@return table<string, string>
 function HarvestHelper.MapActionFiltersToPrefabs(filters)
+    if type(filters) == "string" then
+        filters = { filters }
+    end
+
     local filter_prefabs = {}
     for _, action_filter in ipairs(filters) do
         if action_filter == "tree" or action_filter == "evergreen" then
