@@ -338,41 +338,46 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
                 PlayerInventory:Equip(action_item)
             end
 
-            local entities_to_harvest = 0
-            if entity_to_interact.components.lootdropper then
-                local OriginalSpawnLootPrefab = entity_to_interact.components.lootdropper.SpawnLootPrefab
-                entity_to_interact.components.lootdropper.SpawnLootPrefab = function(self, lootprefab, pt)
-                    OriginalSpawnLootPrefab(self, lootprefab, pt)
+            if (not action_item and (action_name == "mine" or action_name == "chop")) then
+                success = false
+                message = "That interaction requires a pickaxe/axe."
+            else
+                local entities_to_harvest = 0
+                if entity_to_interact.components.lootdropper then
+                    local OriginalSpawnLootPrefab = entity_to_interact.components.lootdropper.SpawnLootPrefab
+                    entity_to_interact.components.lootdropper.SpawnLootPrefab = function(self, lootprefab, pt)
+                        OriginalSpawnLootPrefab(self, lootprefab, pt)
 
-                    entities_to_harvest = entities_to_harvest + 1
-                end
-            end
-
-            local function handle_workable()
-                PlayerLocomotor:PushAction(buffered_action, true)
-
-                if not entity_to_interact or not entity_to_interact.components.workable then
-                    return
+                        entities_to_harvest = entities_to_harvest + 1
+                    end
                 end
 
-                if entity_to_interact.components.workable.workleft > 1 then
-                    Player:DoTaskInTime(1, function() handle_workable() end)
-                elseif entities_to_harvest > 0 then
-                    local cleanup_harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function(current_iteration)
-                        log_info(current_iteration, entities_to_harvest, current_iteration <= entities_to_harvest)
-                        return current_iteration > entities_to_harvest
-                    end, nil)
+                local function handle_workable()
+                    PlayerLocomotor:PushAction(buffered_action, true)
 
-                    TaskManager.StartTasks({ cleanup_harvest_task })
+                    if not entity_to_interact or not entity_to_interact.components.workable then
+                        return
+                    end
+
+                    if entity_to_interact.components.workable.workleft > 1 then
+                        Player:DoTaskInTime(1, function() handle_workable() end)
+                    elseif entities_to_harvest > 0 then
+                        local cleanup_harvest_task = Task:new(TaskManager.TASK_TYPES.HARVEST, function(current_iteration)
+                            log_info(current_iteration, entities_to_harvest, current_iteration <= entities_to_harvest)
+                            return current_iteration > entities_to_harvest
+                        end, nil)
+
+                        TaskManager.StartTasks({ cleanup_harvest_task })
+                    end
                 end
-            end
 
-            handle_workable()
+                handle_workable()
 
-            message = "Performing the " .. action_name .. " action on the " .. entity_name_to_interact .. "."
+                message = "Performing the " .. action_name .. " action on the " .. entity_name_to_interact .. "."
 
-            if response_message then
-                message = message .. " " .. response_message
+                if response_message then
+                    message = message .. " " .. response_message
+                end
             end
         elseif not entity_to_interact then
             success = false
