@@ -253,6 +253,16 @@ AddSimPostInit(function()
     Camera:SetHeadingTarget(270)
     Camera:Snap()
 
+    GlobalPlayer = GLOBAL:GetPlayer()
+
+    if Player == nil and GlobalPlayer == nil then
+        log_error("The Player object is nil")
+
+        return
+    elseif GlobalPlayer ~= nil then
+        Player = GlobalPlayer
+    end
+
     -- If no time has passed in the first cycle, we assume it's a new world
     if (Clock.timeLeftInEra == Clock.totalEraTime and Clock.numcycles == 0) then
         ApiBridge.HandleSendContext('A tall man said to you, "Say pal, you don\'t look so good. ' ..
@@ -268,16 +278,6 @@ AddSimPostInit(function()
         end
     else
         FilterAndRegisterActions()
-    end
-
-    GlobalPlayer = GLOBAL:GetPlayer()
-
-    if Player == nil and GlobalPlayer == nil then
-        log_error("The Player object is nil")
-
-        return
-    elseif GlobalPlayer ~= nil then
-        Player = GlobalPlayer
     end
 
     TriggerManager.SetupTriggerEvents()
