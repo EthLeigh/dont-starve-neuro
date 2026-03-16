@@ -1,8 +1,11 @@
 import WebSocket from 'ws';
 import { env } from '../env.js';
-import { IncomingMessageSchema } from '../types/incomingMessageTypes.js';
+import { IncomingMessage, IncomingMessageSchema } from '../types/incomingMessageTypes.js';
 import { handleNewIncomingMessage } from '../state/pendingIncomingAction.js';
 import { logger } from '../server.js';
+import allActions from '../constants/actionConstants.js';
+import * as z from 'zod';
+import { createActionResultMessage } from '../utils/outgoingMessageUtils.js';
 
 let ws: WebSocket;
 
@@ -17,28 +20,74 @@ export const initWs = async (): Promise<void> => {
     });
 
     ws.on('message', (data) => {
-      if (!Buffer.isBuffer(data)) {
-        throw new TypeError('Received an action as something other than a buffer');
-      }
-
-      const dataString = data.toString('utf8');
-      let dataObject;
-
+      let messageId;
       try {
-        dataObject = JSON.parse(dataString);
-      } catch (e) {
-        throw new Error('Failed to parse incoming message string', { cause: e });
+        if (!Buffer.isBuffer(data)) {
+          throw new TypeError('Received an action as something other than a buffer');
+        }
+
+        const dataString = data.toString('utf8');
+        let dataObject;
+
+        try {
+          dataObject = JSON.parse(dataString);
+        } catch (e) {
+          throw new Error('Failed to parse incoming message string', { cause: e });
+        }
+
+        const parsedData = IncomingMessageSchema.safeParse(dataObject);
+
+        if (!parsedData.success) {
+          throw new Error('Failed to parse incoming message object', { cause: parsedData.error });
+        }
+
+        const parsedDataObject = parsedData.data;
+        messageId = parsedDataObject.data.id;
+
+        logger.info(
+          { data: parsedDataObject },
+          'Received data from Websocket, attempting to validate against action schema',
+        );
+
+        const actionSchema = allActions.find(
+          (action) => action.name === parsedDataObject.data.name,
+        );
+
+        if (!actionSchema) {
+          throw new Error('No action found with provided name: ' + parsedDataObject.data.name);
+        }
+
+        if (actionSchema.schema) {
+          let dataObject;
+          try {
+            dataObject = JSON.parse(parsedDataObject.data.data!);
+          } catch (e) {
+            throw new Error('Failed to parse incoming message data string', { cause: e });
+          }
+
+          const parsedActionData = z
+            .fromJSONSchema(actionSchema.schema)
+            .safeParse(dataObject);
+
+          if (!parsedActionData.success) {
+            throw new Error('Failed to parse incoming message object', {
+              cause: parsedActionData.error,
+            });
+          }
+        }
+
+        handleNewIncomingMessage(parsedDataObject);
+      } catch (error) {
+        console.error('An error occurred when processing incoming message.', error);
+
+        const resultMessage = createActionResultMessage(
+          messageId ?? '', // Shouldn't be empty unless catastrophe
+          false,
+          'An error occurred when processing incoming message. ' + error,
+        );
+
+        sendMessage(resultMessage);
       }
-
-      const parsedData = IncomingMessageSchema.safeParse(dataObject);
-
-      if (!parsedData.success) {
-        throw new Error('Failed to parse incoming message object', { cause: parsedData.error });
-      }
-
-      logger.info({ data: parsedData.data }, 'Received data from Websocket');
-
-      handleNewIncomingMessage(parsedData.data);
     });
 
     ws.on('error', reject);
