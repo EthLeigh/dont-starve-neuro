@@ -242,28 +242,54 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             message = "That is not a valid craft recipe."
         end
     elseif name == ApiActions.GO_TO_LIGHT_SOURCE then
-        local light_sources = EntityHelper.GetNearbyLightSources()
+        local hotbar_items = InventoryHelper.GetHotbarItems()
 
-        if #light_sources == 0 then
-            success = false
-            message = "Failed to find a nearby light source"
-        else
-            local best_light_source = light_sources[1]
-            for _, light_source in pairs(light_sources) do
-                if light_source.prefab == "campfirefire" then
-                    best_light_source = light_source
+        ---@type HotbarItem|nil
+        local torch
+        for _, item in pairs(hotbar_items) do
+            if item.prefab == "torch" then
+                torch = item
 
-                    break
-                end
+                break
             end
+        end
 
-            local x, _, z = best_light_source.Transform:GetWorldPosition()
-
-            -- Offset to avoid collision and endless running
-            MovementHelper.MoveToPoint(x, z + 1)
+        if torch then
+            PlayerInventory:Equip(torch.item)
 
             success = true
-            message = "Successfully moved toward nearest light source"
+            message = "Equipped torch to stay in the light."
+        else
+            local light_sources = EntityHelper.GetNearbyLightSources()
+
+            if #light_sources == 0 then
+                success = false
+                message = "Failed to find a nearby light source, or equip one."
+            else
+                local best_light_source = light_sources[1]
+                for _, light_source in pairs(light_sources) do
+                    if light_source.prefab == "campfirefire" then
+                        best_light_source = light_source
+
+                        break
+                    end
+                end
+
+                log_info(best_light_source.prefab)
+
+                if best_light_source.prefab == "fireflies" then
+                    success = false
+                    message = "No valid light sources were found nearby, or in your inventory."
+                else
+                    local x, _, z = best_light_source.Transform:GetWorldPosition()
+
+                    -- Offset to avoid collision and endless running
+                    MovementHelper.MoveToPoint(x, z + 1)
+
+                    success = true
+                    message = "Successfully moved toward nearest light source"
+                end
+            end
         end
     elseif name == ApiActions.RETRIEVE_CURRENT_GOAL then
         message = GoalManager.GetAsMessage()
