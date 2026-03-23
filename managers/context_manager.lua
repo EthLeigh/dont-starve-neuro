@@ -81,6 +81,18 @@ local function HandleFreezingStop()
     ApiBridge.HandleSendContext("Your character has stopped freezing.", true)
 end
 
+local function HandleDayStart()
+    ApiBridge.HandleSendContext("It is now morning.", true)
+end
+
+local function HandleDuskStart()
+    ApiBridge.HandleSendContext("It is now dusk. It will soon be night.", true)
+end
+
+local function HandleNightStart()
+    ApiBridge.HandleSendContext("It is now night.", true)
+end
+
 ---@param data table<string, any>
 function ContextManager.OnEntityKilled(_, data)
     local victim = data.victim
@@ -105,6 +117,10 @@ function ContextManager.SetupContextEvents()
 
     PlayerTemperature.inst:ListenForEvent("startfreezing", HandleFreezingStart)
     PlayerTemperature.inst:ListenForEvent("stopfreezing", HandleFreezingStop)
+
+    Clock.inst:ListenForEvent("daytime", HandleDayStart)
+    Clock.inst:ListenForEvent("dusktime", HandleDuskStart)
+    Clock.inst:ListenForEvent("nighttime", HandleNightStart)
 end
 
 function ContextManager.HandleFetchNearbyMessage()
