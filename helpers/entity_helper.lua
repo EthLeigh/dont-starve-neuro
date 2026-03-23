@@ -49,14 +49,12 @@ function EntityHelper.GetNearbyHarvestables(tags)
         GameConstants.SEARCH_RADIUS,
         tags,
         { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS),
-            "player", "structure", "monster", "prey", "animal", "NOFORAGE" }
+            "player", "structure", "monster", "prey", "animal", "NOFORAGE", "stump" }
     )
 
     local filtered_harvestables = {}
     for _, harvestable in pairs(nearby_harvestables) do
-        if harvestable:HasTag("stump") then
-            -- Filter out already cut down trees (trunks still count as trees idk why)
-        elseif harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") then
+        if harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") then
             table.insert(filtered_harvestables, harvestable)
         end
     end
@@ -98,7 +96,8 @@ function EntityHelper.GetNearbyEntities(tags)
         x, 0, z,
         GameConstants.SEARCH_RADIUS,
         nil,
-        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand", "shadowskittish" },
+        { GLOBAL.unpack(EntityHelper.GENERIC_AVOID_TAGS), "player", "shadowcreature", "shadowhand", "shadowskittish",
+            "stump" },
         tags
     )
 
