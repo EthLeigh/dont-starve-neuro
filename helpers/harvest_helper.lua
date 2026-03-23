@@ -40,9 +40,22 @@ end
 
 ---@param ent Entity
 function HarvestHelper.HarvestEntity(ent)
-    local _, buffer_action = Utils.GetBufferedActionForEntity(ent)
+    local action_name, buffer_action = Utils.GetBufferedActionForEntity(ent)
 
     if not buffer_action then return end
+
+    local action_item = nil
+    local hotbar_items = InventoryHelper.GetHotbarItems()
+    for _, hotbar_item in pairs(hotbar_items) do
+        if (action_name == "mine" and hotbar_item.prefab == "pickaxe") or
+            (action_name == "chop" and hotbar_item.prefab == "axe") then
+            action_item = hotbar_item.item
+        end
+    end
+
+    if action_item ~= nil and PlayerInventory.equipslots.hands ~= action_item then
+        PlayerInventory:Equip(action_item)
+    end
 
     PlayerLocomotor:PushAction(buffer_action, true)
 end

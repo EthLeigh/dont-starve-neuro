@@ -10,7 +10,7 @@
 ---@field BufferedAction fun(player: Player, ent: Entity, action: table, invobject: ItemSlot?, pos: Vector3?): BufferedAction
 ---@field Vector3 fun(x: number, y: number, z: number): Vector3
 ---@field TheCamera Camera
----@field ACTIONS table<string, table>
+---@field ACTIONS table<string, table<string, table>
 ---@field GROUND table<string, table>
 ---@field TheSim TheSim
 ---@field GetAllRecipes fun(self: GLOBAL): table<string, Recipe>

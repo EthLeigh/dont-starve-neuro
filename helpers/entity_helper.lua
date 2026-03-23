@@ -54,7 +54,9 @@ function EntityHelper.GetNearbyHarvestables(tags)
 
     local filtered_harvestables = {}
     for _, harvestable in pairs(nearby_harvestables) do
-        if harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") then
+        if harvestable:HasTag("stump") then
+            -- Filter out already cut down trees (trunks still count as trees idk why)
+        elseif harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") then
             table.insert(filtered_harvestables, harvestable)
         end
     end
