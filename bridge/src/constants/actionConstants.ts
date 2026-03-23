@@ -47,12 +47,12 @@ export const getPlayerInfo = createOutgoingAction(
   "Retrieves information about the current character's name, health, hunger, sanity, if they're starving and if the character is sane.",
 );
 
-export const getAvailableCrafts = createOutgoingAction(
+export const getCraftableRecipes = createOutgoingAction(
   'get_craftable_recipes',
   'Retrieves all crafting recipes that can be crafted/built. ',
 );
 
-export const getCraftRecipes = createOutgoingAction(
+export const getUncraftableRecipes = createOutgoingAction(
   'get_uncraftable_recipes',
   'Retrieves all crafting recipes that are missing ingredients.',
 );
@@ -138,8 +138,8 @@ const allActions: readonly OutgoingAction[] = [
   harvestNearby,
   getEnvironmentInfo,
   getPlayerInfo,
-  getAvailableCrafts,
-  getCraftRecipes,
+  getCraftableRecipes,
+  getUncraftableRecipes,
   getPrototypeRecipes,
   craft,
   goToLightSource,

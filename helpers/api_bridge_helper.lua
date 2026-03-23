@@ -123,23 +123,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
             message = "Your available craftable items/buildings are: " ..
                 table.concat(available_craftable_names, ", ") .. "."
         end
-
-        local nearby_science_prototyper = EntityHelper.GetNearbySciencePrototyper()
-        local available_prototypes = CraftingHelper.GetAvailablePrototypes()
-
-        if not nearby_science_prototyper then
-            message = message .. " No science prototyper was found nearby."
-        elseif Utils.GetTableLength(available_prototypes) == 0 then
-            message = message .. " No prototype recipes are available."
-        else
-            local available_prototype_names = {}
-            for prototype_name, _ in pairs(available_prototypes) do
-                table.insert(available_prototype_names, prototype_name)
-            end
-
-            message = message ..
-                " Available prototype recipes: " .. table.concat(available_prototype_names, ", ") .. "."
-        end
     elseif name == ApiActions.GET_UNCRAFTABLE_RECIPES then
         local known_recipes = CraftingHelper.GetUnlockedRecipes()
 
@@ -499,7 +482,6 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
     end
 
     ApiBridge.HandleSendResult(success, message)
-
 
     if not ApiBridgeHelper.OutsideOfSim then
         -- 2 second delay to allow for the result to be sent and handled first
