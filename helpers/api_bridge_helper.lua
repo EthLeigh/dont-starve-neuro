@@ -188,7 +188,7 @@ function ApiBridgeHelper.HandleActionExecution(name, data)
         end
 
         if recipe_exists then
-            success = CraftingHelper.BuildFromRecipeName(recipe_name)
+            success = CraftingHelper.BuildFromRecipeName(recipe_name, true)
 
             if not success then
                 message = "Failed to prototype." -- Just in case

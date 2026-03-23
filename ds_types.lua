@@ -195,6 +195,7 @@
 ---@field DoBuild fun(self: Builder, recipe_name: string, point?: Vector3, rotation?: number): boolean, string
 ---@field KnowsRecipe fun(self: Builder, recipe_name: string): boolean
 ---@field EvaluateTechTrees fun(self: Builder)
+---@field UnlockRecipe fun(self: Builder, recipe_name: string)
 
 ---@class Health: Component
 ---@field GetPercent fun(self: Health): number

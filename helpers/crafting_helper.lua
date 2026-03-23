@@ -30,7 +30,7 @@ function CraftingHelper.GetAvailablePrototypes()
     local protoype_trees = nearby_prototyper.components.prototyper.trees
 
     for prototype_recipe_name, prototype_recipe in pairs(GLOBAL:GetAllRecipes()) do
-        if not PlayerBuilder:CanBuild(prototype_recipe_name) and not PlayerBuilder:KnowsRecipe(prototype_recipe_name) then
+        if not PlayerBuilder:KnowsRecipe(prototype_recipe_name) then
             if prototype_recipe.level.ANCIENT <= protoype_trees.ANCIENT
                 and prototype_recipe.level.MAGIC <= protoype_trees.MAGIC
                 and prototype_recipe.level.SCIENCE <= protoype_trees.SCIENCE
@@ -44,9 +44,14 @@ function CraftingHelper.GetAvailablePrototypes()
 end
 
 ---@param recipe_name string
+---@param learn boolean?
 ---@return boolean "If the craft was successful or not"
-function CraftingHelper.BuildFromRecipeName(recipe_name)
+function CraftingHelper.BuildFromRecipeName(recipe_name, learn)
     local craft_success, _ = PlayerBuilder:DoBuild(recipe_name)
+
+    if learn == true then
+        PlayerBuilder:UnlockRecipe(recipe_name)
+    end
 
     return craft_success
 end
