@@ -1,4 +1,4 @@
-# Don't Starve Neuro Co-op (WIP)
+# Don't Starve Neuro Co-op (Hiatus)
 
 > [!IMPORTANT]
 > If you are looking for the **completed singleplayer** integration it is under the `single` branch, and the releases are marked with `single-*`.
