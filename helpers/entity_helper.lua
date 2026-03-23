@@ -54,7 +54,7 @@ function EntityHelper.GetNearbyHarvestables(tags)
 
     local filtered_harvestables = {}
     for _, harvestable in pairs(nearby_harvestables) do
-        if harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") then
+        if harvestable and Utils.GetActionForEntity(harvestable) ~= nil and not harvestable:HasTag("INLIMBO") and ent.prefab ~= "shadowskittish" then
             table.insert(filtered_harvestables, harvestable)
         end
     end
@@ -103,7 +103,7 @@ function EntityHelper.GetNearbyEntities(tags)
 
     local filtered_ents = {}
     for _, ent in pairs(ents) do
-        if ent and not ent:HasTag("INLIMBO") then
+        if ent and not ent:HasTag("INLIMBO") and ent.prefab ~= "shadowskittish" then
             table.insert(filtered_ents, ent)
         end
     end
@@ -114,20 +114,12 @@ end
 ---@return table<string, integer>
 function EntityHelper.GetAllNearbyEntityCounts()
     local entities = EntityHelper.GetNearbyEntities()
-    local inventory_items = InventoryHelper.GetHotbarItems()
     local entity_counts = {}
-
-    local inventory_item_names = {}
-    for _, inventory_item in pairs(inventory_items) do
-        table.insert(inventory_item_names, inventory_item.item.prefab)
-    end
 
     for _, entity in pairs(entities) do
         local prefab = entity.prefab
 
-        if table.contains(inventory_item_names, prefab) then
-            Utils.RemoveElementByValue(inventory_item_names, prefab)
-        elseif prefab ~= nil then
+        if prefab ~= nil then
             entity_counts[prefab] = (entity_counts[prefab] or 0) + 1
         end
     end
